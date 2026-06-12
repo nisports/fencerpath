@@ -1,0 +1,162 @@
+{
+  "scrapedAt": "2026-05-24T22:10:10Z",
+  "filters": {
+    "weapon": "foil",
+    "age": "u17",
+    "gender": "F",
+    "nation": "SWE",
+    "type": "vmem"
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "points": 430.0,
+      "name": "Henrietta Westin",
+      "rawName": "WESTIN Henrietta"
+    },
+    {
+      "rank": 2,
+      "points": 390.0,
+      "name": "Helen Su",
+      "rawName": "SU Helen"
+    },
+    {
+      "rank": 3,
+      "points": 353.0,
+      "name": "Kinzi Wall",
+      "rawName": "WALL Kinzi"
+    },
+    {
+      "rank": 4,
+      "points": 263.0,
+      "name": "Cleo Fox",
+      "rawName": "FOX Cleo"
+    },
+    {
+      "rank": 5,
+      "points": 258.5,
+      "name": "Linnea Svensson",
+      "rawName": "SVENSSON Linnea"
+    },
+    {
+      "rank": 6,
+      "points": 171.5,
+      "name": "GÖRMAN Emelie Rosenlind",
+      "rawName": "ROSENLIND GÖRMAN Emelie"
+    },
+    {
+      "rank": 7,
+      "points": 140.0,
+      "name": "Carolina Barker",
+      "rawName": "BARKER Carolina"
+    },
+    {
+      "rank": 8,
+      "points": 126.5,
+      "name": "Elsa Blomgren",
+      "rawName": "BLOMGREN Elsa"
+    },
+    {
+      "rank": 9,
+      "points": 70.0,
+      "name": "ERIKSSON Nova Sundberg",
+      "rawName": "SUNDBERG ERIKSSON Nova"
+    },
+    {
+      "rank": 9,
+      "points": 70.0,
+      "name": "BERGSTRÖM Iris Trapassi",
+      "rawName": "TRAPASSI BERGSTRÖM Iris"
+    },
+    {
+      "rank": 11,
+      "points": 40.5,
+      "name": "Matilda Vestin",
+      "rawName": "VESTIN Matilda"
+    },
+    {
+      "rank": 11,
+      "points": 40.5,
+      "name": "Moa Brolin",
+      "rawName": "BROLIN Moa"
+    },
+    {
+      "rank": 11,
+      "points": 40.5,
+      "name": "CLASÉN Vera Lybeck",
+      "rawName": "LYBECK CLASÉN Vera"
+    },
+    {
+      "rank": 14,
+      "points": 40.0,
+      "name": "Jenny Sjölin",
+      "rawName": "SJÖLIN Jenny"
+    },
+    {
+      "rank": 14,
+      "points": 40.0,
+      "name": "Vera Li Sjöblom",
+      "rawName": "SJÖBLOM Vera Li"
+    },
+    {
+      "rank": 14,
+      "points": 40.0,
+      "name": "VIBERG Wilma Silfvander",
+      "rawName": "SILFVANDER VIBERG Wilma"
+    },
+    {
+      "rank": 17,
+      "points": 30.0,
+      "name": "Viktoria Sandholm",
+      "rawName": "SANDHOLM Viktoria"
+    },
+    {
+      "rank": 17,
+      "points": 30.0,
+      "name": "Mira Hommik",
+      "rawName": "HOMMIK Mira"
+    },
+    {
+      "rank": 17,
+      "points": 30.0,
+      "name": "Alma Knutsson",
+      "rawName": "KNUTSSON Alma"
+    },
+    {
+      "rank": 17,
+      "points": 30.0,
+      "name": "Lovisa Hermansson",
+      "rawName": "HERMANSSON Lovisa"
+    },
+    {
+      "rank": 17,
+      "points": 30.0,
+      "name": "Gréta Fischl",
+      "rawName": "FISCHL Gréta"
+    },
+    {
+      "rank": 17,
+      "points": 30.0,
+      "name": "Emeli Örström",
+      "rawName": "ÖRSTRÖM Emeli"
+    },
+    {
+      "rank": 23,
+      "points": 22.5,
+      "name": "Hedvig Selin",
+      "rawName": "SELIN Hedvig"
+    },
+    {
+      "rank": 23,
+      "points": 22.5,
+      "name": "Ella Wolvén",
+      "rawName": "WOLVÉN Ella"
+    },
+    {
+      "rank": 25,
+      "points": 0.0,
+      "name": "Lea Kosieradzki",
+      "rawName": "KOSIERADZKI Lea"
+    }
+  ]
+}

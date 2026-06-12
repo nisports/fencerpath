@@ -1,0 +1,17 @@
+{
+  "name": "fencerpath",
+  "version": "1.0.0",
+  "description": "FencerPath — multi-fencer competition season manager. Runs entirely in the browser.",
+  "homepage": "https://fencerpath.se/",
+  "private": true,
+  "scripts": {
+    "scrape": "node scrape_ophardt.mjs --with-deadlines",
+    "rankings": "node scrape_ophardt_rankings.mjs",
+    "bio": "node scrape_ophardt_bio.mjs",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

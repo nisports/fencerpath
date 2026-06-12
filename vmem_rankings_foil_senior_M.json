@@ -1,0 +1,150 @@
+{
+  "scrapedAt": "2026-05-24T22:10:10Z",
+  "filters": {
+    "weapon": "foil",
+    "age": "senior",
+    "gender": "M",
+    "nation": "SWE",
+    "type": "vmem"
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "points": 142.0,
+      "name": "Henri Ask",
+      "rawName": "ASK Henri"
+    },
+    {
+      "rank": 2,
+      "points": 124.0,
+      "name": "Isak Kvernes",
+      "rawName": "KVERNES Isak"
+    },
+    {
+      "rank": 3,
+      "points": 100.0,
+      "name": "Rufus Fastesson",
+      "rawName": "FASTESSON Rufus"
+    },
+    {
+      "rank": 3,
+      "points": 100.0,
+      "name": "Marcus Broberg",
+      "rawName": "BROBERG Marcus"
+    },
+    {
+      "rank": 5,
+      "points": 88.0,
+      "name": "Tristan Grela",
+      "rawName": "GRELA Tristan"
+    },
+    {
+      "rank": 6,
+      "points": 85.0,
+      "name": "Alvar Ahrling",
+      "rawName": "AHRLING Alvar"
+    },
+    {
+      "rank": 6,
+      "points": 85.0,
+      "name": "Thomas Rienäcker",
+      "rawName": "RIENÄCKER Thomas"
+    },
+    {
+      "rank": 8,
+      "points": 61.0,
+      "name": "Erik Boustedt",
+      "rawName": "BOUSTEDT Erik"
+    },
+    {
+      "rank": 9,
+      "points": 55.0,
+      "name": "Alexander Schreiber",
+      "rawName": "SCHREIBER Alexander"
+    },
+    {
+      "rank": 9,
+      "points": 55.0,
+      "name": "Jonathan Lingjue Kong",
+      "rawName": "KONG Jonathan Lingjue"
+    },
+    {
+      "rank": 9,
+      "points": 55.0,
+      "name": "Elvis Moholi",
+      "rawName": "MOHOLI Elvis"
+    },
+    {
+      "rank": 9,
+      "points": 55.0,
+      "name": "Jordanis Papadopoulos",
+      "rawName": "PAPADOPOULOS Jordanis"
+    },
+    {
+      "rank": 13,
+      "points": 40.0,
+      "name": "Erik Enström",
+      "rawName": "ENSTRÖM Erik"
+    },
+    {
+      "rank": 13,
+      "points": 40.0,
+      "name": "TIM Ludvig Sandström",
+      "rawName": "SANDSTRÖM TIM Ludvig"
+    },
+    {
+      "rank": 13,
+      "points": 40.0,
+      "name": "Anton Abrahamsson",
+      "rawName": "ABRAHAMSSON Anton"
+    },
+    {
+      "rank": 13,
+      "points": 40.0,
+      "name": "WREIBO Elliot Andersson",
+      "rawName": "ANDERSSON WREIBO Elliot"
+    },
+    {
+      "rank": 13,
+      "points": 40.0,
+      "name": "Alvin Vilhelmsson",
+      "rawName": "VILHELMSSON Alvin"
+    },
+    {
+      "rank": 13,
+      "points": 40.0,
+      "name": "Isak Holmdahl",
+      "rawName": "HOLMDAHL Isak"
+    },
+    {
+      "rank": 13,
+      "points": 40.0,
+      "name": "Mose Bengtsson",
+      "rawName": "BENGTSSON Mose"
+    },
+    {
+      "rank": 13,
+      "points": 40.0,
+      "name": "Petter Kajbjer",
+      "rawName": "KAJBJER Petter"
+    },
+    {
+      "rank": 21,
+      "points": 30.0,
+      "name": "Noel Lindkvist",
+      "rawName": "LINDKVIST Noel"
+    },
+    {
+      "rank": 21,
+      "points": 30.0,
+      "name": "Martin Johansson",
+      "rawName": "JOHANSSON Martin"
+    },
+    {
+      "rank": 21,
+      "points": 30.0,
+      "name": "Frank Voltaire",
+      "rawName": "VOLTAIRE Frank"
+    }
+  ]
+}

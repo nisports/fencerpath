@@ -1,0 +1,204 @@
+{
+  "scrapedAt": "2026-05-24T22:10:10Z",
+  "filters": {
+    "weapon": "foil",
+    "age": "u23",
+    "gender": "M",
+    "nation": "SWE",
+    "type": "vmem"
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "points": 274.0,
+      "name": "Henri Ask",
+      "rawName": "ASK Henri"
+    },
+    {
+      "rank": 2,
+      "points": 240.0,
+      "name": "Isak Kvernes",
+      "rawName": "KVERNES Isak"
+    },
+    {
+      "rank": 3,
+      "points": 195.0,
+      "name": "Erik Boustedt",
+      "rawName": "BOUSTEDT Erik"
+    },
+    {
+      "rank": 4,
+      "points": 194.0,
+      "name": "Tristan Grela",
+      "rawName": "GRELA Tristan"
+    },
+    {
+      "rank": 5,
+      "points": 155.0,
+      "name": "Thomas Rienäcker",
+      "rawName": "RIENÄCKER Thomas"
+    },
+    {
+      "rank": 6,
+      "points": 142.0,
+      "name": "Marcus Broberg",
+      "rawName": "BROBERG Marcus"
+    },
+    {
+      "rank": 7,
+      "points": 127.0,
+      "name": "Rufus Fastesson",
+      "rawName": "FASTESSON Rufus"
+    },
+    {
+      "rank": 8,
+      "points": 105.0,
+      "name": "Alvar Ahrling",
+      "rawName": "AHRLING Alvar"
+    },
+    {
+      "rank": 9,
+      "points": 95.0,
+      "name": "Elvis Moholi",
+      "rawName": "MOHOLI Elvis"
+    },
+    {
+      "rank": 10,
+      "points": 82.0,
+      "name": "Jonathan Lingjue Kong",
+      "rawName": "KONG Jonathan Lingjue"
+    },
+    {
+      "rank": 11,
+      "points": 75.0,
+      "name": "Alexander Schreiber",
+      "rawName": "SCHREIBER Alexander"
+    },
+    {
+      "rank": 12,
+      "points": 74.0,
+      "name": "Erik Enström",
+      "rawName": "ENSTRÖM Erik"
+    },
+    {
+      "rank": 13,
+      "points": 70.0,
+      "name": "TIM Ludvig Sandström",
+      "rawName": "SANDSTRÖM TIM Ludvig"
+    },
+    {
+      "rank": 13,
+      "points": 70.0,
+      "name": "WREIBO Elliot Andersson",
+      "rawName": "ANDERSSON WREIBO Elliot"
+    },
+    {
+      "rank": 15,
+      "points": 60.0,
+      "name": "Alvin Vilhelmsson",
+      "rawName": "VILHELMSSON Alvin"
+    },
+    {
+      "rank": 15,
+      "points": 60.0,
+      "name": "Anton Abrahamsson",
+      "rawName": "ABRAHAMSSON Anton"
+    },
+    {
+      "rank": 17,
+      "points": 50.0,
+      "name": "RID Emil Nordman",
+      "rawName": "NORDMAN RID Emil"
+    },
+    {
+      "rank": 18,
+      "points": 45.0,
+      "name": "Noel Lindkvist",
+      "rawName": "LINDKVIST Noel"
+    },
+    {
+      "rank": 18,
+      "points": 45.0,
+      "name": "Frank Voltaire",
+      "rawName": "VOLTAIRE Frank"
+    },
+    {
+      "rank": 20,
+      "points": 40.0,
+      "name": "Mose Bengtsson",
+      "rawName": "BENGTSSON Mose"
+    },
+    {
+      "rank": 21,
+      "points": 20.0,
+      "name": "Bruno Balogh",
+      "rawName": "BALOGH Bruno"
+    },
+    {
+      "rank": 21,
+      "points": 20.0,
+      "name": "Erik Lindh",
+      "rawName": "LINDH Erik"
+    },
+    {
+      "rank": 21,
+      "points": 20.0,
+      "name": "Fredrik Westerberg",
+      "rawName": "WESTERBERG Fredrik"
+    },
+    {
+      "rank": 24,
+      "points": 15.0,
+      "name": "Axel Elmfeldt",
+      "rawName": "ELMFELDT Axel"
+    },
+    {
+      "rank": 24,
+      "points": 15.0,
+      "name": "HALLONSTEN Axel Lindholm",
+      "rawName": "LINDHOLM HALLONSTEN Axel"
+    },
+    {
+      "rank": 24,
+      "points": 15.0,
+      "name": "Erik Stackegård",
+      "rawName": "STACKEGÅRD Erik"
+    },
+    {
+      "rank": 24,
+      "points": 15.0,
+      "name": "Frank Norén",
+      "rawName": "NORÉN Frank"
+    },
+    {
+      "rank": 24,
+      "points": 15.0,
+      "name": "Anour Rosenlundh",
+      "rawName": "ROSENLUNDH Anour"
+    },
+    {
+      "rank": 24,
+      "points": 15.0,
+      "name": "Jakob Berken",
+      "rawName": "BERKEN Jakob"
+    },
+    {
+      "rank": 24,
+      "points": 15.0,
+      "name": "ANDRÉN Kalle Fiedler",
+      "rawName": "FIEDLER ANDRÉN Kalle"
+    },
+    {
+      "rank": 24,
+      "points": 15.0,
+      "name": "TÖRN Caspian Persson",
+      "rawName": "PERSSON TÖRN Caspian"
+    },
+    {
+      "rank": 32,
+      "points": 0.0,
+      "name": "Markus Kallström",
+      "rawName": "KALLSTRÖM Markus"
+    }
+  ]
+}

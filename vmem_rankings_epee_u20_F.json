@@ -1,0 +1,312 @@
+{
+  "scrapedAt": "2026-05-24T22:10:10Z",
+  "filters": {
+    "weapon": "epee",
+    "age": "u20",
+    "gender": "F",
+    "nation": "SWE",
+    "type": "vmem"
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "points": 473.0,
+      "name": "Liv Olsson",
+      "rawName": "OLSSON Liv"
+    },
+    {
+      "rank": 2,
+      "points": 471.0,
+      "name": "Linnea Eriksson",
+      "rawName": "ERIKSSON Linnea"
+    },
+    {
+      "rank": 3,
+      "points": 462.0,
+      "name": "Louise Ulltjärn",
+      "rawName": "ULLTJÄRN Louise"
+    },
+    {
+      "rank": 4,
+      "points": 407.0,
+      "name": "Mira Hommik",
+      "rawName": "HOMMIK Mira"
+    },
+    {
+      "rank": 5,
+      "points": 314.0,
+      "name": "Sophia Andersson",
+      "rawName": "ANDERSSON Sophia"
+    },
+    {
+      "rank": 6,
+      "points": 278.0,
+      "name": "Sofia Lundberg",
+      "rawName": "LUNDBERG Sofia"
+    },
+    {
+      "rank": 7,
+      "points": 254.0,
+      "name": "Emma Carlsson",
+      "rawName": "CARLSSON Emma"
+    },
+    {
+      "rank": 8,
+      "points": 199.0,
+      "name": "Gréta Fischl",
+      "rawName": "FISCHL Gréta"
+    },
+    {
+      "rank": 9,
+      "points": 198.0,
+      "name": "Neolie Lippert",
+      "rawName": "LIPPERT Neolie"
+    },
+    {
+      "rank": 10,
+      "points": 185.0,
+      "name": "Moa Brolin",
+      "rawName": "BROLIN Moa"
+    },
+    {
+      "rank": 11,
+      "points": 154.0,
+      "name": "Tyra Öfors",
+      "rawName": "ÖFORS Tyra"
+    },
+    {
+      "rank": 12,
+      "points": 140.0,
+      "name": "Alba Fallde",
+      "rawName": "FALLDE Alba"
+    },
+    {
+      "rank": 12,
+      "points": 140.0,
+      "name": "Maria Krzyzanowska",
+      "rawName": "KRZYZANOWSKA Maria"
+    },
+    {
+      "rank": 14,
+      "points": 135.0,
+      "name": "Matilda Vestin",
+      "rawName": "VESTIN Matilda"
+    },
+    {
+      "rank": 15,
+      "points": 130.0,
+      "name": "Theodora Persson",
+      "rawName": "PERSSON Theodora"
+    },
+    {
+      "rank": 16,
+      "points": 120.0,
+      "name": "Viktoria Sandholm",
+      "rawName": "SANDHOLM Viktoria"
+    },
+    {
+      "rank": 17,
+      "points": 115.0,
+      "name": "Hermine Blomqvist",
+      "rawName": "BLOMQVIST Hermine"
+    },
+    {
+      "rank": 18,
+      "points": 107.0,
+      "name": "Lova Vinqvist",
+      "rawName": "VINQVIST Lova"
+    },
+    {
+      "rank": 19,
+      "points": 105.0,
+      "name": "Elsa Rozkova",
+      "rawName": "ROZKOVA Elsa"
+    },
+    {
+      "rank": 20,
+      "points": 100.0,
+      "name": "Estrid Ulltjärn",
+      "rawName": "ULLTJÄRN Estrid"
+    },
+    {
+      "rank": 21,
+      "points": 90.0,
+      "name": "Isabelle Axhed",
+      "rawName": "AXHED Isabelle"
+    },
+    {
+      "rank": 21,
+      "points": 90.0,
+      "name": "Elizabeth Bartanson",
+      "rawName": "BARTANSON Elizabeth"
+    },
+    {
+      "rank": 21,
+      "points": 90.0,
+      "name": "Inez Kjellgren",
+      "rawName": "KJELLGREN Inez"
+    },
+    {
+      "rank": 24,
+      "points": 80.0,
+      "name": "ÖHRSKOG Elsa Elmfeldt",
+      "rawName": "ELMFELDT ÖHRSKOG Elsa"
+    },
+    {
+      "rank": 25,
+      "points": 60.0,
+      "name": "Meja Eklund",
+      "rawName": "EKLUND Meja"
+    },
+    {
+      "rank": 25,
+      "points": 60.0,
+      "name": "Elin Barvestad",
+      "rawName": "BARVESTAD Elin"
+    },
+    {
+      "rank": 25,
+      "points": 60.0,
+      "name": "Signe Bergström",
+      "rawName": "BERGSTRÖM Signe"
+    },
+    {
+      "rank": 28,
+      "points": 55.0,
+      "name": "Isabel Stjernstedt",
+      "rawName": "STJERNSTEDT Isabel"
+    },
+    {
+      "rank": 28,
+      "points": 55.0,
+      "name": "Lovisa Hermansson",
+      "rawName": "HERMANSSON Lovisa"
+    },
+    {
+      "rank": 28,
+      "points": 55.0,
+      "name": "Alma Knutsson",
+      "rawName": "KNUTSSON Alma"
+    },
+    {
+      "rank": 31,
+      "points": 50.0,
+      "name": "Embla Swenning",
+      "rawName": "SWENNING Embla"
+    },
+    {
+      "rank": 32,
+      "points": 45.0,
+      "name": "FRANCISCO Dorotea De",
+      "rawName": "DE FRANCISCO Dorotea"
+    },
+    {
+      "rank": 32,
+      "points": 45.0,
+      "name": "Filipa Ozanova",
+      "rawName": "OZANOVA Filipa"
+    },
+    {
+      "rank": 34,
+      "points": 40.0,
+      "name": "Antonia Olsson",
+      "rawName": "OLSSON Antonia"
+    },
+    {
+      "rank": 34,
+      "points": 40.0,
+      "name": "Liv Ramsberg",
+      "rawName": "RAMSBERG Liv"
+    },
+    {
+      "rank": 36,
+      "points": 30.0,
+      "name": "Poppy Lewén",
+      "rawName": "LEWÉN Poppy"
+    },
+    {
+      "rank": 36,
+      "points": 30.0,
+      "name": "Alma Harding",
+      "rawName": "HARDING Alma"
+    },
+    {
+      "rank": 36,
+      "points": 30.0,
+      "name": "Anastasiia Vdovina",
+      "rawName": "VDOVINA Anastasiia"
+    },
+    {
+      "rank": 36,
+      "points": 30.0,
+      "name": "Alicia Gonzalez",
+      "rawName": "GONZALEZ Alicia"
+    },
+    {
+      "rank": 36,
+      "points": 30.0,
+      "name": "Sara Mikulak",
+      "rawName": "MIKULAK Sara"
+    },
+    {
+      "rank": 41,
+      "points": 25.0,
+      "name": "Emilia Lindmarker",
+      "rawName": "LINDMARKER Emilia"
+    },
+    {
+      "rank": 42,
+      "points": 20.0,
+      "name": "Ingrid Lindholm",
+      "rawName": "LINDHOLM Ingrid"
+    },
+    {
+      "rank": 43,
+      "points": 15.0,
+      "name": "Anna Frodler",
+      "rawName": "FRODLER Anna"
+    },
+    {
+      "rank": 43,
+      "points": 15.0,
+      "name": "Hannah Kozma",
+      "rawName": "KOZMA Hannah"
+    },
+    {
+      "rank": 43,
+      "points": 15.0,
+      "name": "Alice Frih",
+      "rawName": "FRIH Alice"
+    },
+    {
+      "rank": 43,
+      "points": 15.0,
+      "name": "Elda Westman",
+      "rawName": "WESTMAN Elda"
+    },
+    {
+      "rank": 43,
+      "points": 15.0,
+      "name": "Emi Nozoe",
+      "rawName": "NOZOE Emi"
+    },
+    {
+      "rank": 48,
+      "points": 14.0,
+      "name": "Angelina Söderström",
+      "rawName": "SÖDERSTRÖM Angelina"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Ellen Magnusson",
+      "rawName": "MAGNUSSON Ellen"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Elisabeth Gustafsson",
+      "rawName": "GUSTAFSSON Elisabeth"
+    }
+  ]
+}
