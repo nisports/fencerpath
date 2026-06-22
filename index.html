@@ -761,6 +761,59 @@
   .dash-bn-reason span:first-child { flex-shrink: 0; font-weight: 700; color: var(--accent); }
   .dash-bn-actions { display: flex; gap: 6px; }
 
+  /* ── AI Coach modal ─────────────────────────────────────────── */
+  .acm-comp-header { padding: 16px 18px 12px; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, rgba(124,58,237,.06), rgba(168,85,247,.04)); }
+  .acm-comp-name { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; color: var(--text); line-height: 1.3; }
+  .acm-comp-meta { font-size: 11.5px; color: var(--muted); display: flex; gap: 5px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+  .acm-section { padding: 12px 18px; border-bottom: 1px solid var(--border); }
+  .acm-section:last-child { border-bottom: none; }
+  .acm-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 10px; }
+  .acm-dims { display: flex; flex-direction: column; gap: 7px; }
+  .acm-dim { display: grid; grid-template-columns: 110px 1fr 32px; align-items: center; gap: 8px; }
+  .acm-dim-label { font-size: 11.5px; color: var(--text); }
+  .acm-dim-bar-wrap { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .acm-dim-bar { height: 100%; border-radius: 3px; transition: width .4s ease; }
+  .acm-dim-val { font-size: 11px; font-weight: 700; text-align: right; }
+  .acm-reasons { display: flex; flex-direction: column; gap: 6px; }
+  .acm-reason { display: flex; gap: 8px; font-size: 12px; color: var(--text); line-height: 1.45; align-items: flex-start; }
+  .acm-check { color: var(--good); font-weight: 700; flex-shrink: 0; }
+  .acm-warn  { color: var(--warn); font-weight: 700; flex-shrink: 0; }
+  .acm-chat { display: flex; flex-direction: column; gap: 10px; }
+  .acm-q-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .acm-q-btn { background: var(--panel-2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 11.5px; color: var(--text); cursor: pointer; transition: all .15s; }
+  .acm-q-btn:hover { border-color: #a855f7; color: #a855f7; }
+  .acm-q-btn.active { background: rgba(168,85,247,.12); border-color: #a855f7; color: #a855f7; font-weight: 600; }
+  .acm-answer { background: rgba(124,58,237,.07); border-radius: var(--radius); padding: 10px 12px; }
+  .acm-answer-text { font-size: 12.5px; color: var(--text); line-height: 1.55; }
+  .acm-input-row { display: flex; gap: 6px; }
+  .acm-input { flex: 1; background: var(--panel-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 7px 10px; font-size: 12px; color: var(--muted); cursor: not-allowed; }
+  .acm-ask-btn { background: var(--border); border: none; border-radius: var(--radius); padding: 7px 12px; color: var(--muted); cursor: not-allowed; font-size: 13px; }
+
+  /* ── AI Coach card ──────────────────────────────────────────── */
+  .ac-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .ac-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .ac-beta { font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff;
+    padding: 2px 7px; border-radius: 20px; }
+  .ac-label { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+    color: #a855f7; margin-bottom: 5px; }
+  .ac-comp-name { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.3;
+    color: var(--text); margin-bottom: 4px; }
+  .ac-meta { font-size: 11.5px; color: var(--muted); display: flex; gap: 5px;
+    flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+  .ac-why { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px;
+    color: var(--muted); margin-bottom: 6px; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+  .ac-reasons { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .ac-reason { display: flex; align-items: flex-start; gap: 7px; font-size: 12px; line-height: 1.4; color: var(--muted); }
+  .ac-reason .ac-check { color: var(--good); font-weight: 700; flex-shrink: 0; font-size: 11px; margin-top: 1px; }
+  .ac-reason .ac-warn-icon { color: var(--warn); font-weight: 700; flex-shrink: 0; font-size: 11px; margin-top: 1px; }
+  .ac-actions { display: flex; gap: 8px; align-items: center; }
+  .ac-ask-btn { display: flex; align-items: center; gap: 5px; padding: 7px 14px;
+    background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff;
+    border: none; border-radius: var(--radius); font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: opacity .15s; }
+  .ac-ask-btn:hover { opacity: 0.88; }
+
   /* Fencer strip — pill chips with colored avatar */
   /* Fencer strip — card layout */
   .fencer-strip-wrap {
@@ -821,6 +874,10 @@
   .fc-status.urgent { color: var(--bad); }
   .fc-status.warn   { color: var(--warn); }
   .fc-status.ok     { color: var(--good); }
+  /* Ranking trend sparkline */
+  .fc-sparkline { margin-top: 8px; padding-top: 7px; border-top: 1px solid var(--border); }
+  .fc-sparkline svg { display: block; width: 100%; overflow: visible; }
+  .fc-sparkline-label { font-size: 9px; color: var(--muted); margin-bottom: 3px; letter-spacing: 0.3px; text-transform: uppercase; }
   /* keep legacy fencer-pill + fencer-avatar for non-strip uses */
   .fencer-pill {
     display: inline-flex; align-items: center; gap: 10px;
@@ -4195,6 +4252,62 @@ function _renderFencerGoalRows_unused() {
 } // end _renderFencerGoalRows_unused
 
 
+/** Build a small SVG sparkline showing placement trend for the last 6 completed results.
+ *  Returns HTML string, or "" if fewer than 2 data points. */
+function fencerSparkline(f) {
+  const completed = State.registrations
+    .filter(r => r.fencerId === f.id && r.status === "completed" && r.result?.placement)
+    .map(r => {
+      const c = State.competitions.find(x => x.id === r.competitionId);
+      return { date: c ? toDate(c.startDate) : null, placement: parseInt(r.result.placement, 10) };
+    })
+    .filter(x => x.date && !isNaN(x.placement))
+    .sort((a, b) => a.date - b.date);
+
+  const last6 = completed.slice(-6);
+  if (last6.length < 2) return "";
+
+  const W = 130, H = 28;
+  const padL = 20, padR = 20, padT = 5, padB = 5;
+  const placements = last6.map(x => x.placement);
+  const maxP = Math.max(...placements);
+  const minP = Math.min(...placements);
+  const range = maxP === minP ? 1 : maxP - minP;
+  const drawW = W - padL - padR;
+  const drawH = H - padT - padB;
+  const n = last6.length;
+
+  const pts = last6.map((x, i) => {
+    const px = padL + (n === 1 ? drawW / 2 : i * drawW / (n - 1));
+    // Invert: better placement (lower number) = higher on chart
+    const py = padT + ((x.placement - minP) / range) * drawH;
+    return { px, py, placement: x.placement };
+  });
+
+  const polyline = pts.map(p => `${p.px.toFixed(1)},${p.py.toFixed(1)}`).join(" ");
+  const color = f.color || "var(--accent)";
+
+  const dots = pts.map((p, i) => {
+    const isLast = i === pts.length - 1;
+    return `<circle cx="${p.px.toFixed(1)}" cy="${p.py.toFixed(1)}" r="${isLast ? 3 : 2}" fill="${color}" opacity="${isLast ? 1 : 0.5}"/>`;
+  }).join("");
+
+  // Label first and last with placement numbers
+  const first = pts[0], last = pts[pts.length - 1];
+  const lblOffset = (p) => p.py < H / 2 ? 9 : -4;
+  const firstLbl = `<text x="${first.px.toFixed(1)}" y="${(first.py + lblOffset(first)).toFixed(1)}" text-anchor="middle" font-size="8" fill="${color}" opacity="0.65">#${first.placement}</text>`;
+  const lastLbl  = `<text x="${last.px.toFixed(1)}"  y="${(last.py  + lblOffset(last)).toFixed(1)}"  text-anchor="middle" font-size="8" fill="${color}" font-weight="700">#${last.placement}</text>`;
+
+  return `<div class="fc-sparkline">
+    <div class="fc-sparkline-label">Recent placements</div>
+    <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="${polyline}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+      ${dots}
+      ${firstLbl}${lastLbl}
+    </svg>
+  </div>`;
+}
+
 function renderFencerStrip() {
   const strip = document.getElementById("fencer-strip");
   if (!strip) return;
@@ -4301,6 +4414,7 @@ function renderFencerStrip() {
                  : urgency === "warn"   ? "fc-dot-warn" : "fc-dot-ok";
 
     const color = f.color || "#5b7a8c";
+    const sparkHtml = fencerSparkline(f);
     return `<div class="fc-card ${active}" onclick="selectFencer('${f.id}')" style="border-top-color:${color};">
       <div class="fc-card-top">
         <div class="fc-avatar" style="background:${color};">${escape(fencerInitials(f))}</div>
@@ -4312,6 +4426,7 @@ function renderFencerStrip() {
       <div class="fc-meta">${metaLabel}</div>
       ${rankStr ? `<div class="fc-rank">${rankStr}</div>` : ""}
       <div class="fc-status ${urgency}">${statusText}</div>
+      ${sparkHtml}
     </div>`;
   }).join("");
 
@@ -6355,40 +6470,36 @@ function renderStrategicInsights() {
           const rc_s       = rc.scores;
           const rcScCls    = rc_s.score100 >= 80 ? "fg-score-good" : rc_s.score100 >= 50 ? "fg-score-warn" : "fg-score-bad";
           const allReasons = heroReasons(rc_s, rc.ageContext);
+          const acReasons = allReasons.slice(0, 4).map(r =>
+            `<div class="ac-reason">
+              <span class="${r.kind==="good"?"ac-check":"ac-warn-icon"}">${r.kind==="good"?"✓":"⚠"}</span>
+              <span>${escape(r.text)}</span>
+            </div>`).join("");
+          const acDeadline = rc_c.regClose ? (() => {
+            const diff = daysBetween(todayD(), toDate(rc_c.regClose));
+            if (diff >= 0 && diff <= 14) return `<span class="chip" style="background:var(--warn-soft);color:#8a4a00;font-size:10px;">⏰ ${diff===0?"Closes today":diff+"d to register"}</span>`;
+            if (diff < 0) return `<span class="chip" style="background:var(--bad-soft);color:var(--bad);font-size:10px;">⏰ Overdue</span>`;
+            return "";
+          })() : "";
           bnRoot.innerHTML = `
-            <div class="dash-bn-label">✨ ${t("heroLabelFor").replace("{name}", fFirstName)}</div>
-            <div class="dash-bn-wrap">
-              <div class="dash-bn-left">
-                <div class="dash-bn-score-row">
-                  <span class="fg-best-score ${rcScCls}">${rc_s.score100}<span class="out">/100</span></span>
-                  <div class="fg-best-stars">${stars(rc_s.composite)}</div>
-                  ${rc_s.needsQualCheck
-                    ? `<span class="chip" style="background:var(--warn-soft);color:#8a4a00;font-size:10px;">${t("recoQualCheckBadge")}</span>`
-                    : rc_s.qualifiesSelection
-                    ? `<span class="chip" style="background:var(--accent-soft);color:var(--accent);font-size:10px;">${t("recoSelectionBadge")}</span>`
-                    : rc_s.isNatChamp
-                    ? `<span class="chip" style="background:var(--good-soft);color:var(--good);font-size:10px;">${t("recoNatChampBadge")}</span>`
-                    : rc_s.isNordicChamp
-                    ? `<span class="chip" style="background:var(--good-soft);color:var(--good);font-size:10px;">${t("recoNordicChampBadge")}</span>`
-                    : ""}
-                  ${rc_s.isUpwardAge ? `<span class="chip" style="background:var(--panel-3);color:var(--muted);font-size:10px;">${t("recoUpwardAgeBadge")}</span>` : ""}
-                </div>
-                <div class="dash-bn-name">${escape(rc_c.name)}</div>
-                <div class="fg-best-meta">
-                  ${fmtDateRange(rc_c.startDate, rc_c.endDate)}
-                  ${rc_c.city ? "· " + escape(rc_c.city) : ""}
-                  <span class="chip ${rc_c.weapon}" style="font-size:10px;">${t(rc_c.weapon)}</span>
-                  ${(rc_c.genders||["M"]).map(g=>genderChip(g)).join("")}
-                  <span class="chip level" style="font-size:10px;">${levelLabel(rc_c.level)}</span>
-                </div>
-              </div>
-              <div class="dash-bn-right">
-                ${allReasons.length ? `<div class="dash-bn-reasons">${allReasons.slice(0,3).map(r => `<div class="dash-bn-reason"><span>${r.kind==="good"?"✓":"!"}</span><span>${escape(r.text)}</span></div>`).join("")}</div>` : ""}
-                <div class="dash-bn-actions">
-                  <button class="btn primary small" onclick="openRegForm(null,'${rc_c.id}','${f.id}')">+ ${t("heroAddToPlan")}</button>
-                  <button class="btn ghost small" onclick="openCompForm('${rc_c.id}')">${t("heroViewDetails")}</button>
-                </div>
-              </div>
+            <div class="ac-header">
+              <span class="ac-title">✦ AI Coach</span>
+              <span class="ac-beta">BETA</span>
+            </div>
+            <div class="ac-label">✨ Recommended next step</div>
+            <div class="ac-comp-name">${escape(rc_c.name)}</div>
+            <div class="ac-meta">
+              ${fmtDateRange(rc_c.startDate, rc_c.endDate)}
+              ${rc_c.city ? `· ${escape(rc_c.city)}` : ""}
+              <span class="chip ${rc_c.weapon}" style="font-size:10px;">${t(rc_c.weapon)}</span>
+              <span class="chip level" style="font-size:10px;">${levelLabel(rc_c.level)}</span>
+              <span class="fg-best-stars" style="font-size:12px;">${stars(rc_s.composite)}</span>
+              ${acDeadline}
+            </div>
+            ${acReasons.length ? `<div class="ac-why">Why this competition?</div><div class="ac-reasons">${acReasons}</div>` : ""}
+            <div class="ac-actions">
+              <button class="btn ghost small" onclick="openRegForm(null,'${rc_c.id}','${f.id}')">+ Add to Plan</button>
+              <button class="ac-ask-btn" onclick="openAICoachModal('${rc_c.id}','${f.id}')">✦ Ask AI Coach →</button>
             </div>`;
         } else {
           bnRoot.innerHTML = `<div class="dash-bn-label">✨ ${t("heroLabelFor").replace("{name}", fFirstName)}</div><div class="fg-best-empty">${t("heroEmpty")}</div>`;
@@ -9406,6 +9517,121 @@ function openModal(html) {
   document.getElementById("modal-bg").classList.add("show");
 }
 function closeModal() { document.getElementById("modal-bg").classList.remove("show"); }
+
+/* ── AI Coach Modal ──────────────────────────────────────────────────────── */
+function openAICoachModal(compId, fencerId) {
+  const c = State.competitions.find(x => x.id === compId);
+  const f = State.fencers.find(x => x.id === fencerId);
+  if (!c || !f) return;
+
+  const td = todayD();
+  const booked = (State.registrations || [])
+    .filter(r => ['registered','confirmed','completed','submitted_club','pending_federation'].includes(r.status))
+    .map(r => { const cc = State.competitions.find(x => x.id === r.competitionId); return cc ? { r, c: cc, s: toDate(cc.startDate), e: toDate(cc.endDate || cc.startDate) } : null; })
+    .filter(Boolean);
+
+  let scores;
+  try { scores = scoreReco(f, c, { td, booked }); }
+  catch(e) { openModal(`<div class="modal-head"><h3>AI Coach</h3><button class="btn ghost small" onclick="closeModal()">×</button></div><div class="modal-body"><p style="color:var(--warn)">⚠ ${e.message}</p></div>`); return; }
+
+  const reasons = heroReasons(scores, null);
+  const fname = f.name.split(" ")[0];
+
+  // Dimension bars
+  const dims = [
+    { label: "Strategic Fit",    val: scores.strategic  },
+    { label: "Points Value",     val: scores.pointsOpp  },
+    { label: "Challenge Level",  val: scores.challenge  },
+    { label: "Logistics",        val: scores.logistics  },
+    { label: "Calendar Fit",     val: scores.calendar   },
+  ];
+  const dimBars = dims.map(d => {
+    const pct = Math.round((d.val / 5) * 100);
+    const col = d.val >= 4 ? "var(--good)" : d.val >= 3 ? "var(--accent)" : d.val >= 2 ? "var(--warn)" : "var(--bad)";
+    return `<div class="acm-dim">
+      <div class="acm-dim-label">${d.label}</div>
+      <div class="acm-dim-bar-wrap">
+        <div class="acm-dim-bar" style="width:${pct}%;background:${col}"></div>
+      </div>
+      <div class="acm-dim-val" style="color:${col}">${d.val.toFixed(1)}</div>
+    </div>`;
+  }).join("");
+
+  const reasonsHtml = reasons.map(r =>
+    `<div class="acm-reason">
+      <span class="${r.kind==="good"?"acm-check":"acm-warn"}">${r.kind==="good"?"✓":"⚠"}</span>
+      <span>${escape(r.text)}</span>
+    </div>`).join("");
+
+  // Predefined Q&A
+  const predefined = [
+    { q: "Should I go?",         a: scores.composite >= 4 ? `Yes — this is a high-value event for ${fname}. The composite score is ${scores.score100}/100.` : scores.composite >= 3 ? `Worth considering for ${fname} — score ${scores.score100}/100. Check the concerns below.` : `Lower priority for ${fname} right now (${scores.score100}/100). Other events may offer better value.` },
+    { q: "How many points?",     a: (() => { const lines = planMissionImpact(scores, f, c); const pts = lines.find(l => l.includes("pts")); return pts ? pts : "Points estimate depends on final placement — see ranking system for exact values."; })() },
+    { q: "What's the risk?",     a: scores.logistics <= 2 ? `Main risk is logistics — ${scores.travelZone === "intercontinental" ? "intercontinental travel is demanding" : "travel burden may affect performance"}.` : scores.calendar <= 2 ? `Timing is tight — registration deadline or schedule conflict is the main concern.` : `Risk is manageable. Main consideration: ${reasons.find(r=>r.kind==="warn")?.text || "none identified"}.` },
+    { q: "Skip consequence?",    a: scores.composite >= 4 ? (scores.qualifiesSelection ? `Skipping means missing a selection event — this directly impacts ${fname}'s EM/VM qualification chances.` : scores.isNatChamp ? `Skipping the Swedish Championships means no national ranking points this season.` : `This is a high-value event — skipping creates a gap in ${fname}'s season plan.`) : `Skipping is an option — there may be better-timed alternatives.` },
+  ];
+
+  const qaHtml = predefined.map(item =>
+    `<button class="acm-q-btn" onclick="acmAnswer(this,'${escape(item.a)}')">${item.q}</button>`
+  ).join("");
+
+  openModal(`
+    <div class="modal-head">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <h3 style="margin:0;">✦ AI Coach</h3>
+        <span class="ac-beta">BETA</span>
+      </div>
+      <button class="btn ghost small" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" style="padding:0;">
+      <div class="acm-comp-header">
+        <div class="acm-comp-name">${escape(c.name)}</div>
+        <div class="acm-comp-meta">
+          ${fmtDateRange(c.startDate, c.endDate)}
+          ${c.city ? `· ${escape(c.city)}` : ""}
+          <span class="chip ${c.weapon}" style="font-size:10px;">${t(c.weapon)}</span>
+          <span class="chip level" style="font-size:10px;">${levelLabel(c.level)}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+          <span style="font-size:22px;font-weight:800;color:${scores.score100>=80?"var(--good)":scores.score100>=50?"var(--accent)":"var(--warn)"};">${scores.score100}<span style="font-size:13px;font-weight:400;color:var(--muted);">/100</span></span>
+          <span style="font-size:15px;color:var(--warn);">${stars(scores.composite)}</span>
+          <span style="font-size:11px;color:var(--muted);">for ${escape(fname)}</span>
+        </div>
+      </div>
+
+      <div class="acm-section">
+        <div class="acm-section-title">Analysis</div>
+        <div class="acm-dims">${dimBars}</div>
+      </div>
+
+      <div class="acm-section">
+        <div class="acm-section-title">Why this competition?</div>
+        <div class="acm-reasons">${reasonsHtml}</div>
+      </div>
+
+      <div class="acm-section acm-chat">
+        <div class="acm-section-title">Quick questions</div>
+        <div class="acm-q-chips">${qaHtml}</div>
+        <div class="acm-answer" id="acm-answer-box" style="display:none;"></div>
+        <div class="acm-input-row">
+          <input class="acm-input" placeholder="Ask anything… (AI responses coming soon)" disabled>
+          <button class="acm-ask-btn" disabled>→</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost small" onclick="closeModal()">Close</button>
+      <button class="btn primary small" onclick="closeModal();openRegForm(null,'${compId}','${fencerId}')">+ Add to Plan</button>
+    </div>`);
+}
+
+function acmAnswer(btn, answer) {
+  document.querySelectorAll(".acm-q-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  const box = document.getElementById("acm-answer-box");
+  box.style.display = "";
+  box.innerHTML = `<div class="acm-answer-text">✦ ${answer}</div>`;
+}
 
 /* Competition form */
 function openCompForm(id) {
