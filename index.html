@@ -3460,6 +3460,13 @@ const I18N = {
     bioPick: "Pick bio.json…",
     bioImported: "Biographies imported",
     ophardtSlug: "Ophardt slug",
+    ophardtSlugHelp: "Find this in your Ophardt biography page URL, right after \"/athlete/\" — e.g. fencing.ophardt.online/en/biography/athlete/kong-kenneth → slug is kong-kenneth.",
+    ophardtFetchBtn: "Fetch from Ophardt",
+    ophardtBioFetching: "Fetching from Ophardt…",
+    ophardtFetchSuccess: "Fetched",
+    ophardtFetchFailed: "Fetch failed",
+    ophardtSlugRequired: "Enter your Ophardt slug first",
+    ophardtSlugInvalid: "Slug should look like lastname-firstname",
     ophardtLastSync: "Last Ophardt sync",
     // misc
     addPastResult: "Add past result",
@@ -3776,6 +3783,13 @@ const I18N = {
     bioPick: "Välj bio.json…",
     bioImported: "Biografier importerade",
     ophardtSlug: "Ophardt-slug",
+    ophardtSlugHelp: "Hittas i webbadressen till din Ophardt-biografisida, direkt efter \"/athlete/\" — t.ex. fencing.ophardt.online/en/biography/athlete/kong-kenneth → slug är kong-kenneth.",
+    ophardtFetchBtn: "Hämta från Ophardt",
+    ophardtBioFetching: "Hämtar från Ophardt…",
+    ophardtFetchSuccess: "Hämtat",
+    ophardtFetchFailed: "Hämtning misslyckades",
+    ophardtSlugRequired: "Ange din Ophardt-slug först",
+    ophardtSlugInvalid: "Slug ska se ut som efternamn-förnamn",
     ophardtLastSync: "Senaste Ophardt-synk",
     addPastResult: "Lägg till tidigare resultat",
     logResult: "Logga resultat",
@@ -13384,11 +13398,11 @@ function saveCompForm(id, isEdit) {
 }
 
 /* Fencer form */
-function openFencerForm(id) {
-  const f = id ? State.fencers.find(x => x.id === id) : {
+function openFencerForm(id, draft) {
+  const f = draft || (id ? State.fencers.find(x => x.id === id) : {
     id: uid(), weapons: ["epee"], ageCategory: "u17",
     color: pickColor(), nationalRank: {}, fieRank: {}, pointsToDefend: {}
-  };
+  });
   openModal(`
     <div class="modal-head"><h3>${id ? t("editFencerTitle") : t("addFencerTitle")}</h3><button class="btn ghost small" onclick="closeModal()">×</button></div>
     <div class="modal-body">
@@ -13410,7 +13424,14 @@ function openFencerForm(id) {
         <label><span>${t("ageCategoryPrimary")}</span><select id="f-fage" onchange="refreshFencerGoalsGrid(); refreshAlsoCompetesInStaleFlags();">
           ${["u11","u13","u15","u17","u20","u23","senior","veteran"].map(a => `<option value="${a}"${f.ageCategory===a?" selected":""}>${t(a)}</option>`).join("")}
         </select></label>
-        <label><span>${t("ophardtSlug")} <a href="https://fencing.ophardt.online/en/search/biographies" target="_blank" style="font-size:11px;">↗</a></span><input id="f-slug" value="${escape(f.ophardtSlug||"")}" placeholder="lastname-firstname"/></label>
+        <label class="full"><span>${t("ophardtSlug")} <a href="https://fencing.ophardt.online/en/search/biographies" target="_blank" style="font-size:11px;">↗</a></span>
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+            <input id="f-slug" value="${escape(f.ophardtSlug||"")}" placeholder="lastname-firstname" style="flex:1;min-width:160px;"/>
+            <button type="button" class="btn ghost small" onclick="fetchOphardtBioForForm('${f.id}')" style="font-size:11px;padding:4px 10px;white-space:nowrap;">📥 ${t("ophardtFetchBtn")}</button>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px;">${t("ophardtSlugHelp")}</div>
+          <div id="f-ophardt-fetch-status" style="font-size:11px;min-height:14px;margin-top:3px;"></div>
+        </label>
         <label><span>Birth Year</span><input id="f-birthyear" type="number" min="1980" max="2020" placeholder="e.g. 2008" value="${f.birthYear||""}" onchange="refreshFencerGoalsGrid()"/></label>
         <label><span>🛂 Passport expiry</span><input id="f-passport-expiry" type="date" value="${escape(f.passportExpiry||"")}"/></label>
         <label><span>Passport nationality</span><input id="f-passport-nat" placeholder="e.g. CHN, SWE, USA" value="${escape(f.passportNationality||"")}" style="text-transform:uppercase;" maxlength="3"/></label>
@@ -13569,6 +13590,61 @@ function openFencerForm(id) {
     }, 50);
   }
 }
+/** Live single-fencer Ophardt lookup, triggered by the "Fetch from Ophardt" button
+ *  in openFencerForm(). Calls the /api/ophardt-bio serverless function (server-side
+ *  fetch avoids browser CORS), then re-renders the whole modal with a merged draft
+ *  so the rankings grid (which is built per-age-category at render time) and the
+ *  existing getRankFromBio() prefill logic both pick up the fresh data automatically
+ *  — no separate DOM-patching logic needed for the dynamic per-category inputs. */
+async function fetchOphardtBioForForm(id) {
+  const statusEl = document.getElementById("f-ophardt-fetch-status");
+  const setStatus = (msg, cls) => {
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.style.color = cls === "bad" ? "var(--bad)" : cls === "good" ? "var(--good)" : "var(--muted)";
+  };
+  const slug = (document.getElementById("f-slug")?.value || "").trim().toLowerCase();
+  if (!slug) { setStatus("⚠ " + t("ophardtSlugRequired"), "bad"); return; }
+  if (!/^[a-z0-9]+(-[a-z0-9]+)+$/.test(slug)) { setStatus("⚠ " + t("ophardtSlugInvalid"), "bad"); return; }
+
+  setStatus("⏳ " + t("ophardtBioFetching"));
+  try {
+    const r = await fetch(`/api/ophardt-bio?slug=${encodeURIComponent(slug)}`);
+    const bio = await r.json();
+    if (!r.ok || bio.error) throw new Error(bio.error || `HTTP ${r.status}`);
+
+    const isNewFencer = !State.fencers.find(x => x.id === id);
+    const draft = readFencerDraftFromForm(id);
+    if (bio.name)  draft.name  = bio.name;
+    if (bio.club)  draft.club  = bio.club;
+    if (bio.gender) draft.gender = bio.gender;
+    if (bio.weapons && bio.weapons.length) draft.weapons = bio.weapons;
+    // Only auto-set the primary age category for a brand-new fencer — the default
+    // skeleton value ("u17") carries no real signal yet. For an existing fencer being
+    // re-synced, leave their already-chosen category alone (same "don't silently
+    // override a real choice" rule used by syncAgeCategoriesFromBirthYear()).
+    if (isNewFencer && bio.age != null) {
+      const bucket = ageBucketFromYears(bio.age);
+      if (bucket) draft.ageCategory = bucket;
+    }
+    draft.ophardtSlug = slug;
+    draft.ophardtRankings = bio.rankings || draft.ophardtRankings;
+    draft.ophardtLastSync = (bio.scrapedAt || new Date().toISOString()).slice(0, 10);
+
+    openFencerForm(id, draft);
+    // openFencerForm() re-renders the whole modal (innerHTML swap), so the original
+    // statusEl node is now detached — grab a fresh reference before updating it.
+    setTimeout(() => {
+      const freshStatusEl = document.getElementById("f-ophardt-fetch-status");
+      if (freshStatusEl) {
+        freshStatusEl.textContent = `✓ ${t("ophardtFetchSuccess")}: ${bio.name}`;
+        freshStatusEl.style.color = "var(--good)";
+      }
+    }, 30);
+  } catch (e) {
+    setStatus(`✗ ${t("ophardtFetchFailed")}: ${e.message}`, "bad");
+  }
+}
 /** Rebuild the goals grid whenever primary category or extra categories change. */
 function refreshFencerGoalsGrid() {
   const grid = document.getElementById("f-goals-grid");
@@ -13612,7 +13688,10 @@ function refreshFencerGoalsGrid() {
   }).join("");
 }
 
-function saveFencerForm(id, isEdit) {
+/** Read the current fencer-form DOM into a fencer-shaped object.
+ *  Shared by saveFencerForm() and the Ophardt live-fetch re-render flow, so
+ *  both always build the exact same object shape from the exact same fields. */
+function readFencerDraftFromForm(id) {
   const weapons = ["foil","epee","sabre"].filter(w => document.getElementById("f-w-"+w).checked);
   const nationalRank = {}, efcRank = {}, fieRank = {}, vmEmRank = {}, vmEmPoints = {};
   const ALL_CATS = ["u11","u13","u15","u17","u20","u23","senior","veteran"];
@@ -13630,14 +13709,12 @@ function saveFencerForm(id, isEdit) {
   const existing = State.fencers.find(x => x.id === id) || {};
   const ageCategories = ["u11","u13","u15","u17","u20","u23","senior","veteran"]
     .filter(a => document.getElementById("f-aa-"+a)?.checked);
-  const obj = {
+  return {
     id, name: val("f-fname"), club: val("f-club"), color: val("f-color"),
     weapons, ageCategory: val("f-fage"), ageCategories,
     seasonGoals: (()=>{
-      const existing = State.fencers.find(x => x.id === id);
       const primary  = val("f-fage");
-      const extras   = ["u11","u13","u15","u17","u20","u23","senior","veteran"]
-        .filter(a => document.getElementById("f-aa-"+a)?.checked);
+      const extras   = ageCategories;
       const cats = [...new Set([primary, ...extras].filter(Boolean))];
       const goals = {};
       cats.forEach(cat => {
@@ -13662,6 +13739,9 @@ function saveFencerForm(id, isEdit) {
       fie:  { status: val("f-lic-fie")  || "unknown", ...(val("f-licexp-fie")  ? { validUntil: val("f-licexp-fie")  } : {}) },
     },
   };
+}
+function saveFencerForm(id, isEdit) {
+  const obj = readFencerDraftFromForm(id);
   if (!obj.name) { alert("Name required"); return; }
   if (isEdit === true || isEdit === "true") {
     const i = State.fencers.findIndex(x => x.id === id);
