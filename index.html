@@ -3188,6 +3188,7 @@ const I18N = {
     allFencers: "All fencers",
     fencersTitle: "Fencers",
     addFencer: "Add fencer",
+    dashEmptyAddFencer: "Add your first fencer to get started.",
     travelTitle: "Competition Plans", tripList: "All missions",
     recommendationsTitle: "Smart recommendations",
     recoIntro: "For each fencer, we score upcoming competitions on age/weapon match, ranking-improvement potential, recent form, travel burden, and family/logistics conflicts.",
@@ -3515,6 +3516,7 @@ const I18N = {
     allFencers: "Alla fäktare",
     fencersTitle: "Fäktare",
     addFencer: "Lägg till fäktare",
+    dashEmptyAddFencer: "Lägg till din första fäktare för att komma igång.",
     travelTitle: "Tävlingsplaner", tripList: "Alla uppdrag",
     recommendationsTitle: "Smarta rekommendationer",
     recoIntro: "För varje fäktare poängsätter vi kommande tävlingar baserat på ålder/vapen, rankningspotential, senaste form, resbörda och familjekonflikter.",
@@ -6076,7 +6078,13 @@ function renderWhatNeedsAttention() {
     ? State.fencers.filter(f => f.id === uiSelectedFencer)
     : State.fencers;
 
-  if (State.fencers.length === 0) { root.innerHTML = `<div class="wna-empty" style="grid-column:1/-1;">Add fencers to get started.</div>`; return; }
+  if (State.fencers.length === 0) {
+    root.innerHTML = `<div class="wna-empty" style="grid-column:1/-1; display:flex; flex-direction:column; align-items:center; gap:12px; padding:24px 0;">
+      <div>${t("dashEmptyAddFencer")}</div>
+      <button class="btn" onclick="setTab('fencers'); openFencerForm();">+ ${t("addFencer")}</button>
+    </div>`;
+    return;
+  }
 
   // ── Card 1: ACTION REQUIRED — most urgent item ─────────────────────
   let card1 = "";
