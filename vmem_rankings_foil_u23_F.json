@@ -1,0 +1,126 @@
+{
+  "scrapedAt": "2026-05-24T22:10:10Z",
+  "filters": {
+    "weapon": "foil",
+    "age": "u23",
+    "gender": "F",
+    "nation": "SWE",
+    "type": "vmem"
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "points": 142.0,
+      "name": "Helen Su",
+      "rawName": "SU Helen"
+    },
+    {
+      "rank": 2,
+      "points": 110.0,
+      "name": "Maria Jechil",
+      "rawName": "JECHIL Maria"
+    },
+    {
+      "rank": 3,
+      "points": 104.0,
+      "name": "Mathilda Andersson",
+      "rawName": "ANDERSSON Mathilda"
+    },
+    {
+      "rank": 4,
+      "points": 87.0,
+      "name": "Henrietta Westin",
+      "rawName": "WESTIN Henrietta"
+    },
+    {
+      "rank": 5,
+      "points": 82.0,
+      "name": "Kinzi Wall",
+      "rawName": "WALL Kinzi"
+    },
+    {
+      "rank": 5,
+      "points": 82.0,
+      "name": "Amy Mccoy",
+      "rawName": "MCCOY Amy"
+    },
+    {
+      "rank": 7,
+      "points": 75.0,
+      "name": "Elsa Blomgren",
+      "rawName": "BLOMGREN Elsa"
+    },
+    {
+      "rank": 8,
+      "points": 55.0,
+      "name": "Siri Eklöf",
+      "rawName": "EKLÖF Siri"
+    },
+    {
+      "rank": 8,
+      "points": 55.0,
+      "name": "Cleo Fox",
+      "rawName": "FOX Cleo"
+    },
+    {
+      "rank": 10,
+      "points": 50.0,
+      "name": "Sara Mikulak",
+      "rawName": "MIKULAK Sara"
+    },
+    {
+      "rank": 11,
+      "points": 34.0,
+      "name": "Linnea Svensson",
+      "rawName": "SVENSSON Linnea"
+    },
+    {
+      "rank": 12,
+      "points": 20.0,
+      "name": "Jenny Sjölin",
+      "rawName": "SJÖLIN Jenny"
+    },
+    {
+      "rank": 12,
+      "points": 20.0,
+      "name": "ERIKSSON Nova Sundberg",
+      "rawName": "SUNDBERG ERIKSSON Nova"
+    },
+    {
+      "rank": 12,
+      "points": 20.0,
+      "name": "Vera Li Sjöblom",
+      "rawName": "SJÖBLOM Vera Li"
+    },
+    {
+      "rank": 12,
+      "points": 20.0,
+      "name": "VIBERG Wilma Silfvander",
+      "rawName": "SILFVANDER VIBERG Wilma"
+    },
+    {
+      "rank": 12,
+      "points": 20.0,
+      "name": "Carolina Barker",
+      "rawName": "BARKER Carolina"
+    },
+    {
+      "rank": 12,
+      "points": 20.0,
+      "name": "Linda Murad",
+      "rawName": "MURAD Linda"
+    },
+    {
+      "rank": 12,
+      "points": 20.0,
+      "name": "GÖRMAN Emelie Rosenlind",
+      "rawName": "ROSENLIND GÖRMAN Emelie"
+    },
+    {
+      "rank": 19,
+      "points": 15.0,
+      "name": "Emeli Örström",
+      "rawName": "ÖRSTRÖM Emeli"
+    }
+  ]
+}

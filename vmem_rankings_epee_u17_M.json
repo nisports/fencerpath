@@ -1,0 +1,408 @@
+{
+  "scrapedAt": "2026-05-24T22:10:10Z",
+  "filters": {
+    "weapon": "epee",
+    "age": "u17",
+    "gender": "M",
+    "nation": "SWE",
+    "type": "vmem"
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "points": 441.0,
+      "name": "Egon Koij",
+      "rawName": "KOIJ Egon"
+    },
+    {
+      "rank": 2,
+      "points": 357.0,
+      "name": "Simon Fischl",
+      "rawName": "FISCHL Simon"
+    },
+    {
+      "rank": 3,
+      "points": 296.0,
+      "name": "WALLÉN Wilhelm Hellner",
+      "rawName": "HELLNER WALLÉN Wilhelm"
+    },
+    {
+      "rank": 4,
+      "points": 214.0,
+      "name": "Emil Jacobsson",
+      "rawName": "JACOBSSON Emil"
+    },
+    {
+      "rank": 5,
+      "points": 212.0,
+      "name": "Vladimir Chkhikvadze",
+      "rawName": "CHKHIKVADZE Vladimir"
+    },
+    {
+      "rank": 6,
+      "points": 201.0,
+      "name": "GROOTE Casper De",
+      "rawName": "DE GROOTE Casper"
+    },
+    {
+      "rank": 7,
+      "points": 175.0,
+      "name": "Emil Sandström",
+      "rawName": "SANDSTRÖM Emil"
+    },
+    {
+      "rank": 8,
+      "points": 158.0,
+      "name": "STEINBRECHER Wilhelm Bengtsson",
+      "rawName": "BENGTSSON STEINBRECHER Wilhelm"
+    },
+    {
+      "rank": 9,
+      "points": 151.0,
+      "name": "Oscar Cronstedt",
+      "rawName": "CRONSTEDT Oscar"
+    },
+    {
+      "rank": 10,
+      "points": 143.0,
+      "name": "Oscar Hamp",
+      "rawName": "HAMP Oscar"
+    },
+    {
+      "rank": 11,
+      "points": 137.0,
+      "name": "LINDER Henry Lindbäck",
+      "rawName": "LINDBÄCK LINDER Henry"
+    },
+    {
+      "rank": 12,
+      "points": 128.0,
+      "name": "Anton Elmqvist",
+      "rawName": "ELMQVIST Anton"
+    },
+    {
+      "rank": 13,
+      "points": 102.0,
+      "name": "Malte Sandgren",
+      "rawName": "SANDGREN Malte"
+    },
+    {
+      "rank": 14,
+      "points": 97.0,
+      "name": "William Dettner",
+      "rawName": "DETTNER William"
+    },
+    {
+      "rank": 15,
+      "points": 89.0,
+      "name": "Charlie Ploom",
+      "rawName": "PLOOM Charlie"
+    },
+    {
+      "rank": 16,
+      "points": 86.0,
+      "name": "Charles Åström",
+      "rawName": "ÅSTRÖM Charles"
+    },
+    {
+      "rank": 17,
+      "points": 83.0,
+      "name": "Milton Le",
+      "rawName": "LE Milton"
+    },
+    {
+      "rank": 18,
+      "points": 80.0,
+      "name": "Didrik Byfors",
+      "rawName": "BYFORS Didrik"
+    },
+    {
+      "rank": 19,
+      "points": 74.0,
+      "name": "Axel Palme",
+      "rawName": "PALME Axel"
+    },
+    {
+      "rank": 20,
+      "points": 65.0,
+      "name": "Benjamin Holmgren",
+      "rawName": "HOLMGREN Benjamin"
+    },
+    {
+      "rank": 21,
+      "points": 63.0,
+      "name": "Alfred Magnusson",
+      "rawName": "MAGNUSSON Alfred"
+    },
+    {
+      "rank": 22,
+      "points": 60.0,
+      "name": "ZANDER Gabriel Soussi",
+      "rawName": "SOUSSI ZANDER Gabriel"
+    },
+    {
+      "rank": 23,
+      "points": 56.0,
+      "name": "GILLJAM Dante Mravljov",
+      "rawName": "MRAVLJOV GILLJAM Dante"
+    },
+    {
+      "rank": 24,
+      "points": 51.0,
+      "name": "Adrian Holmgren",
+      "rawName": "HOLMGREN Adrian"
+    },
+    {
+      "rank": 25,
+      "points": 47.0,
+      "name": "Philip Edholm",
+      "rawName": "EDHOLM Philip"
+    },
+    {
+      "rank": 26,
+      "points": 46.0,
+      "name": "Vidar Nilsson",
+      "rawName": "NILSSON Vidar"
+    },
+    {
+      "rank": 27,
+      "points": 45.0,
+      "name": "FRIED Simon Klusell",
+      "rawName": "KLUSELL FRIED Simon"
+    },
+    {
+      "rank": 28,
+      "points": 40.0,
+      "name": "Joel Bergerson",
+      "rawName": "BERGERSON Joel"
+    },
+    {
+      "rank": 28,
+      "points": 40.0,
+      "name": "Noah Malmhult",
+      "rawName": "MALMHULT Noah"
+    },
+    {
+      "rank": 30,
+      "points": 36.0,
+      "name": "Leonel Gidlund",
+      "rawName": "GIDLUND Leonel"
+    },
+    {
+      "rank": 30,
+      "points": 36.0,
+      "name": "Mykhailo Bondarenko",
+      "rawName": "BONDARENKO Mykhailo"
+    },
+    {
+      "rank": 32,
+      "points": 35.0,
+      "name": "KAFFKE Alfred Söderfeldt",
+      "rawName": "SÖDERFELDT KAFFKE Alfred"
+    },
+    {
+      "rank": 33,
+      "points": 30.0,
+      "name": "Abbe Thoresson",
+      "rawName": "THORESSON Abbe"
+    },
+    {
+      "rank": 33,
+      "points": 30.0,
+      "name": "KAFFKE Ingmar Söderfeldt",
+      "rawName": "SÖDERFELDT KAFFKE Ingmar"
+    },
+    {
+      "rank": 33,
+      "points": 30.0,
+      "name": "Elias Näreskog",
+      "rawName": "NÄRESKOG Elias"
+    },
+    {
+      "rank": 36,
+      "points": 20.0,
+      "name": "Nevo Dekel",
+      "rawName": "DEKEL Nevo"
+    },
+    {
+      "rank": 36,
+      "points": 20.0,
+      "name": "Bruno Balogh",
+      "rawName": "BALOGH Bruno"
+    },
+    {
+      "rank": 36,
+      "points": 20.0,
+      "name": "Alfred Zhao",
+      "rawName": "ZHAO Alfred"
+    },
+    {
+      "rank": 36,
+      "points": 20.0,
+      "name": "Mirai Kvevlander",
+      "rawName": "KVEVLANDER Mirai"
+    },
+    {
+      "rank": 40,
+      "points": 16.0,
+      "name": "Knut Bengnér",
+      "rawName": "BENGNÉR Knut"
+    },
+    {
+      "rank": 40,
+      "points": 16.0,
+      "name": "Allan Karlsson",
+      "rawName": "KARLSSON Allan"
+    },
+    {
+      "rank": 40,
+      "points": 16.0,
+      "name": "Dylan Zhao",
+      "rawName": "ZHAO Dylan"
+    },
+    {
+      "rank": 40,
+      "points": 16.0,
+      "name": "Matteo Jarl",
+      "rawName": "JARL Matteo"
+    },
+    {
+      "rank": 40,
+      "points": 16.0,
+      "name": "Michael Mikulas",
+      "rawName": "MIKULAS Michael"
+    },
+    {
+      "rank": 45,
+      "points": 15.0,
+      "name": "August Adamsson",
+      "rawName": "ADAMSSON August"
+    },
+    {
+      "rank": 45,
+      "points": 15.0,
+      "name": "Erik Westcott",
+      "rawName": "WESTCOTT Erik"
+    },
+    {
+      "rank": 45,
+      "points": 15.0,
+      "name": "ETOW Adrian Wallgren",
+      "rawName": "WALLGREN ETOW Adrian"
+    },
+    {
+      "rank": 45,
+      "points": 15.0,
+      "name": "Theo Hjerling",
+      "rawName": "HJERLING Theo"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Lucas Björkeby",
+      "rawName": "BJÖRKEBY Lucas"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Bernard Hjalmarsson",
+      "rawName": "HJALMARSSON Bernard"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Erik Bergström",
+      "rawName": "BERGSTRÖM Erik"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Emil Ellegård",
+      "rawName": "ELLEGÅRD Emil"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Robert Wijkman",
+      "rawName": "WIJKMAN Robert"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Vilgot Skiöld",
+      "rawName": "SKIÖLD Vilgot"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Frank Voltaire",
+      "rawName": "VOLTAIRE Frank"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Edgar Olsson",
+      "rawName": "OLSSON Edgar"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "KJÄLL Loke Oswaldson",
+      "rawName": "OSWALDSON KJÄLL Loke"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Max Lindell",
+      "rawName": "LINDELL Max"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Wilhelm Östring",
+      "rawName": "ÖSTRING Wilhelm"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Jonathan Brandeker",
+      "rawName": "BRANDEKER Jonathan"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Leonardo Bissmark",
+      "rawName": "BISSMARK Leonardo"
+    },
+    {
+      "rank": 49,
+      "points": 10.0,
+      "name": "Olle Grönqvist",
+      "rawName": "GRÖNQVIST Olle"
+    },
+    {
+      "rank": 63,
+      "points": 6.0,
+      "name": "Erik Gustafsson",
+      "rawName": "GUSTAFSSON Erik"
+    },
+    {
+      "rank": 64,
+      "points": 5.0,
+      "name": "WALLIN Charlie Rosdahl",
+      "rawName": "ROSDAHL WALLIN Charlie"
+    },
+    {
+      "rank": 64,
+      "points": 5.0,
+      "name": "Antonio Aho",
+      "rawName": "AHO Antonio"
+    },
+    {
+      "rank": 64,
+      "points": 5.0,
+      "name": "Albin Sanden",
+      "rawName": "SANDEN Albin"
+    }
+  ]
+}

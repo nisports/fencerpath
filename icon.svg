@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Deep navy rounded square background -->
+  <rect width="512" height="512" rx="96" fill="#0f1c30"/>
+
+  <!-- Geometric "F" — clean rectangles -->
+  <g fill="#f6f4ee">
+    <!-- F vertical stem -->
+    <rect x="115" y="120" width="50" height="285"/>
+    <!-- F top bar -->
+    <rect x="115" y="120" width="155" height="48"/>
+    <!-- F middle bar -->
+    <rect x="115" y="222" width="115" height="42"/>
+  </g>
+
+  <!-- Geometric "P" -->
+  <g fill="#f6f4ee">
+    <!-- P vertical stem -->
+    <rect x="295" y="120" width="50" height="285"/>
+    <!-- P bowl - top half rectangle + curve via two paths -->
+    <rect x="295" y="120" width="65" height="48"/>
+    <rect x="295" y="200" width="65" height="48"/>
+    <!-- Right side of P bowl (curve approximated with arcs) -->
+    <path d="M 360 120
+             Q 410 120 410 184
+             Q 410 248 360 248
+             L 360 200
+             Q 380 200 380 184
+             Q 380 168 360 168
+             Z"/>
+  </g>
+
+  <!-- Diagonal sword — slightly thinner, from upper-right to lower-left -->
+  <g stroke="#f6f4ee" stroke-width="7" stroke-linecap="round" fill="none">
+    <line x1="425" y1="85" x2="115" y2="425"/>
+  </g>
+
+  <!-- Bell guard at top of sword -->
+  <g transform="translate(425, 85) rotate(-43)">
+    <ellipse cx="0" cy="0" rx="18" ry="9" fill="#f6f4ee"/>
+    <line x1="0" y1="-18" x2="0" y2="18" stroke="#f6f4ee" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="0" cy="-18" r="4" fill="#f6f4ee"/>
+  </g>
+
+  <!-- Pommel at bottom -->
+  <circle cx="115" cy="425" r="8" fill="#f6f4ee"/>
+
+  <!-- Gold "path" curve at the bottom of the P (curving outward like a road) -->
+  <path d="M 295 380
+           L 345 380
+           L 345 405
+           Q 345 425 365 425
+           L 405 425
+           Q 425 425 425 405
+           L 425 395
+           Q 408 395 395 395
+           Q 365 395 360 380
+           L 295 380
+           Z"
+        fill="#c4995f"/>
+</svg>

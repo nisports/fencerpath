@@ -1,0 +1,163 @@
+{
+  "scrapedAt": "2026-06-27T22:08:39.025Z",
+  "source": "ophardt-bio",
+  "eventId": null,
+  "season": "2025",
+  "rankings": [
+    {
+      "weapon": "sabre",
+      "age": "senior",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "European Championships",
+          "date": "2026-06-16",
+          "compId": "199814"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Kenneth Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 58,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Antony (FRA)",
+              "date": "2026-06-16",
+              "category": "Sabre Men's Senior Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "sabre",
+      "age": "senior",
+      "gender": "M",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "European Championships",
+          "date": "2026-06-16",
+          "compId": "199820"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Kenneth Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 15,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Antony (FRA)",
+              "date": "2026-06-16",
+              "category": "Sabre Men's Senior Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "senior",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "European Championships",
+          "date": "2026-06-16",
+          "compId": "199817"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Henri Ask",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 35,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Antony (FRA)",
+              "date": "2026-06-16",
+              "category": "Foil Men's Senior Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "epee",
+      "age": "senior",
+      "gender": "W",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "European Championships",
+          "date": "2026-06-16",
+          "compId": "199818"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Linnea Eriksson",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 57,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Antony (FRA)",
+              "date": "2026-06-16",
+              "category": "Epee Women's Senior Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "epee",
+      "age": "senior",
+      "gender": "W",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "European Championships",
+          "date": "2026-06-16",
+          "compId": "199824"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Linnea Eriksson",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 13,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Antony (FRA)",
+              "date": "2026-06-16",
+              "category": "Epee Women's Senior Team"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

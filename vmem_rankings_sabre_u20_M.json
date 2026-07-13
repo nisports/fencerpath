@@ -1,0 +1,54 @@
+{
+  "scrapedAt": "2026-05-24T22:10:10Z",
+  "filters": {
+    "weapon": "sabre",
+    "age": "u20",
+    "gender": "M",
+    "nation": "SWE",
+    "type": "vmem"
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "points": 148.0,
+      "name": "Kalle Fröde",
+      "rawName": "FRÖDE Kalle"
+    },
+    {
+      "rank": 2,
+      "points": 80.0,
+      "name": "Kenneth Kong",
+      "rawName": "KONG Kenneth"
+    },
+    {
+      "rank": 3,
+      "points": 27.0,
+      "name": "Mattias Pekar",
+      "rawName": "PEKAR Mattias"
+    },
+    {
+      "rank": 3,
+      "points": 27.0,
+      "name": "Hugo Alfven",
+      "rawName": "ALFVEN Hugo"
+    },
+    {
+      "rank": 5,
+      "points": 20.0,
+      "name": "Isak Song",
+      "rawName": "SONG Isak"
+    },
+    {
+      "rank": 5,
+      "points": 20.0,
+      "name": "LINDSTRÖM Ivar Asgermyr",
+      "rawName": "ASGERMYR LINDSTRÖM Ivar"
+    },
+    {
+      "rank": 5,
+      "points": 20.0,
+      "name": "Antoni Fedko",
+      "rawName": "FEDKO Antoni"
+    }
+  ]
+}

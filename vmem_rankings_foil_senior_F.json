@@ -1,0 +1,72 @@
+{
+  "scrapedAt": "2026-05-24T22:10:10Z",
+  "filters": {
+    "weapon": "foil",
+    "age": "senior",
+    "gender": "F",
+    "nation": "SWE",
+    "type": "vmem"
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "points": 350.0,
+      "name": "Miriam Schreiber",
+      "rawName": "SCHREIBER Miriam"
+    },
+    {
+      "rank": 2,
+      "points": 100.0,
+      "name": "Helen Su",
+      "rawName": "SU Helen"
+    },
+    {
+      "rank": 3,
+      "points": 70.0,
+      "name": "Mathilda Andersson",
+      "rawName": "ANDERSSON Mathilda"
+    },
+    {
+      "rank": 3,
+      "points": 70.0,
+      "name": "Maria Jechil",
+      "rawName": "JECHIL Maria"
+    },
+    {
+      "rank": 5,
+      "points": 55.0,
+      "name": "FELLDIN Kerstin Hübel",
+      "rawName": "HÜBEL FELLDIN Kerstin"
+    },
+    {
+      "rank": 5,
+      "points": 55.0,
+      "name": "Elsa Blomgren",
+      "rawName": "BLOMGREN Elsa"
+    },
+    {
+      "rank": 5,
+      "points": 55.0,
+      "name": "Siri Eklöf",
+      "rawName": "EKLÖF Siri"
+    },
+    {
+      "rank": 5,
+      "points": 55.0,
+      "name": "Kinzi Wall",
+      "rawName": "WALL Kinzi"
+    },
+    {
+      "rank": 5,
+      "points": 55.0,
+      "name": "Cleo Fox",
+      "rawName": "FOX Cleo"
+    },
+    {
+      "rank": 5,
+      "points": 55.0,
+      "name": "Amy Mccoy",
+      "rawName": "MCCOY Amy"
+    }
+  ]
+}
