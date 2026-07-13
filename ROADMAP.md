@@ -6,7 +6,7 @@ _最后更新: 2026-07-13_
 
 - 功能完整的单页 vanilla JS 应用(`index.html`),业务逻辑经过多轮验证:排名合并(VM/EM vs National 优先级)、资格赛 C1/C2 卫星赛规则、跨联合会赛事去重、证件(SVFF/EFC/FIE)自动判断、Priority Inbox 推荐引擎等。
 - 纯本地 `localStorage` 存储,无账号系统、无云同步、无付费墙、无 tier gating 逻辑。
-- 部署现状:`main` 分支为完整源码(生产环境是 Vercel,域名 `fencerpath.se`);`gh-pages` 分支只放精简版 `index.html`,作为早期/备用镜像。两者需要在阶段三整理清楚。
+- 部署现状:`main` 分支为完整源码(生产环境是 Vercel,域名 `fencerpath.com`;此前 `fencerpath.se` 也注册过但从未配置 DNS,已于 2026-07-13 决定弃用 `.se`、统一用 `.com`);`gh-pages` 分支只放精简版 `index.html`,作为早期/备用镜像。两者需要在阶段三整理清楚。
 
 ## 决策:不做整体 Next.js 重写
 
