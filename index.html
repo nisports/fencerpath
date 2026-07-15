@@ -13629,6 +13629,7 @@ async function fetchOphardtBioForForm(id) {
     }
     draft.ophardtSlug = slug;
     draft.ophardtRankings = bio.rankings || draft.ophardtRankings;
+    draft.ophardtResultsPending = bio.results || [];
     draft.ophardtLastSync = (bio.scrapedAt || new Date().toISOString()).slice(0, 10);
 
     openFencerForm(id, draft);
@@ -13731,6 +13732,7 @@ function readFencerDraftFromForm(id) {
     passportNationality: (val("f-passport-nat")||"").toUpperCase().trim() || undefined,
     ophardtLastSync: existing.ophardtLastSync,
     ophardtRankings: existing.ophardtRankings,
+    ophardtResultsPending: existing.ophardtResultsPending,
     nation: existing.nation, gender: val("f-gender") || existing.gender || "M",
     birthYear: parseInt(val("f-birthyear")) || undefined,
     licenses: {
@@ -13752,6 +13754,13 @@ function saveFencerForm(id, isEdit) {
   // If birthYear was just added/changed, immediately correct the primary ageCategory rather
   // than waiting for the next reload's migrateData() pass to catch it.
   syncAgeCategoriesFromBirthYear();
+  // If a live Ophardt fetch just staged raw match-results for this fencer, merge them into
+  // State.competitions/State.registrations now (auto-creating competitions as needed) — this
+  // is what lets a brand-new fencer get real 25/26 results without the manual script+import.
+  if (obj.ophardtResultsPending && obj.ophardtResultsPending.length) {
+    mergeOphardtResultsForFencer(obj);
+    delete obj.ophardtResultsPending;
+  }
   save(); closeModal(); renderAll();
 }
 
@@ -14354,6 +14363,7 @@ async function tryFetchOphardt() {
 }
 function setOphStatus(msg, cls) {
   const el = document.getElementById("ophardt-status");
+  if (!el) return;
   el.textContent = msg;
   el.style.color = cls === "bad" ? "var(--bad)" : cls === "good" ? "var(--good)" : cls === "warn" ? "var(--warn)" : "var(--muted)";
 }
@@ -14898,6 +14908,40 @@ function mergeResultsPayload(payload) {
     (purged      ? ` · ${purged} invalid future registrations removed` : ""),
     imported > 0 ? "good" : "warn"
   );
+}
+
+/** Merge a single fencer's freshly live-fetched Ophardt match results (fencer.ophardtResultsPending,
+ *  as returned by /api/ophardt-bio's `results` field) into State.competitions/State.registrations.
+ *  Reuses mergeResultsPayload() — the same engine driving the Settings "Sync from Ophardt" import —
+ *  by grouping the flat per-result list into the {rankings:[{weapon,age,gender,team,competitions,athletes}]}
+ *  shape it expects, keyed exactly like scrape_ophardt_results.mjs's scrapeBio() groups them
+ *  (`${weapon}|${age}|${gender}|${team?"team":"ind"}`). This is what lets a single live "Fetch from
+ *  Ophardt" click on a brand-new fencer auto-create their competitions/registrations, instead of
+ *  requiring the standalone script + manual Settings import every time. */
+function mergeOphardtResultsForFencer(fencer) {
+  const results = fencer.ophardtResultsPending || [];
+  if (!results.length) return;
+  const groups = new Map();
+  for (const r of results) {
+    if (!r.weapon || !r.gender || !r.age) continue;
+    const key = `${r.weapon}|${r.age}|${r.gender}|${r.team ? "team" : "ind"}`;
+    if (!groups.has(key)) {
+      groups.set(key, { weapon: r.weapon, age: r.age, gender: r.gender, team: r.team, season: undefined, competitions: [], athletes: [] });
+    }
+    const grp = groups.get(key);
+    if (!grp.competitions.find(c => c.compId === r.compId && c.name === r.compName)) {
+      // r.compId comes from the bio page's results-competition/{id} link — same Ophardt
+      // event-id namespace as the bulk scraper's results-mastercompetition/{id} link, so it
+      // doubles as masterCompId here too (keeps Qualification Path Condition 2 tagging working
+      // for fencers added via the live single-fetch flow, not just the bulk Settings import).
+      grp.competitions.push({ name: r.compName, date: r.startDate, compId: r.compId, masterCompId: r.compId });
+    }
+    let ath = grp.athletes.find(a => a.name === fencer.name);
+    if (!ath) { ath = { name: fencer.name, nation: fencer.nation || "SWE", club: fencer.club || "", results: [] }; grp.athletes.push(ath); }
+    ath.results.push({ placement: r.placement, points: null, compName: r.compName, city: r.city, date: r.startDate, category: r.category });
+  }
+  if (!groups.size) return;
+  mergeResultsPayload({ rankings: [...groups.values()] });
 }
 
 /** Map an Ophardt category-page title to our internal scope key. */

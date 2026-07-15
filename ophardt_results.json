@@ -1,35 +1,35 @@
 {
-  "scrapedAt": "2026-06-27T22:08:39.025Z",
+  "scrapedAt": "2026-07-15T15:47:22.041Z",
   "source": "ophardt-bio",
   "eventId": null,
   "season": "2025",
   "rankings": [
     {
       "weapon": "sabre",
-      "age": "senior",
+      "age": "u23",
       "gender": "M",
       "team": false,
       "season": "2025",
       "competitions": [
         {
-          "name": "European Championships",
-          "date": "2026-06-16",
-          "compId": "199814"
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195563"
         }
       ],
       "athletes": [
         {
           "name": "Kenneth Kong",
           "nation": "SWE",
-          "club": "",
+          "club": "FFF Stockholm",
           "results": [
             {
-              "placement": 58,
+              "placement": 1,
               "points": null,
-              "compName": "European Championships",
-              "city": "Antony (FRA)",
-              "date": "2026-06-16",
-              "category": "Sabre Men's Senior Individual"
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Sabre Men's U23 Individual"
             }
           ]
         }
@@ -43,17 +43,35 @@
       "season": "2025",
       "competitions": [
         {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195536"
+        },
+        {
           "name": "European Championships",
           "date": "2026-06-16",
           "compId": "199820"
+        },
+        {
+          "name": "Svenska mästerskapen lag",
+          "date": "2025-12-20",
+          "compId": "200995"
         }
       ],
       "athletes": [
         {
           "name": "Kenneth Kong",
           "nation": "SWE",
-          "club": "",
+          "club": "FFF Stockholm",
           "results": [
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Sabre Men's Senior Team"
+            },
             {
               "placement": 15,
               "points": null,
@@ -61,6 +79,717 @@
               "city": "Antony (FRA)",
               "date": "2026-06-16",
               "category": "Sabre Men's Senior Team"
+            },
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Svenska mästerskapen lag",
+              "city": "Stockholm (SWE)",
+              "date": "2025-12-20",
+              "category": "Sabre Men's Senior Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "sabre",
+      "age": "u17",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195524"
+        },
+        {
+          "name": "World Championships",
+          "date": "2026-04-01",
+          "compId": "194198"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-02-20",
+          "compId": "199830"
+        },
+        {
+          "name": "Asparoukh's Sword",
+          "date": "2026-01-30",
+          "compId": "205948"
+        },
+        {
+          "name": "Etropolski’s sabre",
+          "date": "2025-11-15",
+          "compId": "197834"
+        },
+        {
+          "name": "Ciudad de Segovia",
+          "date": "2026-01-10",
+          "compId": "197854"
+        },
+        {
+          "name": "Allstar - Cup",
+          "date": "2025-12-06",
+          "compId": "197851"
+        },
+        {
+          "name": "Huniber Cup",
+          "date": "2025-11-08",
+          "compId": "197824"
+        },
+        {
+          "name": "Istanbul Cadet Circuit",
+          "date": "2025-10-11",
+          "compId": "197802"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Kenneth Kong",
+          "nation": "SWE",
+          "club": "FFF Stockholm",
+          "results": [
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Sabre Men's U17 Individual"
+            },
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "World Championships",
+              "city": "Rio de Janeiro (BRA)",
+              "date": "2026-04-01",
+              "category": "Sabre Men's U17 Individual"
+            },
+            {
+              "placement": 11,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-20",
+              "category": "Sabre Men's U17 Individual"
+            },
+            {
+              "placement": 24,
+              "points": null,
+              "compName": "Asparoukh's Sword",
+              "city": "Plovdiv (BUL)",
+              "date": "2026-01-30",
+              "category": "Sabre Men's U17 Individual"
+            },
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Etropolski’s sabre",
+              "city": "Sofia (BUL)",
+              "date": "2025-11-15",
+              "category": "Sabre Men's U17 Individual"
+            },
+            {
+              "placement": 45,
+              "points": null,
+              "compName": "Ciudad de Segovia",
+              "city": "Segovia (ESP)",
+              "date": "2026-01-10",
+              "category": "Sabre Men's U17 Individual"
+            },
+            {
+              "placement": 38,
+              "points": null,
+              "compName": "Allstar - Cup",
+              "city": "Eislingen (GER)",
+              "date": "2025-12-06",
+              "category": "Sabre Men's U17 Individual"
+            },
+            {
+              "placement": 29,
+              "points": null,
+              "compName": "Huniber Cup",
+              "city": "Gödöllö (HUN)",
+              "date": "2025-11-08",
+              "category": "Sabre Men's U17 Individual"
+            },
+            {
+              "placement": 12,
+              "points": null,
+              "compName": "Istanbul Cadet Circuit",
+              "city": "Istanbul (TUR)",
+              "date": "2025-10-11",
+              "category": "Sabre Men's U17 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "sabre",
+      "age": "senior",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195529"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-06-16",
+          "compId": "199814"
+        },
+        {
+          "name": "Viking Cup",
+          "date": "2025-09-20",
+          "compId": "194173"
+        },
+        {
+          "name": "Gerevich-Kovacs-Karpati",
+          "date": "2026-03-27",
+          "compId": "194161"
+        },
+        {
+          "name": "Swedish Seniors Championships",
+          "date": "2026-05-02",
+          "compId": "201622"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Kenneth Kong",
+          "nation": "SWE",
+          "club": "FFF Stockholm",
+          "results": [
+            {
+              "placement": 5,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Sabre Men's Senior Individual"
+            },
+            {
+              "placement": 58,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Antony (FRA)",
+              "date": "2026-06-16",
+              "category": "Sabre Men's Senior Individual"
+            },
+            {
+              "placement": 8,
+              "points": null,
+              "compName": "Viking Cup",
+              "city": "Reykjavik (ISL)",
+              "date": "2025-09-20",
+              "category": "Sabre Men's Senior Individual"
+            },
+            {
+              "placement": 177,
+              "points": null,
+              "compName": "Gerevich-Kovacs-Karpati",
+              "city": "Budapest (HUN)",
+              "date": "2026-03-27",
+              "category": "Sabre Men's Senior Individual"
+            },
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Swedish Seniors Championships",
+              "city": "Kalmar (SWE)",
+              "date": "2026-05-02",
+              "category": "Sabre Men's Senior Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "sabre",
+      "age": "u20",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "World Championships",
+          "date": "2026-04-01",
+          "compId": "194196"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-02-24",
+          "compId": "199842"
+        },
+        {
+          "name": "Asparoukh's Sword",
+          "date": "2026-01-30",
+          "compId": "194078"
+        },
+        {
+          "name": "Preis der Chemiestadt",
+          "date": "2025-12-13",
+          "compId": "194070"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Kenneth Kong",
+          "nation": "SWE",
+          "club": "FFF Stockholm",
+          "results": [
+            {
+              "placement": 101,
+              "points": null,
+              "compName": "World Championships",
+              "city": "Rio de Janeiro (BRA)",
+              "date": "2026-04-01",
+              "category": "Sabre Men's U20 Individual"
+            },
+            {
+              "placement": 44,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-24",
+              "category": "Sabre Men's U20 Individual"
+            },
+            {
+              "placement": 187,
+              "points": null,
+              "compName": "Asparoukh's Sword",
+              "city": "Plovdiv (BUL)",
+              "date": "2026-01-30",
+              "category": "Sabre Men's U20 Individual"
+            },
+            {
+              "placement": 89,
+              "points": null,
+              "compName": "Preis der Chemiestadt",
+              "city": "Dormagen (GER)",
+              "date": "2025-12-13",
+              "category": "Sabre Men's U20 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u17",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195503"
+        },
+        {
+          "name": "World Championships",
+          "date": "2026-04-01",
+          "compId": "194204"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-02-20",
+          "compId": "199828"
+        },
+        {
+          "name": "Istanbul World Cup",
+          "date": "2025-10-30",
+          "compId": "202042"
+        },
+        {
+          "name": "Cadet Circuit",
+          "date": "2026-01-24",
+          "compId": "197866"
+        },
+        {
+          "name": "Coupe Mondiale de fleurets cadets",
+          "date": "2025-12-05",
+          "compId": "197846"
+        },
+        {
+          "name": "Cadet Circuit",
+          "date": "2025-11-22",
+          "compId": "197825"
+        },
+        {
+          "name": "West Coast Challenge",
+          "date": "2025-10-25",
+          "compId": "197814"
+        },
+        {
+          "name": "Coupe de Samaria",
+          "date": "2025-10-03",
+          "compId": "197798"
+        },
+        {
+          "name": "Witold Woyda's Foil",
+          "date": "2025-09-27",
+          "compId": "197863"
+        },
+        {
+          "name": "Swedish Championships U15 and U17",
+          "date": "2026-05-23",
+          "compId": "201052"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Jonathan Lingjue Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 2,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 19,
+              "points": null,
+              "compName": "World Championships",
+              "city": "Rio de Janeiro (BRA)",
+              "date": "2026-04-01",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 41,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-20",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 34,
+              "points": null,
+              "compName": "Istanbul World Cup",
+              "city": "Istanbul (TUR)",
+              "date": "2025-10-30",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 45,
+              "points": null,
+              "compName": "Cadet Circuit",
+              "city": "Riga (LAT)",
+              "date": "2026-01-24",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 155,
+              "points": null,
+              "compName": "Coupe Mondiale de fleurets cadets",
+              "city": "Cabries (FRA)",
+              "date": "2025-12-05",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 70,
+              "points": null,
+              "compName": "Cadet Circuit",
+              "city": "Nürnberg (GER)",
+              "date": "2025-11-22",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 46,
+              "points": null,
+              "compName": "West Coast Challenge",
+              "city": "Gothenburg (SWE)",
+              "date": "2025-10-25",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 197,
+              "points": null,
+              "compName": "Coupe de Samaria",
+              "city": "Samorin (SVK)",
+              "date": "2025-10-03",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 48,
+              "points": null,
+              "compName": "Witold Woyda's Foil",
+              "city": "Warszawa (POL)",
+              "date": "2025-09-27",
+              "category": "Foil Men's U17 Individual"
+            },
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Swedish Championships U15 and U17",
+              "city": "Karlskrona (SWE)",
+              "date": "2026-05-23",
+              "category": "Foil Men's U17 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u20",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195501"
+        },
+        {
+          "name": "World Championships",
+          "date": "2026-04-01",
+          "compId": "194202"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-02-24",
+          "compId": "199840"
+        },
+        {
+          "name": "Istanbul World Cup",
+          "date": "2025-10-30",
+          "compId": "194030"
+        },
+        {
+          "name": "Swedish Championships U20",
+          "date": "2026-01-17",
+          "compId": "201633"
+        },
+        {
+          "name": "Coupe de Stockholm",
+          "date": "2025-09-27",
+          "compId": "199304"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Jonathan Lingjue Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 11,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Foil Men's U20 Individual"
+            },
+            {
+              "placement": 138,
+              "points": null,
+              "compName": "World Championships",
+              "city": "Rio de Janeiro (BRA)",
+              "date": "2026-04-01",
+              "category": "Foil Men's U20 Individual"
+            },
+            {
+              "placement": 31,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-24",
+              "category": "Foil Men's U20 Individual"
+            },
+            {
+              "placement": 154,
+              "points": null,
+              "compName": "Istanbul World Cup",
+              "city": "Istanbul (TUR)",
+              "date": "2025-10-30",
+              "category": "Foil Men's U20 Individual"
+            },
+            {
+              "placement": 2,
+              "points": null,
+              "compName": "Swedish Championships U20",
+              "city": "Helsingborg (SWE)",
+              "date": "2026-01-17",
+              "category": "Foil Men's U20 Individual"
+            },
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Coupe de Stockholm",
+              "city": "Stockholm (SWE)",
+              "date": "2025-09-27",
+              "category": "Foil Men's U20 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u17",
+      "gender": "M",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "European Championships",
+          "date": "2026-02-20",
+          "compId": "199834"
+        },
+        {
+          "name": "Cadet Circuit",
+          "date": "2025-11-22",
+          "compId": "197826"
+        },
+        {
+          "name": "West Coast Challenge",
+          "date": "2025-10-25",
+          "compId": "197816"
+        },
+        {
+          "name": "Coupe de Samaria",
+          "date": "2025-10-03",
+          "compId": "197800"
+        },
+        {
+          "name": "Swedish Championships U15 and U17",
+          "date": "2026-05-23",
+          "compId": "201053"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Jonathan Lingjue Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 15,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-20",
+              "category": "Foil Men's U17 Team"
+            },
+            {
+              "placement": 17,
+              "points": null,
+              "compName": "Cadet Circuit",
+              "city": "Nürnberg (GER)",
+              "date": "2025-11-22",
+              "category": "Foil Men's U17 Team"
+            },
+            {
+              "placement": 9,
+              "points": null,
+              "compName": "West Coast Challenge",
+              "city": "Gothenburg (SWE)",
+              "date": "2025-10-25",
+              "category": "Foil Men's U17 Team"
+            },
+            {
+              "placement": 9,
+              "points": null,
+              "compName": "Coupe de Samaria",
+              "city": "Samorin (SVK)",
+              "date": "2025-10-03",
+              "category": "Foil Men's U17 Team"
+            },
+            {
+              "placement": 2,
+              "points": null,
+              "compName": "Swedish Championships U15 and U17",
+              "city": "Karlskrona (SWE)",
+              "date": "2026-05-23",
+              "category": "Foil Men's U17 Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u15",
+      "gender": "M",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Swedish Championships U15 and U17",
+          "date": "2026-05-23",
+          "compId": "201045"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Jonathan Lingjue Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Swedish Championships U15 and U17",
+              "city": "Karlskrona (SWE)",
+              "date": "2026-05-23",
+              "category": "Foil Men's U15 Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u15",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Swedish Championships U15 and U17",
+          "date": "2026-05-23",
+          "compId": "201044"
+        },
+        {
+          "name": "Challenge Wratislavia",
+          "date": "2026-03-19",
+          "compId": "200584"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Jonathan Lingjue Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Swedish Championships U15 and U17",
+              "city": "Karlskrona (SWE)",
+              "date": "2026-05-23",
+              "category": "Foil Men's U15 Individual"
+            },
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Challenge Wratislavia",
+              "city": "Wroclaw (POL)",
+              "date": "2026-03-19",
+              "category": "Foil Men's U15 Individual"
             }
           ]
         }
@@ -74,9 +803,793 @@
       "season": "2025",
       "competitions": [
         {
+          "name": "Swedish Seniors Championships",
+          "date": "2026-05-02",
+          "compId": "201624"
+        },
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195517"
+        },
+        {
           "name": "European Championships",
           "date": "2026-06-16",
           "compId": "199817"
+        },
+        {
+          "name": "Grand Prix",
+          "date": "2026-05-15",
+          "compId": "194126"
+        },
+        {
+          "name": "World Cup",
+          "date": "2026-04-30",
+          "compId": "194129"
+        },
+        {
+          "name": "National Bank of Egypt World Cup",
+          "date": "2026-04-16",
+          "compId": "194120"
+        },
+        {
+          "name": "Lima Grand Prix",
+          "date": "2026-03-20",
+          "compId": "194124"
+        },
+        {
+          "name": "Trofeo INALPI",
+          "date": "2026-02-05",
+          "compId": "194118"
+        },
+        {
+          "name": "Challenge International de Paris",
+          "date": "2026-01-09",
+          "compId": "194131"
+        },
+        {
+          "name": "Prince Takamado Trophy",
+          "date": "2025-12-05",
+          "compId": "194133"
+        },
+        {
+          "name": "Ciutat de Palma",
+          "date": "2025-11-07",
+          "compId": "194139"
+        },
+        {
+          "name": "Trofeu International Sabadell",
+          "date": "2025-10-25",
+          "compId": "194194"
+        },
+        {
+          "name": "SISTA-SFZ International",
+          "date": "2025-09-27",
+          "compId": "194177"
+        },
+        {
+          "name": "Eurofence League",
+          "date": "2026-02-14",
+          "compId": "198294"
+        },
+        {
+          "name": "German Championships",
+          "date": "2026-05-30",
+          "compId": "198839"
+        },
+        {
+          "name": "Esslinger Burg-Cup",
+          "date": "2026-06-13",
+          "compId": "198775"
+        },
+        {
+          "name": "20.International Händel-Cup",
+          "date": "2025-12-20",
+          "compId": "198773"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Jonathan Lingjue Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 8,
+              "points": null,
+              "compName": "Swedish Seniors Championships",
+              "city": "Kalmar (SWE)",
+              "date": "2026-05-02",
+              "category": "Foil Men's Senior Individual"
+            }
+          ]
+        },
+        {
+          "name": "Henri Ask",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 35,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Antony (FRA)",
+              "date": "2026-06-16",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 199,
+              "points": null,
+              "compName": "Grand Prix",
+              "city": "Shanghai (CHN)",
+              "date": "2026-05-15",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 157,
+              "points": null,
+              "compName": "World Cup",
+              "city": "Istanbul (TUR)",
+              "date": "2026-04-30",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 86,
+              "points": null,
+              "compName": "National Bank of Egypt World Cup",
+              "city": "Cairo (EGY)",
+              "date": "2026-04-16",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 138,
+              "points": null,
+              "compName": "Lima Grand Prix",
+              "city": "Lima (PER)",
+              "date": "2026-03-20",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 220,
+              "points": null,
+              "compName": "Trofeo INALPI",
+              "city": "Torino (ITA)",
+              "date": "2026-02-05",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 102,
+              "points": null,
+              "compName": "Challenge International de Paris",
+              "city": "Paris (FRA)",
+              "date": "2026-01-09",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 105,
+              "points": null,
+              "compName": "Prince Takamado Trophy",
+              "city": "Fukuoka (JPN)",
+              "date": "2025-12-05",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 146,
+              "points": null,
+              "compName": "Ciutat de Palma",
+              "city": "Palma de Mallorca (ESP)",
+              "date": "2025-11-07",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 29,
+              "points": null,
+              "compName": "Trofeu International Sabadell",
+              "city": "Barcelona Sabadell (ESP)",
+              "date": "2025-10-25",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 66,
+              "points": null,
+              "compName": "SISTA-SFZ International",
+              "city": "Amsterdam (NED)",
+              "date": "2025-09-27",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 13,
+              "points": null,
+              "compName": "Eurofence League",
+              "city": "London (GBR)",
+              "date": "2026-02-14",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 15,
+              "points": null,
+              "compName": "German Championships",
+              "city": "Berlin (GER)",
+              "date": "2026-05-30",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 18,
+              "points": null,
+              "compName": "Esslinger Burg-Cup",
+              "city": "Esslingen (GER)",
+              "date": "2026-06-13",
+              "category": "Foil Men's Senior Individual"
+            },
+            {
+              "placement": 29,
+              "points": null,
+              "compName": "20.International Händel-Cup",
+              "city": "Halle (GER)",
+              "date": "2025-12-20",
+              "category": "Foil Men's Senior Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u20",
+      "gender": "M",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Swedish Championships U20",
+          "date": "2026-01-17",
+          "compId": "201634"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Jonathan Lingjue Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Swedish Championships U20",
+              "city": "Helsingborg (SWE)",
+              "date": "2026-01-17",
+              "category": "Foil Men's U20 Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u23",
+      "gender": "M",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Swedish Championships for U23",
+          "date": "2025-12-20",
+          "compId": "200997"
+        },
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195559"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-04-25",
+          "compId": "199852"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Jonathan Lingjue Kong",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 5,
+              "points": null,
+              "compName": "Swedish Championships for U23",
+              "city": "Stockholm (SWE)",
+              "date": "2025-12-20",
+              "category": "Foil Men's U23 Individual"
+            }
+          ]
+        },
+        {
+          "name": "Henri Ask",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Foil Men's U23 Individual"
+            },
+            {
+              "placement": 38,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Cagliari (ITA)",
+              "date": "2026-04-25",
+              "category": "Foil Men's U23 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u20",
+      "gender": "W",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195500"
+        },
+        {
+          "name": "Golden Hope",
+          "date": "2025-11-28",
+          "compId": "194042"
+        },
+        {
+          "name": "Swedish Championships U20",
+          "date": "2026-01-17",
+          "compId": "201632"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Helen Su",
+          "nation": "SWE",
+          "club": "VS GFK Göteborg",
+          "results": [
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Foil Women's U20 Individual"
+            },
+            {
+              "placement": 146,
+              "points": null,
+              "compName": "Golden Hope",
+              "city": "Samorin (SVK)",
+              "date": "2025-11-28",
+              "category": "Foil Women's U20 Individual"
+            },
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Swedish Championships U20",
+              "city": "Helsingborg (SWE)",
+              "date": "2026-01-17",
+              "category": "Foil Women's U20 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u17",
+      "gender": "W",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195504"
+        },
+        {
+          "name": "World Championships",
+          "date": "2026-04-01",
+          "compId": "194203"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-02-20",
+          "compId": "199825"
+        },
+        {
+          "name": "Cadet Circuit",
+          "date": "2026-01-24",
+          "compId": "197867"
+        },
+        {
+          "name": "AMU Cup",
+          "date": "2026-01-10",
+          "compId": "197861"
+        },
+        {
+          "name": "Coupe Mondiale de fleurets cadets",
+          "date": "2025-12-05",
+          "compId": "197845"
+        },
+        {
+          "name": "Cadet Circuit",
+          "date": "2025-11-22",
+          "compId": "197828"
+        },
+        {
+          "name": "Budapest Cup",
+          "date": "2025-11-15",
+          "compId": "197831"
+        },
+        {
+          "name": "West Coast Challenge",
+          "date": "2025-10-25",
+          "compId": "197815"
+        },
+        {
+          "name": "Coupe de Samaria",
+          "date": "2025-10-03",
+          "compId": "197797"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Helen Su",
+          "nation": "SWE",
+          "club": "VS GFK Göteborg",
+          "results": [
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 54,
+              "points": null,
+              "compName": "World Championships",
+              "city": "Rio de Janeiro (BRA)",
+              "date": "2026-04-01",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 30,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-20",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 47,
+              "points": null,
+              "compName": "Cadet Circuit",
+              "city": "Riga (LAT)",
+              "date": "2026-01-24",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 39,
+              "points": null,
+              "compName": "AMU Cup",
+              "city": "Poznan (POL)",
+              "date": "2026-01-10",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 143,
+              "points": null,
+              "compName": "Coupe Mondiale de fleurets cadets",
+              "city": "Cabries (FRA)",
+              "date": "2025-12-05",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 47,
+              "points": null,
+              "compName": "Cadet Circuit",
+              "city": "Nürnberg (GER)",
+              "date": "2025-11-22",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 91,
+              "points": null,
+              "compName": "Budapest Cup",
+              "city": "Budapest (HUN)",
+              "date": "2025-11-15",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 33,
+              "points": null,
+              "compName": "West Coast Challenge",
+              "city": "Gothenburg (SWE)",
+              "date": "2025-10-25",
+              "category": "Foil Women's U17 Individual"
+            },
+            {
+              "placement": 65,
+              "points": null,
+              "compName": "Coupe de Samaria",
+              "city": "Samorin (SVK)",
+              "date": "2025-10-03",
+              "category": "Foil Women's U17 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u17",
+      "gender": "W",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "European Championships",
+          "date": "2026-02-20",
+          "compId": "199831"
+        },
+        {
+          "name": "Cadet Circuit",
+          "date": "2025-11-22",
+          "compId": "197827"
+        },
+        {
+          "name": "West Coast Challenge",
+          "date": "2025-10-25",
+          "compId": "197813"
+        },
+        {
+          "name": "Coupe de Samaria",
+          "date": "2025-10-03",
+          "compId": "197799"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Helen Su",
+          "nation": "SWE",
+          "club": "VS GFK Göteborg",
+          "results": [
+            {
+              "placement": 14,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-20",
+              "category": "Foil Women's U17 Team"
+            },
+            {
+              "placement": 12,
+              "points": null,
+              "compName": "Cadet Circuit",
+              "city": "Nürnberg (GER)",
+              "date": "2025-11-22",
+              "category": "Foil Women's U17 Team"
+            },
+            {
+              "placement": 13,
+              "points": null,
+              "compName": "West Coast Challenge",
+              "city": "Gothenburg (SWE)",
+              "date": "2025-10-25",
+              "category": "Foil Women's U17 Team"
+            },
+            {
+              "placement": 12,
+              "points": null,
+              "compName": "Coupe de Samaria",
+              "city": "Samorin (SVK)",
+              "date": "2025-10-03",
+              "category": "Foil Women's U17 Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "senior",
+      "gender": "W",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Grand Prix",
+          "date": "2026-05-15",
+          "compId": "194125"
+        },
+        {
+          "name": "Swedish Seniors Championships",
+          "date": "2026-05-02",
+          "compId": "201623"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Helen Su",
+          "nation": "SWE",
+          "club": "VS GFK Göteborg",
+          "results": [
+            {
+              "placement": 176,
+              "points": null,
+              "compName": "Grand Prix",
+              "city": "Shanghai (CHN)",
+              "date": "2026-05-15",
+              "category": "Foil Women's Senior Individual"
+            },
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Swedish Seniors Championships",
+              "city": "Kalmar (SWE)",
+              "date": "2026-05-02",
+              "category": "Foil Women's Senior Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u20",
+      "gender": "W",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Swedish Championships U20",
+          "date": "2026-01-17",
+          "compId": "201639"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Helen Su",
+          "nation": "SWE",
+          "club": "VS GFK Göteborg",
+          "results": [
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Swedish Championships U20",
+              "city": "Helsingborg (SWE)",
+              "date": "2026-01-17",
+              "category": "Foil Women's U20 Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "u23",
+      "gender": "W",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Swedish Championships for U23",
+          "date": "2025-12-20",
+          "compId": "201000"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Helen Su",
+          "nation": "SWE",
+          "club": "VS GFK Göteborg",
+          "results": [
+            {
+              "placement": 2,
+              "points": null,
+              "compName": "Swedish Championships for U23",
+              "city": "Stockholm (SWE)",
+              "date": "2025-12-20",
+              "category": "Foil Women's U23 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "senior",
+      "gender": "W",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Svenska mästerskapen lag",
+          "date": "2025-12-20",
+          "compId": "200992"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Helen Su",
+          "nation": "SWE",
+          "club": "VS GFK Göteborg",
+          "results": [
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Svenska mästerskapen lag",
+              "city": "Stockholm (SWE)",
+              "date": "2025-12-20",
+              "category": "Foil Women's Senior Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "epee",
+      "age": "u17",
+      "gender": "W",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Swedish Championships U15 and U17",
+          "date": "2026-05-23",
+          "compId": "201038"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Helen Su",
+          "nation": "SWE",
+          "club": "VS GFK Göteborg",
+          "results": [
+            {
+              "placement": 31,
+              "points": null,
+              "compName": "Swedish Championships U15 and U17",
+              "city": "Karlskrona (SWE)",
+              "date": "2026-05-23",
+              "category": "Epee Women's U17 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "foil",
+      "age": "senior",
+      "gender": "M",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "German Team Championships",
+          "date": "2026-06-27",
+          "compId": "198891"
         }
       ],
       "athletes": [
@@ -86,12 +1599,82 @@
           "club": "",
           "results": [
             {
-              "placement": 35,
+              "placement": 3,
+              "points": null,
+              "compName": "German Team Championships",
+              "city": "Koblenz (GER)",
+              "date": "2026-06-27",
+              "category": "Foil Men's Senior Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "epee",
+      "age": "u20",
+      "gender": "W",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195518"
+        },
+        {
+          "name": "World Championships",
+          "date": "2026-04-01",
+          "compId": "194211"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-02-24",
+          "compId": "199847"
+        },
+        {
+          "name": "Swedish Championships U20",
+          "date": "2026-01-17",
+          "compId": "201635"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Linnea Eriksson",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Epee Women's U20 Team"
+            },
+            {
+              "placement": 26,
+              "points": null,
+              "compName": "World Championships",
+              "city": "Rio de Janeiro (BRA)",
+              "date": "2026-04-01",
+              "category": "Epee Women's U20 Team"
+            },
+            {
+              "placement": 15,
               "points": null,
               "compName": "European Championships",
-              "city": "Antony (FRA)",
-              "date": "2026-06-16",
-              "category": "Foil Men's Senior Individual"
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-24",
+              "category": "Epee Women's U20 Team"
+            },
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Swedish Championships U20",
+              "city": "Helsingborg (SWE)",
+              "date": "2026-01-17",
+              "category": "Epee Women's U20 Team"
             }
           ]
         }
@@ -105,9 +1688,74 @@
       "season": "2025",
       "competitions": [
         {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195526"
+        },
+        {
           "name": "European Championships",
           "date": "2026-06-16",
           "compId": "199818"
+        },
+        {
+          "name": "St.Duje Cup",
+          "date": "2025-10-11",
+          "compId": "194184"
+        },
+        {
+          "name": "Challenge Monal",
+          "date": "2026-05-22",
+          "compId": "198384"
+        },
+        {
+          "name": "Westend-Grand Prix",
+          "date": "2026-04-17",
+          "compId": "194096"
+        },
+        {
+          "name": "World Cup",
+          "date": "2026-03-26",
+          "compId": "194098"
+        },
+        {
+          "name": "World Cup",
+          "date": "2026-02-06",
+          "compId": "194113"
+        },
+        {
+          "name": "Fujairah World Cup",
+          "date": "2026-01-08",
+          "compId": "194109"
+        },
+        {
+          "name": "Eurofence League",
+          "date": "2025-10-25",
+          "compId": "198277"
+        },
+        {
+          "name": "Swedish Seniors Championships",
+          "date": "2026-05-02",
+          "compId": "201625"
+        },
+        {
+          "name": "Malmö International - Nordic Championships",
+          "date": "2026-06-06",
+          "compId": "200967"
+        },
+        {
+          "name": "Djurgården Epee",
+          "date": "2026-05-09",
+          "compId": "201037"
+        },
+        {
+          "name": "Challenge Bernadotte",
+          "date": "2025-10-18",
+          "compId": "201004"
+        },
+        {
+          "name": "International Competition",
+          "date": "2026-03-14",
+          "compId": "208924"
         }
       ],
       "athletes": [
@@ -117,12 +1765,308 @@
           "club": "",
           "results": [
             {
+              "placement": 3,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
               "placement": 57,
               "points": null,
               "compName": "European Championships",
               "city": "Antony (FRA)",
               "date": "2026-06-16",
               "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 7,
+              "points": null,
+              "compName": "St.Duje Cup",
+              "city": "Split (CRO)",
+              "date": "2025-10-11",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 233,
+              "points": null,
+              "compName": "Challenge Monal",
+              "city": "Saint-Maur (FRA)",
+              "date": "2026-05-22",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 71,
+              "points": null,
+              "compName": "Westend-Grand Prix",
+              "city": "Budapest (HUN)",
+              "date": "2026-04-17",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 76,
+              "points": null,
+              "compName": "World Cup",
+              "city": "Astana (KAZ)",
+              "date": "2026-03-26",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 170,
+              "points": null,
+              "compName": "World Cup",
+              "city": "Wuxi (CHN)",
+              "date": "2026-02-06",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 50,
+              "points": null,
+              "compName": "Fujairah World Cup",
+              "city": "Fujairah (UAE)",
+              "date": "2026-01-08",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 12,
+              "points": null,
+              "compName": "Eurofence League",
+              "city": "Colmar (FRA)",
+              "date": "2025-10-25",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 7,
+              "points": null,
+              "compName": "Swedish Seniors Championships",
+              "city": "Kalmar (SWE)",
+              "date": "2026-05-02",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Malmö International - Nordic Championships",
+              "city": "Malmo (SWE)",
+              "date": "2026-06-06",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 2,
+              "points": null,
+              "compName": "Djurgården Epee",
+              "city": "Stockholm (SWE)",
+              "date": "2026-05-09",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 7,
+              "points": null,
+              "compName": "Challenge Bernadotte",
+              "city": "Stockholm (SWE)",
+              "date": "2025-10-18",
+              "category": "Epee Women's Senior Individual"
+            },
+            {
+              "placement": 22,
+              "points": null,
+              "compName": "International Competition",
+              "city": "Budapest (HUN)",
+              "date": "2026-03-14",
+              "category": "Epee Women's Senior Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "epee",
+      "age": "u23",
+      "gender": "W",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195560"
+        },
+        {
+          "name": "U23 European Circuit",
+          "date": "2025-12-06",
+          "compId": "198323"
+        },
+        {
+          "name": "Swedish Championships for U23",
+          "date": "2025-12-20",
+          "compId": "200998"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Linnea Eriksson",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 5,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Epee Women's U23 Individual"
+            },
+            {
+              "placement": 5,
+              "points": null,
+              "compName": "U23 European Circuit",
+              "city": "Laupheim (GER)",
+              "date": "2025-12-06",
+              "category": "Epee Women's U23 Individual"
+            },
+            {
+              "placement": 2,
+              "points": null,
+              "compName": "Swedish Championships for U23",
+              "city": "Stockholm (SWE)",
+              "date": "2025-12-20",
+              "category": "Epee Women's U23 Individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "epee",
+      "age": "u20",
+      "gender": "W",
+      "team": false,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "Nordic Championships",
+          "date": "2025-08-28",
+          "compId": "195505"
+        },
+        {
+          "name": "World Championships",
+          "date": "2026-04-01",
+          "compId": "194207"
+        },
+        {
+          "name": "European Championships",
+          "date": "2026-02-24",
+          "compId": "199841"
+        },
+        {
+          "name": "San Jose World Cup",
+          "date": "2025-11-14",
+          "compId": "194002"
+        },
+        {
+          "name": "Alpe Adria",
+          "date": "2026-01-04",
+          "compId": "194016"
+        },
+        {
+          "name": "Ciudad de Burgos",
+          "date": "2025-12-13",
+          "compId": "194010"
+        },
+        {
+          "name": "Swedish Championships U20",
+          "date": "2026-01-17",
+          "compId": "201630"
+        },
+        {
+          "name": "Örebro Masters",
+          "date": "2025-10-04",
+          "compId": "199308"
+        },
+        {
+          "name": "Uppsala Cup",
+          "date": "2025-09-13",
+          "compId": "199292"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Linnea Eriksson",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Nordic Championships",
+              "city": "Copenhagen (DEN)",
+              "date": "2025-08-28",
+              "category": "Epee Women's U20 Individual"
+            },
+            {
+              "placement": 19,
+              "points": null,
+              "compName": "World Championships",
+              "city": "Rio de Janeiro (BRA)",
+              "date": "2026-04-01",
+              "category": "Epee Women's U20 Individual"
+            },
+            {
+              "placement": 6,
+              "points": null,
+              "compName": "European Championships",
+              "city": "Tbilisi (GEO)",
+              "date": "2026-02-24",
+              "category": "Epee Women's U20 Individual"
+            },
+            {
+              "placement": 2,
+              "points": null,
+              "compName": "San Jose World Cup",
+              "city": "San Jose (CRC)",
+              "date": "2025-11-14",
+              "category": "Epee Women's U20 Individual"
+            },
+            {
+              "placement": 20,
+              "points": null,
+              "compName": "Alpe Adria",
+              "city": "Udine (ITA)",
+              "date": "2026-01-04",
+              "category": "Epee Women's U20 Individual"
+            },
+            {
+              "placement": 58,
+              "points": null,
+              "compName": "Ciudad de Burgos",
+              "city": "Burgos (ESP)",
+              "date": "2025-12-13",
+              "category": "Epee Women's U20 Individual"
+            },
+            {
+              "placement": 10,
+              "points": null,
+              "compName": "Swedish Championships U20",
+              "city": "Helsingborg (SWE)",
+              "date": "2026-01-17",
+              "category": "Epee Women's U20 Individual"
+            },
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Örebro Masters",
+              "city": "Örebro (SWE)",
+              "date": "2025-10-04",
+              "category": "Epee Women's U20 Individual"
+            },
+            {
+              "placement": 5,
+              "points": null,
+              "compName": "Uppsala Cup",
+              "city": "Uppsala (SWE)",
+              "date": "2025-09-13",
+              "category": "Epee Women's U20 Individual"
             }
           ]
         }
@@ -139,6 +2083,41 @@
           "name": "European Championships",
           "date": "2026-06-16",
           "compId": "199824"
+        },
+        {
+          "name": "Fujairah World Cup",
+          "date": "2026-01-08",
+          "compId": "194110"
+        },
+        {
+          "name": "Challenge Monal",
+          "date": "2026-05-22",
+          "compId": "198383"
+        },
+        {
+          "name": "World Cup",
+          "date": "2026-03-26",
+          "compId": "194100"
+        },
+        {
+          "name": "World Cup",
+          "date": "2026-02-06",
+          "compId": "194114"
+        },
+        {
+          "name": "Coupe d'Europe",
+          "date": "2025-10-31",
+          "compId": "198368"
+        },
+        {
+          "name": "Svenska mästerskapen lag",
+          "date": "2025-12-20",
+          "compId": "200994"
+        },
+        {
+          "name": "Malmö International - Nordic Championships",
+          "date": "2026-06-06",
+          "compId": "200976"
         }
       ],
       "athletes": [
@@ -154,6 +2133,93 @@
               "city": "Antony (FRA)",
               "date": "2026-06-16",
               "category": "Epee Women's Senior Team"
+            },
+            {
+              "placement": 6,
+              "points": null,
+              "compName": "Fujairah World Cup",
+              "city": "Fujairah (UAE)",
+              "date": "2026-01-08",
+              "category": "Epee Women's Senior Team"
+            },
+            {
+              "placement": 14,
+              "points": null,
+              "compName": "Challenge Monal",
+              "city": "Saint-Maur (FRA)",
+              "date": "2026-05-22",
+              "category": "Epee Women's Senior Team"
+            },
+            {
+              "placement": 16,
+              "points": null,
+              "compName": "World Cup",
+              "city": "Astana (KAZ)",
+              "date": "2026-03-26",
+              "category": "Epee Women's Senior Team"
+            },
+            {
+              "placement": 15,
+              "points": null,
+              "compName": "World Cup",
+              "city": "Wuxi (CHN)",
+              "date": "2026-02-06",
+              "category": "Epee Women's Senior Team"
+            },
+            {
+              "placement": 9,
+              "points": null,
+              "compName": "Coupe d'Europe",
+              "city": "Heidenheim (GER)",
+              "date": "2025-10-31",
+              "category": "Epee Women's Senior Team"
+            },
+            {
+              "placement": 3,
+              "points": null,
+              "compName": "Svenska mästerskapen lag",
+              "city": "Stockholm (SWE)",
+              "date": "2025-12-20",
+              "category": "Epee Women's Senior Team"
+            },
+            {
+              "placement": 1,
+              "points": null,
+              "compName": "Malmö International - Nordic Championships",
+              "city": "Malmo (SWE)",
+              "date": "2026-06-06",
+              "category": "Epee Women's Senior Team"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "weapon": "epee",
+      "age": "u23",
+      "gender": "W",
+      "team": true,
+      "season": "2025",
+      "competitions": [
+        {
+          "name": "U23 European Circuit",
+          "date": "2025-12-06",
+          "compId": "198322"
+        }
+      ],
+      "athletes": [
+        {
+          "name": "Linnea Eriksson",
+          "nation": "SWE",
+          "club": "",
+          "results": [
+            {
+              "placement": 5,
+              "points": null,
+              "compName": "U23 European Circuit",
+              "city": "Laupheim (GER)",
+              "date": "2025-12-06",
+              "category": "Epee Women's U23 Team"
             }
           ]
         }

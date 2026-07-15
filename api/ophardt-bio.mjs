@@ -9,6 +9,13 @@
  *
  * Parsing logic ported directly from scrape_ophardt_bio.mjs (same repo) —
  * keep the two in sync if Ophardt's HTML structure changes.
+ *
+ * The match-results block (parseMatchResults / splitTdCells / parseMDY /
+ * parseCategoryLabel below) is ported separately from parseBiographyPage() in
+ * scrape_ophardt_results.mjs — keep THAT in sync too if it changes. It's what
+ * lets a single live fetch populate both the ranking-summary numbers AND
+ * per-competition match results (placement/date/points), instead of requiring
+ * the standalone script + manual "Sync from Ophardt" import for results.
  */
 
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)+$/;
@@ -28,6 +35,90 @@ const AGE_FROM_TEXT = {
   Senior: "senior", Seniors: "senior", Cadet: "u17", Junior: "u20",
   Veteran: "veteran", Veterans: "veteran",
 };
+
+// ---------- match-results parse helpers (ported from scrape_ophardt_results.mjs) ----------
+// "6/16/26" or "4/9/26" (biography page date) → "2026-06-16"
+function parseMDY(s) {
+  const m = String(s || "").trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+  if (!m) return null;
+  const yy = parseInt(m[3]);
+  const yr = m[3].length === 2 ? (yy >= 70 ? 1900 + yy : 2000 + yy) : yy;
+  return `${yr}-${m[1].padStart(2, "0")}-${m[2].padStart(2, "0")}`;
+}
+// "Sabre Men's U17 Individual" → {weapon, gender, age, team}
+function parseCategoryLabel(s) {
+  const t = decodeHtml(s).replace(/\s+/g, " ").trim();
+  const team = /\bteam\b/i.test(t);
+  let weapon = null, gender = null, age = null;
+  if (/épée|epee/i.test(t))        weapon = "epee";
+  else if (/\bfoil\b/i.test(t))    weapon = "foil";
+  else if (/sabre|saber/i.test(t)) weapon = "sabre";
+  if (/\bwomen\b|\bfemale\b/i.test(t))     gender = "W";
+  else if (/\bmen\b|\bmale\b/i.test(t))    gender = "M";
+  if      (/\bu11\b/i.test(t))  age = "u11";
+  else if (/\bu13\b/i.test(t))  age = "u13";
+  else if (/\bu15\b/i.test(t))  age = "u15";
+  else if (/\bu17\b|\bcadet\b/i.test(t)) age = "u17";
+  else if (/\bu20\b|\bjunior\b/i.test(t)) age = "u20";
+  else if (/\bu23\b/i.test(t))  age = "u23";
+  else if (/\bsenior\b/i.test(t)) age = "senior";
+  else if (/\bveteran\b/i.test(t)) age = "veteran";
+  return { weapon, gender, age, team };
+}
+// Split a row's HTML into cells by splitting on <td> openings.
+// Handles the biography page's unclosed <td> tags (date cell has no </td>).
+function splitTdCells(rowHtml) {
+  const parts = rowHtml.split(/<td\b[^>]*>/);
+  return parts.slice(1).map(p => p.replace(/<\/t[dr]>[\s\S]*$/, ""));
+}
+// Parse all match results from a biography page HTML (the "results" section,
+// distinct from the "Rankings" summary table parsed by parseBioPage() below).
+// Returns [{placement, startDate, city, compName, compId, category, weapon, gender, age, team}]
+function parseMatchResults(html) {
+  const results = [];
+  const anchor = html.indexOf('id="results"');
+  if (anchor === -1) return results;
+  const chunk = html.slice(anchor);
+
+  const tableRe = /<tbody>([\s\S]*?)<\/tbody>/g;
+  let tm;
+  while ((tm = tableRe.exec(chunk)) !== null) {
+    const tbody = tm[1];
+    const rowRe = /<tr\b[^>]*>([\s\S]*?)<\/tr>/g;
+    let rm;
+    while ((rm = rowRe.exec(tbody)) !== null) {
+      const cells = splitTdCells(rm[1]);
+      if (cells.length < 4) continue;
+
+      const placement = parseInt(stripTags(cells[0]).trim());
+      if (isNaN(placement) || placement <= 0) continue;
+
+      const dateM = stripTags(cells[1]).match(/(\d{1,2}\/\d{1,2}\/\d{2,4})/);
+      const startDate = dateM ? parseMDY(dateM[1]) : null;
+
+      const flagM   = cells[2].match(/title="([A-Z]{2,3})"/);
+      const country = flagM ? flagM[1] : "";
+      const cityM   = cells[2].match(/\/>\s*([^<>]+?)\s*<\/a>/);
+      const city    = cityM ? stripTags(cityM[1]).trim() : "";
+
+      const compName = stripTags(cells[3]).trim();
+
+      const compIdM = (cells[2] + cells[3]).match(/results-competition\/(\d+)/);
+      const compId  = compIdM ? compIdM[1] : null;
+
+      const category = cells.length >= 5 ? decodeHtml(cells[4]).replace(/\s+/g, " ").trim() : "";
+      const cat = parseCategoryLabel(category);
+
+      results.push({
+        placement, startDate,
+        city: city ? `${city}${country ? " (" + country + ")" : ""}` : "",
+        compName, compId, category,
+        ...cat,
+      });
+    }
+  }
+  return results;
+}
 
 function parseBioPage(html, slug) {
   const headerBlock = html.match(/<div class="page-header[^"]*">([\s\S]*?)<div class="bios_main"/);
@@ -107,6 +198,7 @@ function parseBioPage(html, slug) {
     weapons: [...weapons],
     rankings,
     memberships,
+    results: parseMatchResults(html),
     scrapedAt: new Date().toISOString(),
   };
 }

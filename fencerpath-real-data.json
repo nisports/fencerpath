@@ -3,18 +3,45 @@
     {
       "id": "f-422543",
       "name": "Kenneth Kong",
-      "club": "",
+      "club": "FFF Stockholm",
       "color": "#c0392b",
       "weapons": ["sabre"],
       "ageCategory": "senior",
       "ageCategories": [],
-      "nationalRank": {},
-      "fieRank": {},
+      "nationalRank": { "sabre": { "u17": 1, "u20": 2, "u23": 4, "senior": 2 } },
+      "efcRank": { "sabre": { "u17": 13 } },
+      "fieRank": { "sabre": { "u17": 13, "u20": 209, "senior": 329 } },
       "pointsToDefend": {},
       "nation": "SWE",
       "gender": "M",
       "ophardtSlug": "kong-kenneth",
-      "ophardtAthleteId": "422543"
+      "ophardtAthleteId": "422543",
+      "ophardtLastSync": "2026-07-15",
+      "ophardtRankings": {
+        "international": [
+          { "rank": 148, "points": 5.25, "season": "2026", "title": "FIE (unofficial)", "weapon": "sabre", "age": "u20", "kind": "Individual" },
+          { "rank": 209, "points": 5.25, "season": "2025", "title": "FIE (unofficial)", "weapon": "sabre", "age": "u20", "kind": "Individual" },
+          { "rank": 13,  "points": 66,   "season": "2025", "title": "FIE (unofficial)", "weapon": "sabre", "age": "u17", "kind": "Individual" },
+          { "rank": 329, "points": 1.25, "season": "2025", "title": "FIE (unofficial)", "weapon": "sabre", "age": "senior", "kind": "Individual" },
+          { "rank": 451, "points": 0,    "season": "2024", "title": "FIE (unofficial)", "weapon": "sabre", "age": "u20", "kind": "Individual" }
+        ],
+        "continental": [
+          { "rank": 13,  "points": 122, "season": "2025", "title": "EFC (unofficial)", "weapon": "sabre", "age": "u17", "kind": "Individual" },
+          { "rank": 167, "points": 0,   "season": "2024", "title": "EFC extracted FIE Ranking (unofficial)", "weapon": "sabre", "age": "u20", "kind": "Individual" },
+          { "rank": 39,  "points": 64,  "season": "2024", "title": "EFC (unofficial)", "weapon": "sabre", "age": "u17", "kind": "Individual" },
+          { "rank": 78,  "points": 35,  "season": "2023", "title": "EFC (unofficial)", "weapon": "sabre", "age": "u17", "kind": "Individual" }
+        ],
+        "national": [
+          { "rank": 1, "points": 280, "season": "2025", "title": "Uttagning VM/EM", "weapon": "sabre", "age": "u17", "kind": "Individual" },
+          { "rank": 2, "points": 80,  "season": "2025", "title": "Uttagning VM/EM", "weapon": "sabre", "age": "u20", "kind": "Individual" },
+          { "rank": 4, "points": 50,  "season": "2025", "title": "Uttagning VM/EM", "weapon": "sabre", "age": "u23", "kind": "Individual" },
+          { "rank": 2, "points": 138, "season": "2025", "title": "Uttagning VM/EM", "weapon": "sabre", "age": "senior", "kind": "Individual" },
+          { "rank": 5, "points": 121, "season": "2024", "title": "Uttagning VM/EM", "weapon": "sabre", "age": "u20", "kind": "Individual" },
+          { "rank": 8, "points": 70,  "season": "2024", "title": "Uttagning VM/EM", "weapon": "sabre", "age": "u23", "kind": "Individual" },
+          { "rank": 5, "points": 170, "season": "2024", "title": "Uttagning VM/EM", "weapon": "sabre", "age": "senior", "kind": "Individual" },
+          { "rank": 1, "points": 385, "season": "2024", "title": "Uttagning VM/EM", "weapon": "sabre", "age": "u17", "kind": "Individual" }
+        ]
+      }
     },
     {
       "id": "f-395812",
