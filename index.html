@@ -13431,6 +13431,15 @@ function openFencerForm(id, draft) {
           </div>
           <div style="font-size:11px;color:var(--muted);margin-top:3px;">${t("ophardtSlugHelp")}</div>
           <div id="f-ophardt-fetch-status" style="font-size:11px;min-height:14px;margin-top:3px;"></div>
+          <!-- Stash non-form Ophardt blobs (raw multi-season rankings + pending match-results) as
+               hidden-input JSON so they survive this render cycle and are read back verbatim by
+               readFencerDraftFromForm() at Save time. Without this, a freshly-fetched draft's
+               ophardtRankings/ophardtResultsPending -- which have no visible form field of their
+               own -- would be silently lost: readFencerDraftFromForm() only had the OLD saved
+               fencer object to fall back on, so a same-session fetch-then-save always saved the
+               stale pre-fetch value instead of what was just fetched. -->
+          <input type="hidden" id="f-ophardt-rankings-json" value="${escape(JSON.stringify(f.ophardtRankings||null))}"/>
+          <input type="hidden" id="f-ophardt-results-pending-json" value="${escape(JSON.stringify(f.ophardtResultsPending||[]))}"/>
         </label>
         <label><span>Birth Year</span><input id="f-birthyear" type="number" min="1980" max="2020" placeholder="e.g. 2008" value="${f.birthYear||""}" onchange="refreshFencerGoalsGrid()"/></label>
         <label><span>🛂 Passport expiry</span><input id="f-passport-expiry" type="date" value="${escape(f.passportExpiry||"")}"/></label>
@@ -13731,8 +13740,20 @@ function readFencerDraftFromForm(id) {
     passportExpiry: val("f-passport-expiry") || undefined,
     passportNationality: (val("f-passport-nat")||"").toUpperCase().trim() || undefined,
     ophardtLastSync: existing.ophardtLastSync,
-    ophardtRankings: existing.ophardtRankings,
-    ophardtResultsPending: existing.ophardtResultsPending,
+    // Read the freshly-fetched blobs back from the hidden-input JSON stash (see openFencerForm)
+    // rather than `existing` — `existing` is the fencer as it was BEFORE this fetch, so it would
+    // silently discard a same-session fetch's results if used directly. Fall back to `existing`
+    // only if the hidden input is missing/unparsable (e.g. modal opened without ever fetching).
+    ophardtRankings: (() => {
+      const raw = document.getElementById("f-ophardt-rankings-json")?.value;
+      if (raw) { try { const parsed = JSON.parse(raw); if (parsed) return parsed; } catch (e) {} }
+      return existing.ophardtRankings;
+    })(),
+    ophardtResultsPending: (() => {
+      const raw = document.getElementById("f-ophardt-results-pending-json")?.value;
+      if (raw) { try { const parsed = JSON.parse(raw); if (Array.isArray(parsed) && parsed.length) return parsed; } catch (e) {} }
+      return existing.ophardtResultsPending;
+    })(),
     nation: existing.nation, gender: val("f-gender") || existing.gender || "M",
     birthYear: parseInt(val("f-birthyear")) || undefined,
     licenses: {
