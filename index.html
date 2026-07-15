@@ -12616,6 +12616,33 @@ function ageOpenTo(compAge, fencerAge) {
   return ci >= fi;
 }
 /**
+ * Ophardt bio-page "Rankings" tables store the season as a single 4-digit year, but that
+ * year's meaning is NOT consistent across scopes — confirmed empirically (2026-07-15) against
+ * Kenneth's real bio page: National/Continental rows for the current 25/26 season are labeled
+ * "2025" (the season's STARTING year — same convention normalizeSeasonKey's lone-year branch
+ * assumes), but the International/FIE table's current-season rows are labeled "2026" (the
+ * season's ENDING year instead). Treating every lone year as "starting year" — what
+ * normalizeSeasonKey alone does — silently zeroed out the international rank every time,
+ * because "2026" normalized to "26/27" (next season) instead of "25/26" (this one). Rather than
+ * pick one convention and risk being wrong for some other scope/site quirk, accept a lone year
+ * as a match if EITHER interpretation (starting-year or ending-year) lines up with the wanted
+ * season. This only affects raw single-year strings; explicit "2025/2026"-style ranges (used by
+ * the SVFF ranking importers) are untouched and still require an exact match via normalizeSeasonKey.
+ */
+function ophardtSeasonMatches(rawSeason, wantSeasonKey) {
+  if (!rawSeason || !wantSeasonKey) return false;
+  const str = String(rawSeason).trim();
+  if (normalizeSeasonKey(str) === wantSeasonKey) return true;
+  const y = str.match(/^(\d{4})$/);
+  if (y) {
+    const endYear = parseInt(y[1]);
+    const asEndingYear = `${String((endYear - 1) % 100).padStart(2,"0")}/${String(endYear % 100).padStart(2,"0")}`;
+    if (asEndingYear === wantSeasonKey) return true;
+  }
+  return false;
+}
+
+/**
  * Read a ranking directly from f.ophardtRankings (raw bio scrape data).
  * scope: "national" | "continental" | "international"
  * Returns the rank for weapon × cat in the app's ACTIVE season, or null.
@@ -12626,6 +12653,10 @@ function ageOpenTo(compAge, fencerAge) {
  * bio season was closest to today's real date, even while every other ranking lookup in the
  * app (findRankingCacheForCat, the Season Change stat, etc.) strictly honors activeSeasonKey()
  * and never silently falls back across seasons. Fixed to match that same invariant.
+ *
+ * NOTE (2026-07-15): switched the season check from a strict normalizeSeasonKey `===` to
+ * ophardtSeasonMatches() — see that function's comment for why (Ophardt's international
+ * ranking table uses the opposite starting/ending-year convention from national/continental).
  */
 function getRankFromBio(f, weapon, cat, scope) {
   const arr = f.ophardtRankings?.[scope];
@@ -12633,7 +12664,7 @@ function getRankFromBio(f, weapon, cat, scope) {
   const wantSeason = activeSeasonKey();
   const matches = arr.filter(r =>
     r.weapon === weapon && r.age === cat &&
-    normalizeSeasonKey(String(r.season)) === wantSeason   // exact season match only — no cross-season fallback
+    ophardtSeasonMatches(r.season, wantSeason)
   );
   if (!matches.length) return null;
   matches.sort((a, b) => +b.season - +a.season);
@@ -15412,12 +15443,18 @@ function pickAllRankings(bioRankings) {
   // current-season fields with stale ones. Only pick entries tagged with the ACTIVE season now.
   // f.ophardtRankings still stores the full raw table regardless (see mergeBioPayload), so
   // getRankFromBio() can still be asked about other seasons explicitly if ever needed.
+  //
+  // NOTE (2026-07-15): uses ophardtSeasonMatches() rather than a strict normalizeSeasonKey
+  // `===` check — Ophardt's international/FIE ranking rows label the season by its ENDING year
+  // (e.g. "2026" for the 25/26 season) while national/continental rows use the STARTING year
+  // (e.g. "2025" for that same season). A strict check silently dropped the international rank
+  // every time. See ophardtSeasonMatches()'s comment for the full story.
   const out = { national:{}, efc:{}, fie:{} };
   const wantSeason = activeSeasonKey();
   const byKey = (arr) => {
     const m = {};
     for (const r of (arr||[])) {
-      if (normalizeSeasonKey(String(r.season)) !== wantSeason) continue;
+      if (!ophardtSeasonMatches(r.season, wantSeason)) continue;
       m[`${r.weapon}-${r.age}`] = r; // one entry per weapon×age for the active season
     }
     return m;
