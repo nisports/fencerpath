@@ -6237,7 +6237,7 @@ function renderWhatNeedsAttention() {
     </div>`;
   }
   const fForGoal = uiSelectedFencer ? State.fencers.find(x => x.id === uiSelectedFencer) : null;
-  if (fForGoal) {
+  if (uiSelectedFencer && fForGoal) {
     const primaryW = (fForGoal.weapons || [])[0];
     const fCatsGoal = fencerAllCategories(fForGoal);
     const goalCat = fCatsGoal[0];
@@ -6308,7 +6308,7 @@ function renderWhatNeedsAttention() {
       <div class="wna-progress-pct">${displayPct}%</div>
       <button class="wna-cta wna-cta-goal" onclick="viewFencerGoalPlan('${fForGoal.id}')">View Goal Plan →</button>
     </div>`;
-  } else {
+  } else if (uiSelectedFencer) {
     card3 = `<div class="wna-card wna-card-goal">
       <div class="wna-tag wna-tag-goal">SEASON GOAL</div>
       <div style="padding:24px 0;text-align:center;color:var(--muted);font-size:28px;">🎯</div>
