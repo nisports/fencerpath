@@ -3122,6 +3122,14 @@ async function onAuthReady(user) {
   applyAdminGating(isAdminUser(user));
   fillSettings();
   setLang(State.settings.language || "en");
+  // Single-fencer accounts (the common case for an athlete tracking only themselves)
+  // shouldn't land on the unfiltered "All fencers" dashboard on every login — auto-select
+  // the one fencer that exists so the dashboard is personalized immediately. Multi-fencer
+  // rosters (coaches/parents tracking several athletes) keep starting unfiltered, since
+  // there's no single obvious default among several fencers.
+  if (!uiSelectedFencer && State.fencers.length === 1) {
+    uiSelectedFencer = State.fencers[0].id;
+  }
   renderAll();
   // Defensive cleanup: strip any leftover #access_token=... fragment from
   // the address bar now that auth has resolved, so a future login attempt
