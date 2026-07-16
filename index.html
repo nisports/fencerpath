@@ -14578,9 +14578,18 @@ function mergeVmEmRankingsPayload(payload) {
   State.rankingsCache = State.rankingsCache || {};
   const baseKey = `vmem-${(filters.nation||"SWE").toUpperCase()}-${(filters.age||"").toLowerCase()}-${weapon}-${(filters.gender||"").toUpperCase()}`;
   const cacheKey = season ? `${baseKey}@${season}` : baseKey;
+  // findRankingCacheForCat() only trusts vmem-prefixed cache entries tagged source:"swe" —
+  // it treats untagged vmem- entries as "international EFC/FIE rankings" and skips them so
+  // they never leak into the Top-3-national-ranking EM gate. This importer (scrape_vmem_rankings.mjs
+  // / "Pick vmem_rankings.json…") scrapes the exact same Swedish federation "Uttagning VM/EM"
+  // selection list that mergeSweRankingsPayload's scope==="selection" branch tags source:"swe" —
+  // it was just never tagged here, so Qualification Path's EM section silently ignored every
+  // import done through this button and kept showing "Not yet / import vmem_rankings.json"
+  // even after a successful import.
   State.rankingsCache[cacheKey] = {
     scrapedAt: payload.scrapedAt || new Date().toISOString(),
     filters: { ...filters, vmem: true },
+    source: (filters.nation || "SWE").toUpperCase() === "SWE" ? "swe" : (filters.nation || "").toLowerCase(),
     season,
     list
   };
