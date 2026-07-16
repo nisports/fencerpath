@@ -12643,6 +12643,27 @@ function ophardtSeasonMatches(rawSeason, wantSeasonKey) {
 }
 
 /**
+ * Ophardt's bio-page weapon badges (bio.weapons, returned by /api/ophardt-bio) come from whatever
+ * order the site's HTML template happens to render them in — NOT from which weapon the fencer
+ * actually competes in. Confirmed empirically (2026-07-16) against Kenneth Kong's real bio page:
+ * bio.weapons came back as ["foil","sabre"] even though he has zero ranking-table rows and only
+ * 1 of 61 registrations in foil, versus complete, correctly-dated sabre data across every ranking
+ * scope. Since 15+ call sites throughout this file treat weapons[0] as "the" primary weapon for
+ * ranking/results/qualification display, trusting the raw badge order silently broke every one of
+ * those displays for him. Reorder by descending count of real ranking + result rows per weapon
+ * instead, so the weapon the fencer actually competes in leads. Weapons with equal (including zero)
+ * signal keep their relative badge order, since Array#sort is stable.
+ */
+function reorderWeaponsByActivity(weapons, rankings, results) {
+  const counts = {};
+  weapons.forEach(w => counts[w] = 0);
+  const tally = (rows) => (rows || []).forEach(r => { if (r && r.weapon && counts.hasOwnProperty(r.weapon)) counts[r.weapon]++; });
+  if (rankings) { tally(rankings.international); tally(rankings.continental); tally(rankings.national); }
+  tally(results);
+  return [...weapons].sort((a, b) => counts[b] - counts[a]);
+}
+
+/**
  * Read a ranking directly from f.ophardtRankings (raw bio scrape data).
  * scope: "national" | "continental" | "international"
  * Returns the rank for weapon × cat in the app's ACTIVE season, or null.
@@ -13658,7 +13679,7 @@ async function fetchOphardtBioForForm(id) {
     if (bio.name)  draft.name  = bio.name;
     if (bio.club)  draft.club  = bio.club;
     if (bio.gender) draft.gender = bio.gender;
-    if (bio.weapons && bio.weapons.length) draft.weapons = bio.weapons;
+    if (bio.weapons && bio.weapons.length) draft.weapons = reorderWeaponsByActivity(bio.weapons, bio.rankings, bio.results);
     // Only auto-set the primary age category for a brand-new fencer — the default
     // skeleton value ("u17") carries no real signal yet. For an existing fencer being
     // re-synced, leave their already-chosen category alone (same "don't silently
@@ -13733,7 +13754,15 @@ function refreshFencerGoalsGrid() {
  *  Shared by saveFencerForm() and the Ophardt live-fetch re-render flow, so
  *  both always build the exact same object shape from the exact same fields. */
 function readFencerDraftFromForm(id) {
-  const weapons = ["foil","epee","sabre"].filter(w => document.getElementById("f-w-"+w).checked);
+  const existing = State.fencers.find(x => x.id === id) || {};
+  // Weapon checkboxes always render in a fixed foil/epee/sabre order (see openFencerForm), so a
+  // naive rebuild from that order would silently discard any real primary-weapon order every time
+  // the form is saved — 15+ call sites throughout this file treat weapons[0] as "the" primary
+  // weapon for ranking/results/qualification display. Preserve the fencer's existing weapon order
+  // for weapons that are still checked, and only append newly-checked weapons at the end.
+  const checkedWeapons = ["foil","epee","sabre"].filter(w => document.getElementById("f-w-"+w).checked);
+  const prevOrder = Array.isArray(existing.weapons) ? existing.weapons.filter(w => checkedWeapons.includes(w)) : [];
+  const weapons = [...prevOrder, ...checkedWeapons.filter(w => !prevOrder.includes(w))];
   const nationalRank = {}, efcRank = {}, fieRank = {}, vmEmRank = {}, vmEmPoints = {};
   const ALL_CATS = ["u11","u13","u15","u17","u20","u23","senior","veteran"];
   ["foil","epee","sabre"].forEach(w => {
@@ -13747,7 +13776,6 @@ function readFencerDraftFromForm(id) {
       const fr = parseInt(val(`f-fie-${w}-${cat}`)); if (fr) { if (!fieRank[w])      fieRank[w]      = {}; fieRank[w][cat]      = fr; }
     });
   });
-  const existing = State.fencers.find(x => x.id === id) || {};
   const ageCategories = ["u11","u13","u15","u17","u20","u23","senior","veteran"]
     .filter(a => document.getElementById("f-aa-"+a)?.checked);
   return {
