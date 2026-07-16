@@ -3050,6 +3050,10 @@ async function authSignInGoogle() {
   });
 }
 async function authSignOut() {
+  // Flush any pending debounced save FIRST. Otherwise a save() from the last 800ms
+  // (see queueCloudSave) is still waiting on cloudSyncTimer when we wipe localStorage
+  // and reload below — silently dropping that write with no copy left anywhere.
+  await flushCloudSave();
   await supabaseClient.auth.signOut();
   // Clear the local cache too — otherwise leftover local data from this
   // account could be misread as "this device's local data" and get pushed
@@ -3084,6 +3088,75 @@ function queueCloudSave() {
   if (!currentAuthUser) return;
   clearTimeout(cloudSyncTimer);
   cloudSyncTimer = setTimeout(() => cloudSave(currentAuthUser.id), 800);
+}
+
+/** Force any pending debounced cloud save to happen immediately, and wait for it to finish.
+ *  Must be called before anything that ends/reloads the session (sign out, tab close) —
+ *  otherwise an edit made in the last 800ms (see queueCloudSave's debounce) is still sitting
+ *  in cloudSyncTimer when the page reloads, so that setTimeout is thrown away and the write
+ *  to Supabase never happens. In authSignOut()'s case local data is *also* wiped right after,
+ *  so that edit would be lost with literally no copy left anywhere — this is the root cause
+ *  of "I signed out and all my data was gone" reports. */
+async function flushCloudSave() {
+  if (!currentAuthUser) return;
+  clearTimeout(cloudSyncTimer);
+  cloudSyncTimer = null;
+  await cloudSave(currentAuthUser.id);
+}
+
+/**
+ * Pull the shared, cross-user `rankings_cache` table (public read-only via the anon key —
+ * see supabase/migrations/0001_rankings_cache.sql) and merge any rows this user doesn't
+ * already have a fresher local copy of into State.rankingsCache, using the exact same key
+ * format / shape mergeVmEmRankingsPayload() writes ("vmem-SWE-u17-sabre-M@25/26", source:"swe").
+ *
+ * This table is populated automatically once a day by Vercel Cron (api/cron/sync-rankings.mjs),
+ * one row per weapon/age/gender combo. Because findRankingCacheForCat() and
+ * syncCurrentRankFromActiveSeasonCache() both just read State.rankingsCache, merging shared
+ * rows in here is enough to make every user's Qualification Path auto-update — no code changes
+ * needed in the (many) synchronous render-path call sites, and no need for the user to ever
+ * manually run scrape_vmem_rankings.mjs / import a JSON file again.
+ *
+ * A shared row only overwrites a local entry if it's the SAME OR NEWER (by scrapedAt) —
+ * so this can never clobber a manual import done more recently than the last cron run.
+ */
+async function syncSharedRankingsCache() {
+  try {
+    const { data, error } = await supabaseClient
+      .from("rankings_cache")
+      .select("weapon, age_category, gender, nation, season, source, scraped_at, list");
+    if (error) { console.warn("syncSharedRankingsCache failed", error); return; }
+    if (!Array.isArray(data) || !data.length) return;
+
+    State.rankingsCache = State.rankingsCache || {};
+    let changed = false;
+    for (const row of data) {
+      const weapon = (row.weapon || "").toLowerCase();
+      const age    = (row.age_category || "").toLowerCase();
+      const gender = (row.gender || "").toUpperCase();
+      const nation = (row.nation || "SWE").toUpperCase();
+      const season = normalizeSeasonKey(row.season) || row.season;
+      if (!weapon || !age || !gender || !season || !Array.isArray(row.list)) continue;
+
+      const cacheKey  = `vmem-${nation}-${age}-${weapon}-${gender}@${season}`;
+      const existing  = State.rankingsCache[cacheKey];
+      const incoming  = row.scraped_at ? new Date(row.scraped_at).getTime() : 0;
+      const current   = existing?.scrapedAt ? new Date(existing.scrapedAt).getTime() : -1;
+      if (existing && current >= incoming) continue; // local copy is same age or newer — keep it
+
+      State.rankingsCache[cacheKey] = {
+        scrapedAt: row.scraped_at || new Date().toISOString(),
+        filters: { weapon, age, gender, nation, vmem: true },
+        source: row.source || (nation === "SWE" ? "swe" : nation.toLowerCase()),
+        season,
+        list: row.list,
+      };
+      changed = true;
+    }
+    if (changed) save();
+  } catch (err) {
+    console.warn("syncSharedRankingsCache error", err);
+  }
 }
 
 /** Runs once, right after sign-in, before the auth gate is hidden.
@@ -3130,6 +3203,9 @@ async function onAuthReady(user) {
   if (!uiSelectedFencer && State.fencers.length === 1) {
     uiSelectedFencer = State.fencers[0].id;
   }
+  // Merge in the shared, Cron-synced rankings_cache table before the first render, so
+  // Qualification Path etc. show up-to-date VM/EM data without waiting on a manual import.
+  await syncSharedRankingsCache();
   renderAll();
   // Defensive cleanup: strip any leftover #access_token=... fragment from
   // the address bar now that auth has resolved, so a future login attempt
@@ -3350,6 +3426,10 @@ const I18N = {
     name: "Name", dates: "Dates", location: "Location", weapon: "Weapon", level: "Level",
     ageCategory: "Age category", ageCategoryPrimary: "Primary age category", alsoCompetesIn: "Also competes in (additional categories)", rankingMatrix: "Rankings by weapon × age", allAges: "All ages", allCategories: "All categories", regOpen: "Reg. opens", regClose: "Reg. closes", cancellationDeadline: "Cancellation deadline",
     pointsPool: "Points pool", link: "Link", notes: "Notes",
+    satelliteTier: "Satellite-tier event",
+    satelliteTierHint: "Excludes this competition from VM/EM Top-32 qualification (Condition 2), even with a strong result. Auto-detected when the name says \"Satellite\" — check this manually for FIE-circuit events whose name doesn't spell it out (e.g. \"Viking Cup\").",
+    confirmTier: "Confirm event tier",
+    confirmTierHint: "This result counts toward VM/EM Top-32 qualification, but the event's tier has never been manually confirmed — click to check it isn't actually a Satellite-tier event.",
     // statuses
     statusPlanning: "Planning", statusRegistered: "Registered", statusConfirmed: "Confirmed",
     statusCancelled: "Cancelled", statusCompleted: "Completed",
@@ -3683,6 +3763,10 @@ const I18N = {
     name: "Namn", dates: "Datum", location: "Plats", weapon: "Vapen", level: "Nivå",
     ageCategory: "Åldersklass", ageCategoryPrimary: "Primär åldersklass", alsoCompetesIn: "Tävlar även i (extra åldersklasser)", rankingMatrix: "Rankning per vapen × åldersklass", allAges: "Alla åldersklasser", allCategories: "Alla kategorier", regOpen: "Anmälan öppnar", regClose: "Anmälan stänger", cancellationDeadline: "Avanmälningsdatum",
     pointsPool: "Poängpool", link: "Länk", notes: "Anteckningar",
+    satelliteTier: "Satellittävling",
+    satelliteTierHint: "Utesluter tävlingen från VM/EM-kvalificering (Top 32), även vid ett starkt resultat. Upptäcks automatiskt om namnet innehåller \"Satellite\" — kryssa i manuellt för FIE-tävlingar vars namn inte anger det (t.ex. \"Viking Cup\").",
+    confirmTier: "Bekräfta tävlingsnivå",
+    confirmTierHint: "Detta resultat räknas mot VM/EM Top 32-kvalificering, men tävlingens nivå har aldrig bekräftats manuellt — klicka för att kontrollera att det inte faktiskt är en satellittävling.",
     statusPlanning: "Planerar", statusRegistered: "Anmäld", statusConfirmed: "Bekräftad",
     statusCancelled: "Avanmäld", statusCompleted: "Genomförd",
     statusSubmittedClub: "Skickad till klubb", statusPendingFederation: "Väntar på förbund", statusNeedsFollowup: "Behöver uppföljning",
@@ -4235,6 +4319,20 @@ function isSatelliteComp(c) {
   if ((c.typ || "").toUpperCase() === "SAT") return true;
   if (/\bsatellite\b/i.test(c.name || "")) return true;
   return /^\s*sat-\w+\b/i.test(c.name || "");   // SVFF abbreviation, e.g. "Sat-VC <city>"
+}
+// True if a competition is currently counting toward a Top-32 VM/EM qualifying
+// result (i.e. isC2Comp already accepted it — see getC2Status) but its Satellite-tier
+// status has never been manually confirmed one way or the other. Neither Ophardt nor
+// any of our scrapers reliably expose FIE's own World Cup/Grand Prix/Challenge/Satellite
+// grading (see satelliteTierHint) — auto-detection only catches events whose NAME says
+// "Satellite" or "Sat-<city>". Everything else is a silent guess unless a human has
+// actually opened the competition form and looked at the checkbox (tierReviewed).
+// Deliberately reactive, not proactive: we only flag this for a comp that's actually
+// driving someone's qualification status right now, not for every FIE-level event on
+// the calendar — see conversation 2026-07-17 for why (avoids nagging Tina to pre-tag
+// hundreds of events that never end up mattering).
+function compTierUnconfirmed(c) {
+  return !!c && !isSatelliteComp(c) && !c.tierReviewed;
 }
 function fmtDate(s) {
   if (!s) return "—";
@@ -6747,10 +6845,15 @@ function buildAOQualStatus(f, isSv) {
           const c  = State.competitions.find(x => x.id === r.competitionId);
           const ds = c ? fmtShort(c.startDate) : "";
           const levelBadge = c?.level ? `<span style="font-size:9px;padding:1px 4px;border-radius:3px;background:var(--accent-soft);color:var(--accent);font-weight:700;margin-left:3px;">${c.level.toUpperCase()}</span>` : "";
+          const tierWarn = compTierUnconfirmed(c)
+            ? `<span title="${escape(t("confirmTierHint"))}" onclick="${c?`openCompForm('${c.id}')`:''}"
+                style="cursor:pointer;font-size:9px;padding:1px 4px;border-radius:3px;background:var(--warn-soft);color:var(--warn);font-weight:700;">⚠ ${t("confirmTier")}</span>`
+            : "";
           return `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
             <span style="font-weight:700;color:var(--good);">#${r.result.placement}</span>
             <span>${c ? compLink(c, escape(c.name)) : "—"}</span>
             ${levelBadge}
+            ${tierWarn}
             ${ds ? `<span style="color:var(--muted);">${ds}</span>` : ""}
           </div>`;
         }).join("");
@@ -8787,6 +8890,8 @@ function getC2Status(f, cat, { strict = false } = {}) {
     if (!c) return false;
     const p = parseInt(r.result?.placement);
     if (!(p > 0 && p <= 32)) return false;
+    // Team-event results never count toward an individual's VM/EM Top-32 qualification.
+    if (r.result?.isTeam) return false;
     const endDate = toDate(c.endDate || c.startDate);
     if (!(r.status === "completed" || (endDate != null && endDate < today))) return false;
     // RULE 0: VM/EM selection resets every season — a qualifying result only counts toward
@@ -9193,7 +9298,11 @@ function renderStrategicInsights() {
             const nameLink = url
               ? `<a href="${url}" target="_blank" style="color:inherit;${linkStyle}">${nameLabel}</a>`
               : r.id ? `<span style="${linkStyle}" onclick="openRegForm('${r.id}')">${nameLabel}</span>` : nameLabel;
-            return `<strong>#${r.result.placement}</strong> ${nameLink} <span style="color:var(--muted);">${ds}</span>`;
+            const tierWarn = compTierUnconfirmed(c)
+              ? `<span title="${escape(t("confirmTierHint"))}" onclick="${c?`openCompForm('${c.id}')`:''}"
+                  style="cursor:pointer;font-size:10px;padding:0 4px;border-radius:3px;background:var(--warn-soft);color:var(--warn);font-weight:700;">⚠ ${t("confirmTier")}</span>`
+              : "";
+            return `<strong>#${r.result.placement}</strong> ${nameLink} <span style="color:var(--muted);">${ds}</span> ${tierWarn}`;
           }).join(" · ");
         } else {
           c2block = c2.upcoming.length
@@ -9508,7 +9617,10 @@ function getBookingStatus(reg, comp) {
   // legacy manually-set b.fiercard value is intentionally ignored now that this is automatic.
   const f = State.fencers.find(x => x.id === reg.fencerId);
   const licType = gatingLicenseForLevel((comp && comp.level) || "swedish");
-  const licStatus = f ? licenseStatus(f, licType) : "unknown";
+  // Check validity AS OF the competition's date, not today — a license that's valid right
+  // now but expires before this competition happens is not actually usable for it. See
+  // licenseStatus()'s asOfDate comment.
+  const licStatus = f ? licenseStatus(f, licType, comp && comp.startDate) : "unknown";
   return {
     flight:    b.flight    || def.flight,
     hotel:     b.hotel     || def.hotel,
@@ -12968,14 +13080,23 @@ function seasonLicenseExpiry(seasonKey) {
 /** Get effective license status: "active", "expired", or "unknown".
  *  A license marked "active" with no validUntil is cross-checked against
  *  the active season's standard expiry (Aug 31 of season end year).
- *  If validUntil is before today OR before the season start → "expired". */
-function licenseStatus(f, licType) {
+ *  If validUntil is before the reference date → "expired".
+ *
+ *  `asOfDate` (optional, "YYYY-MM-DD") is the date to check validity AGAINST — defaults to
+ *  today when omitted. Registration/booking call sites (getBookingStatus) MUST pass the
+ *  competition's startDate here: a license that's valid today but expires before the
+ *  competition takes place is not actually usable for that competition, and checking
+ *  against "today" instead silently showed it as "valid" right up until the day it expired,
+ *  even for a competition happening well after that expiry date. General "current status"
+ *  call sites (dashboard reminders/badges, with no specific competition in view) correctly
+ *  keep using today's date by simply omitting asOfDate. */
+function licenseStatus(f, licType, asOfDate) {
   const lic = (f.licenses || {})[licType];
   if (!lic || !lic.status || lic.status === "unknown") return "unknown";
   if (lic.status === "active") {
-    const today = new Date();
+    const ref = asOfDate ? (toDate(asOfDate) || new Date()) : new Date();
     const expiryStr = lic.validUntil || seasonLicenseExpiry(activeSeasonKey());
-    if (expiryStr && new Date(expiryStr + "T23:59:59") < today) return "expired";
+    if (expiryStr && new Date(expiryStr + "T23:59:59") < ref) return "expired";
     return "active";
   }
   return lic.status;
@@ -13331,6 +13452,11 @@ function openCompForm(id) {
         </label>
         <label><span>${t("pointsPool")}</span><input id="f-pool" type="number" value="${c.pointsPool||""}"/></label>
         <label><span>${t("expectedEntries")}</span><input id="f-entries" type="number" min="1" placeholder="~" value="${c.expectedEntries||""}"/></label>
+        <label class="full" style="flex-direction:row; align-items:flex-start; gap:8px; font-weight:400;">
+          <input type="checkbox" id="f-satellite" style="margin-top:3px;" ${isSatelliteComp(c)?"checked":""}/>
+          <span><span style="font-weight:600;">${t("satelliteTier")}</span><br/>
+            <span style="font-size:11px; color:var(--muted);">${t("satelliteTierHint")}</span></span>
+        </label>
         <label><span>${t("regOpen")}</span><input id="f-regopen" type="date" value="${c.regOpen||""}"/></label>
         <label><span>${t("regClose")}</span><input id="f-regclose" type="date" value="${c.regClose||""}"/></label>
         <label><span>${t("cancellationDeadline")}</span><input id="f-cancel" type="date" value="${c.cancelDeadline||""}"/></label>
@@ -13363,6 +13489,14 @@ function saveCompForm(id, isEdit) {
       level: val("f-level"),
       pointsPool: parseInt(val("f-pool"))||null,
       expectedEntries: parseInt(val("f-entries"))||null,
+      // Manual satellite-tier flag (see satelliteTierHint) — FIE-circuit imports never set this
+      // automatically since autoCreateComp() has no signal for it, so it must be settable by hand.
+      pointsCategory: document.getElementById("f-satellite")?.checked ? "Satellite"
+        : (existing.pointsCategory === "Satellite" ? null : existing.pointsCategory),
+      // Any explicit save through this form means the satellite checkbox above was visible and
+      // considered — see compTierUnconfirmed(), which uses this to stop nagging once a human has
+      // actually looked at the tier, regardless of which way they left the checkbox.
+      tierReviewed: true,
       regOpen: val("f-regopen"), regClose: val("f-regclose"), cancelDeadline: val("f-cancel"),
       link: val("f-link"), notes: val("f-notes"),
       hasIndividual: document.getElementById("f-has-ind")?.checked ?? true,
@@ -13385,6 +13519,7 @@ function saveCompForm(id, isEdit) {
         name, startDate: base.startDate, endDate: base.endDate,
         city: base.city, country: base.country, level: base.level,
         genders: base.genders, pointsPool: base.pointsPool, expectedEntries: base.expectedEntries,
+        pointsCategory: base.pointsCategory, tierReviewed: base.tierReviewed,
         regOpen: base.regOpen, regClose: base.regClose, cancelDeadline: base.cancelDeadline,
         link: base.link, notes: base.notes,
         hasIndividual: base.hasIndividual, hasTeam: base.hasTeam,
@@ -13833,11 +13968,20 @@ function readFencerDraftFromForm(id) {
 function saveFencerForm(id, isEdit) {
   const obj = readFencerDraftFromForm(id);
   if (!obj.name) { alert("Name required"); return; }
+  const isNewFencer = !(isEdit === true || isEdit === "true");
   if (isEdit === true || isEdit === "true") {
     const i = State.fencers.findIndex(x => x.id === id);
     if (i >= 0) State.fencers[i] = obj; else State.fencers.push(obj);
   } else {
     State.fencers.push(obj);
+  }
+  // Same auto-select behavior as onAuthReady(): if this was the first fencer ever added
+  // (brand-new single-fencer account) and nothing is currently selected, jump straight to
+  // their personalized dashboard instead of leaving the unfiltered "All fencers" view up.
+  // Without this, auto-select only ever fired at login — adding your very first fencer
+  // mid-session left the dashboard stuck on "All fencers" until the next login.
+  if (isNewFencer && !uiSelectedFencer && State.fencers.length === 1) {
+    uiSelectedFencer = obj.id;
   }
   // If birthYear was just added/changed, immediately correct the primary ageCategory rather
   // than waiting for the next reload's migrateData() pass to catch it.

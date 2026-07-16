@@ -2,6 +2,104 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "crons": [
+    {
+      "path": "/api/cron/sync-rankings?weapon=epee&age=senior&gender=M",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=epee&age=senior&gender=F",
+      "schedule": "1 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=epee&age=u23&gender=M",
+      "schedule": "2 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=epee&age=u23&gender=F",
+      "schedule": "3 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=epee&age=u20&gender=M",
+      "schedule": "4 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=epee&age=u20&gender=F",
+      "schedule": "5 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=epee&age=u17&gender=M",
+      "schedule": "6 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=epee&age=u17&gender=F",
+      "schedule": "7 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=foil&age=senior&gender=M",
+      "schedule": "8 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=foil&age=senior&gender=F",
+      "schedule": "9 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=foil&age=u23&gender=M",
+      "schedule": "10 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=foil&age=u23&gender=F",
+      "schedule": "11 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=foil&age=u20&gender=M",
+      "schedule": "12 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=foil&age=u20&gender=F",
+      "schedule": "13 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=foil&age=u17&gender=M",
+      "schedule": "14 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=foil&age=u17&gender=F",
+      "schedule": "15 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=sabre&age=senior&gender=M",
+      "schedule": "16 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=sabre&age=senior&gender=F",
+      "schedule": "17 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=sabre&age=u23&gender=M",
+      "schedule": "18 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=sabre&age=u23&gender=F",
+      "schedule": "19 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=sabre&age=u20&gender=M",
+      "schedule": "20 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=sabre&age=u20&gender=F",
+      "schedule": "21 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=sabre&age=u17&gender=M",
+      "schedule": "22 3 * * *"
+    },
+    {
+      "path": "/api/cron/sync-rankings?weapon=sabre&age=u17&gender=F",
+      "schedule": "23 3 * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
