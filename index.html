@@ -10848,6 +10848,13 @@ function renderCalendarTimeline() {
   // Gather active registrations as timeline items, optionally filtered by uiSelectedFencer
   const today_ts = new Date(); today_ts.setHours(0,0,0,0);
   const _futureCompIds2 = new Set(activeComps().filter(c => c.startDate && new Date(c.startDate) >= today_ts).map(c => c.id));
+  // Scope the Timeline to whichever season is active in the season selector (see
+  // activeSeasonKey()), same as the rest of the Season Calendar/Dashboard. Before this,
+  // the Timeline ignored the season dropdown entirely and always showed a fencer's full
+  // history — Tina noticed switching to "26/27" still showed a 2018 competition first.
+  // The anchor-on-today sort below doesn't hide anything by itself; this filter is what
+  // actually scopes the list to one season (2026-07-17).
+  const _tlSeason = activeSeasonKey();
   const items = State.registrations
     .filter(r => r.status !== "cancelled")
     // Display-layer guard: never show "completed" registrations under future competitions
@@ -10860,9 +10867,10 @@ function renderCalendarTimeline() {
       return { r, c, f, s: toDate(c.startDate), e: toDate(c.endDate || c.startDate) };
     })
     .filter(Boolean)
+    .filter(it => seasonOf(it.c.startDate) === _tlSeason)
     .sort((a, b) => (a.c.startDate || "").localeCompare(b.c.startDate || ""));
 
-  // Camp items for timeline
+  // Camp items for timeline — same season scoping as competitions above.
   const campItems = (State.camps || [])
     .filter(camp => !uiSelectedFencer || camp.fencerId === uiSelectedFencer)
     .map(camp => {
@@ -10870,7 +10878,8 @@ function renderCalendarTimeline() {
       if (!f || !camp.startDate) return null;
       return { type: "camp", camp, f, s: toDate(camp.startDate), e: toDate(camp.endDate || camp.startDate) };
     })
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter(ci => seasonOf(ci.camp.startDate) === _tlSeason);
 
   if (items.length === 0 && campItems.length === 0) {
     root.innerHTML = `<div class="timeline-empty">${t("timelineEmpty")}</div>`;
