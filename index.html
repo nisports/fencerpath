@@ -56,6 +56,7 @@
     --bad-soft: rgba(224,82,82,0.15);
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.4), 0 1px 1px rgba(0,0,0,0.3);
     --shadow:    0 1px 3px rgba(0,0,0,0.5), 0 4px 14px rgba(0,0,0,0.4);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
     --radius: 12px;
     --radius-sm: 8px;
   }
@@ -83,9 +84,15 @@
       --bad-soft:    rgba(204,48,48,0.10);
       --shadow-sm:   0 1px 2px rgba(0,0,0,0.06), 0 1px 1px rgba(0,0,0,0.04);
       --shadow:      0 1px 4px rgba(0,0,0,0.09), 0 4px 16px rgba(0,0,0,0.07);
+      --shadow-lg:   0 8px 24px rgba(20,40,70,0.10), 0 2px 8px rgba(20,40,70,0.06);
     }
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
   html, body {
     margin: 0; padding: 0;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
@@ -95,21 +102,25 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
   a { color: inherit; }
   img { max-width: 100%; display: block; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
   header.topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 28px;
+    padding: 16px 28px;
     background: var(--panel);
     border-bottom: 2px solid var(--gold);
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: padding 0.25s ease, box-shadow 0.25s ease;
   }
+  header.topbar.is-scrolled { padding: 10px 28px; box-shadow: var(--shadow); }
   .topbar-brand-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .topbar-brand-link h1 {
     margin: 0;
@@ -119,28 +130,37 @@
     text-transform: uppercase;
     color: var(--text);
   }
-  .logo-mark { width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0; }
+  .logo-mark { width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0; transition: width 0.25s ease, height 0.25s ease; }
+  header.topbar.is-scrolled .logo-mark { width: 26px; height: 26px; }
   .topbar-tagline { font-size: 10px; font-weight: 500; letter-spacing: 1.8px; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
   .topbar-right { display: flex; align-items: center; gap: 18px; }
   .topbar-nav { display: flex; align-items: center; gap: 22px; }
   .topbar-nav a {
     font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none;
+    transition: color 0.15s ease;
   }
   .topbar-nav a:hover { color: var(--text); }
   @media (max-width: 780px) { .topbar-nav { display: none; } }
 
-  main { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
-  section { padding: 72px 0; }
-  section.tight { padding: 48px 0; }
+  main { display: block; width: 100%; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+  section { padding: 84px 0; position: relative; }
+  section.tight { padding: 56px 0; }
+  section.band { background: var(--panel-2); }
+  section[id] { scroll-margin-top: 84px; }
   @media (max-width: 700px) {
     header.topbar { padding: 12px 16px; }
-    main { padding: 0 16px; }
-    section { padding: 48px 0; }
+    .wrap { padding: 0 16px; }
+    section { padding: 56px 0; }
   }
+
+  /* ── Scroll-reveal ─────────────────────────────────────────────── */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
 
   h1.hero-h1 {
     margin: 0 0 10px 0;
-    font-size: 48px;
+    font-size: 50px;
     font-weight: 800;
     letter-spacing: -1.2px;
     line-height: 1.08;
@@ -159,7 +179,7 @@
   }
   h2.sec-h2 {
     margin: 0 0 8px 0;
-    font-size: 30px;
+    font-size: 31px;
     font-weight: 700;
     letter-spacing: -0.6px;
     line-height: 1.15;
@@ -174,10 +194,14 @@
     margin: 0 0 10px 0;
     font-size: 12px;
     font-weight: 700;
-    color: var(--muted);
+    color: var(--gold);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
+  h3.eyebrow::before { content: ""; width: 16px; height: 2px; background: var(--gold); border-radius: 2px; }
 
   .btn {
     display: inline-flex;
@@ -194,24 +218,45 @@
     border: 1px solid var(--border-strong);
     background: transparent;
     color: var(--text);
-    transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .btn:hover { background: var(--panel-2); }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .btn.primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+  .btn:hover { background: var(--panel-2); transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 2px 10px rgba(75,158,245,0.25); }
+  .btn.primary:hover { background: var(--accent-2); border-color: var(--accent-2); box-shadow: 0 4px 16px rgba(75,158,245,0.35); }
   .btn.big { padding: 15px 30px; font-size: 16px; }
 
-  .hero {
-    display: flex;
-    align-items: center;
-    gap: 48px;
-    padding: 76px 0 64px;
+  /* ── Hero ──────────────────────────────────────────────────────── */
+  section.hero { padding: 96px 0 76px; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(620px 420px at 12% -10%, var(--accent-soft), transparent 60%),
+      radial-gradient(520px 380px at 96% 10%, var(--gold-soft), transparent 60%),
+      radial-gradient(circle, var(--border) 1px, transparent 1.4px);
+    background-size: auto, auto, 26px 26px;
+    background-repeat: no-repeat, no-repeat, repeat;
+    opacity: 1;
+    mask-image: linear-gradient(to bottom, black, transparent 92%);
   }
+  .hero { display: flex; align-items: center; gap: 48px; position: relative; z-index: 1; }
   .hero-copy { flex: 1.1; min-width: 0; }
   .hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
   .hero-trust { font-size: 13px; color: var(--subtle); }
-  .hero-visual { flex: 1; min-width: 0; display: flex; justify-content: center; }
+  .hero-visual { flex: 1; min-width: 0; display: flex; justify-content: center; align-items: center; position: relative; }
   @media (max-width: 900px) { .hero { flex-direction: column; padding-top: 40px; } }
+
+  /* Decorative crossed-sabres emblem behind the mock card */
+  .hero-emblem {
+    position: absolute;
+    width: 420px; height: 420px;
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-emblem .ring { animation: spin-slow 90s linear infinite; transform-origin: center; }
+  @media (prefers-reduced-motion: reduce) { .hero-emblem .ring { animation: none; } }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
   /* Mock "hero recommendation" card — echoes the real app's hero-reco style */
   .mock-card {
@@ -219,12 +264,15 @@
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 22px 24px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-lg);
     width: 100%;
     max-width: 380px;
     position: relative;
+    z-index: 1;
     overflow: hidden;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
+  .mock-card:hover { transform: translateY(-4px); }
   .mock-card::before {
     content: "";
     position: absolute;
@@ -242,9 +290,20 @@
   .mock-stars { color: var(--gold); font-size: 15px; letter-spacing: 2px; margin-bottom: 12px; }
   .mock-row { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; padding: 7px 0; border-top: 1px solid var(--border); }
   .mock-row:first-of-type { border-top: none; }
-  .mock-ok { color: var(--good); }
+  .mock-ok { color: var(--good); font-weight: 600; }
   .mock-score { position: absolute; top: 22px; right: 24px; font-size: 30px; font-weight: 800; color: var(--good); z-index: 2; }
   .mock-score sub { font-size: 13px; font-weight: 500; color: var(--muted); }
+
+  /* ── Feature icons (inline SVG, not emoji) ────────────────────── */
+  .feat-icon, .aud-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .feat-icon svg, .aud-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
   .feat-grid {
     display: grid;
@@ -255,18 +314,11 @@
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 22px 22px;
+    padding: 24px 22px;
     box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
-  .feat-icon {
-    width: 38px; height: 38px;
-    border-radius: 10px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    margin-bottom: 14px;
-  }
+  .feat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--border-strong); }
   .feat-card h4 { margin: 0 0 8px 0; font-size: 16px; font-weight: 700; }
   .feat-card p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.55; }
 
@@ -278,24 +330,28 @@
   .audience-card {
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 24px 22px;
-    background: var(--panel-2);
+    padding: 26px 22px;
+    background: var(--panel);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .audience-card .aud-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--accent); margin-bottom: 10px; }
+  .audience-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .audience-card .aud-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--accent); margin-bottom: 4px; }
   .audience-card h4 { margin: 0 0 8px 0; font-size: 18px; font-weight: 700; }
   .audience-card p { margin: 0; font-size: 14px; color: var(--muted); }
 
   .steps-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
+    gap: 28px;
+    position: relative;
   }
   .step-card { position: relative; padding-left: 4px; }
   .step-num {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 30px; height: 30px; border-radius: 50%;
+    width: 32px; height: 32px; border-radius: 50%;
     background: var(--gold-soft); color: var(--gold);
-    font-weight: 800; font-size: 14px; margin-bottom: 12px;
+    border: 1px solid var(--gold);
+    font-weight: 800; font-size: 14px; margin-bottom: 14px;
   }
   .step-card h4 { margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
   .step-card p { margin: 0; font-size: 13.5px; color: var(--muted); }
@@ -310,12 +366,21 @@
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 26px 24px;
+    padding: 28px 24px;
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .price-card.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow); }
+  .price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .price-card.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow-lg); position: relative; }
+  .price-card.featured::after {
+    content: "Most popular";
+    position: absolute; top: -12px; right: 24px;
+    background: var(--accent); color: #fff;
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px;
+  }
   .price-tier { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin-bottom: 10px; }
   .price-amount { font-size: 34px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 2px; }
   .price-amount .unit { font-size: 14px; font-weight: 500; color: var(--muted); }
@@ -326,14 +391,15 @@
   .price-card .btn { width: 100%; }
 
   .faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 760px; }
-  .faq-item { border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); overflow: hidden; }
+  .faq-item { border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); overflow: hidden; transition: border-color 0.2s ease; }
+  .faq-item[open] { border-color: var(--border-strong); }
   .faq-item summary {
-    padding: 16px 20px; cursor: pointer; font-weight: 600; font-size: 14.5px;
+    padding: 17px 20px; cursor: pointer; font-weight: 600; font-size: 14.5px;
     list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
   }
   .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary::after { content: "+"; color: var(--muted); font-size: 20px; font-weight: 400; flex-shrink: 0; }
-  .faq-item[open] summary::after { content: "–"; }
+  .faq-item summary::after { content: "+"; color: var(--muted); font-size: 20px; font-weight: 400; flex-shrink: 0; transition: transform 0.2s ease; }
+  .faq-item[open] summary::after { content: "+"; transform: rotate(45deg); }
   .faq-item .faq-a { padding: 0 20px 18px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
 
   .cta-band {
@@ -341,30 +407,38 @@
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 56px 32px;
+    padding: 60px 32px;
     box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
   }
-  .cta-band h2 { margin: 0 0 10px 0; }
+  .cta-band::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(480px 260px at 50% 0%, var(--accent-soft), transparent 70%);
+    pointer-events: none;
+  }
+  .cta-band > * { position: relative; z-index: 1; }
+  .cta-band h2 { margin: 0 0 10px 0; justify-content: center; }
   .cta-band p { margin: 0 0 26px 0; color: var(--muted); font-size: 15px; }
 
   footer.site-footer {
     border-top: 1px solid var(--border);
     padding: 36px 0 40px;
-    margin-top: 40px;
   }
   .footer-inner {
     display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
   }
   .footer-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; }
   .footer-links { display: flex; gap: 20px; font-size: 13px; color: var(--muted); }
-  .footer-links a { text-decoration: none; }
+  .footer-links a { text-decoration: none; transition: color 0.15s ease; }
   .footer-links a:hover { color: var(--text); }
   .footer-copy { font-size: 12px; color: var(--subtle); margin-top: 18px; }
 </style>
 </head>
 <body>
 
-<header class="topbar">
+<header class="topbar" id="site-header">
   <a class="topbar-brand-link" href="#top">
     <img class="logo-mark" src="LOGO.PNG" alt="" width="32" height="32" />
     <div>
@@ -386,192 +460,220 @@
 <main id="top">
 
   <section class="hero">
-    <div class="hero-copy">
-      <h1 class="hero-h1">Plan your <span class="hi">entire fencing season</span> — not just your next tournament.</h1>
-      <p class="hero-sub">FencerPath tracks every competition, deadline, and ranking point for your fencers, then tells you which event is actually worth entering next — so plans hold up instead of falling apart the week before registration closes.</p>
-      <div class="hero-cta-row">
-        <a class="btn primary big" href="/app">Start Free</a>
-        <a class="btn big" href="#features">See how it works</a>
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap hero">
+      <div class="hero-copy">
+        <h1 class="hero-h1">Plan your <span class="hi">entire fencing season</span> — not just your next tournament.</h1>
+        <p class="hero-sub">FencerPath tracks every competition, deadline, and ranking point for your fencers, then tells you which event is actually worth entering next — so plans hold up instead of falling apart the week before registration closes.</p>
+        <div class="hero-cta-row">
+          <a class="btn primary big" href="/app">Start Free</a>
+          <a class="btn big" href="#features">See how it works</a>
+        </div>
+        <div class="hero-trust">Free for your first fencer. No credit card required.</div>
       </div>
-      <div class="hero-trust">Free for your first fencer. No credit card required.</div>
-    </div>
-    <div class="hero-visual">
-      <div class="mock-card">
-        <div class="mock-score">92<sub>/100</sub></div>
-        <div class="mock-label">✨ Best next competition</div>
-        <div class="mock-title">Svenska Mästerskapen</div>
-        <div class="mock-meta">Épée · Senior · Malmö, Mar 14–15</div>
-        <div class="mock-stars">★★★★★</div>
-        <div class="mock-row"><span>Points opportunity</span><span class="mock-ok">Strong</span></div>
-        <div class="mock-row"><span>Qualification impact</span><span class="mock-ok">Counts for VM/EM</span></div>
-        <div class="mock-row"><span>Travel &amp; logistics</span><span class="mock-ok">No conflicts</span></div>
+      <div class="hero-visual">
+        <svg class="hero-emblem" viewBox="0 0 200 200" aria-hidden="true">
+          <g class="ring">
+            <circle cx="100" cy="100" r="92" fill="none" stroke="var(--gold)" stroke-width="1" stroke-dasharray="2 7" opacity="0.55"/>
+          </g>
+          <g stroke-linecap="round">
+            <rect x="94" y="20" width="12" height="130" rx="6" fill="var(--accent-2)" opacity="0.30" transform="rotate(35 100 100)"/>
+            <rect x="94" y="20" width="12" height="130" rx="6" fill="var(--gold)" opacity="0.30" transform="rotate(-35 100 100)"/>
+            <circle cx="100" cy="100" r="10" fill="var(--panel)" stroke="var(--gold)" stroke-width="2" opacity="0.6"/>
+          </g>
+        </svg>
+        <div class="mock-card">
+          <div class="mock-score">92<sub>/100</sub></div>
+          <div class="mock-label">✨ Best next competition</div>
+          <div class="mock-title">Svenska Mästerskapen</div>
+          <div class="mock-meta">Épée · Senior · Malmö, Mar 14–15</div>
+          <div class="mock-stars">★★★★★</div>
+          <div class="mock-row"><span>Points opportunity</span><span class="mock-ok">Strong</span></div>
+          <div class="mock-row"><span>Qualification impact</span><span class="mock-ok">Counts for VM/EM</span></div>
+          <div class="mock-row"><span>Travel &amp; logistics</span><span class="mock-ok">No conflicts</span></div>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="features">
-    <h3 class="eyebrow">Features</h3>
-    <h2 class="sec-h2">Everything a fencing season actually needs</h2>
-    <p class="sec-lead">Built from real problems: missed deadlines, double-booked weekends, and guessing which competition is worth the travel.</p>
-    <div class="feat-grid">
-      <div class="feat-card">
-        <div class="feat-icon">📅</div>
-        <h4>Season calendar &amp; planning</h4>
-        <p>Every competition, camp, and deadline for every fencer in one shared calendar — month view for the full picture, timeline view for what's next.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">★</div>
-        <h4>Smart recommendations</h4>
-        <p>Each upcoming competition is scored on level fit, points opportunity, current form, logistics, and timing — so you know why it's worth entering, not just that it is.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🎯</div>
-        <h4>Qualification path tracking</h4>
-        <p>See exactly what's still needed for VM/EM and other selection rankings, updated automatically as results come in — no more manual spreadsheet math.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🔄</div>
-        <h4>Live rankings sync</h4>
-        <p>National and FIE rankings sync automatically every night. No more downloading PDFs or re-importing ranking files by hand.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">⚠️</div>
-        <h4>Deadlines &amp; conflict detection</h4>
-        <p>Registration and cancellation deadlines, plus travel conflicts across fencers, are flagged before they become a problem — not after.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">👪</div>
-        <h4>Built for families &amp; clubs</h4>
-        <p>Track multiple fencers across weapons and age categories from one account, with per-fencer views for athletes managing their own plan.</p>
+    <div class="wrap">
+      <h3 class="eyebrow reveal">Features</h3>
+      <h2 class="sec-h2 reveal">Everything a fencing season actually needs</h2>
+      <p class="sec-lead reveal">Built from real problems: missed deadlines, double-booked weekends, and guessing which competition is worth the travel.</p>
+      <div class="feat-grid reveal">
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></div>
+          <h4>Season calendar &amp; planning</h4>
+          <p>Every competition, camp, and deadline for every fencer in one shared calendar — month view for the full picture, timeline view for what's next.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" stroke-width="0" fill="currentColor"><path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4L12 2z"/></svg></div>
+          <h4>Smart recommendations</h4>
+          <p>Each upcoming competition is scored on level fit, points opportunity, current form, logistics, and timing — so you know why it's worth entering, not just that it is.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></div>
+          <h4>Qualification path tracking</h4>
+          <p>See exactly what's still needed for VM/EM and other selection rankings, updated automatically as results come in — no more manual spreadsheet math.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.2-6.9"/><path d="M21 3v5.5H15.5"/></svg></div>
+          <h4>Live rankings sync</h4>
+          <p>National and FIE rankings sync automatically every night. No more downloading PDFs or re-importing ranking files by hand.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 3.5l9.5 16.5H2.5L12 3.5z"/><path d="M12 10v4.2M12 17.3v.01"/></svg></div>
+          <h4>Deadlines &amp; conflict detection</h4>
+          <p>Registration and cancellation deadlines, plus travel conflicts across fencers, are flagged before they become a problem — not after.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.3" cy="9" r="2.6"/><path d="M15.1 14.7c2.6.2 4.9 2.4 4.9 5.3"/></svg></div>
+          <h4>Built for families &amp; clubs</h4>
+          <p>Track multiple fencers across weapons and age categories from one account, with per-fencer views for athletes managing their own plan.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="tight">
-    <h3 class="eyebrow">Who it's for</h3>
-    <h2 class="sec-h2">Designed for everyone around the strip</h2>
-    <div class="audience-grid" style="margin-top:28px;">
-      <div class="audience-card">
-        <div class="aud-label">Athletes</div>
-        <h4>Know your next best move</h4>
-        <p>See your own qualification path, deadlines, and recommended competitions without digging through federation websites.</p>
-      </div>
-      <div class="audience-card">
-        <div class="aud-label">Parents &amp; families</div>
-        <h4>One plan for the whole family</h4>
-        <p>Manage multiple fencers' schedules, travel, and entry fees side by side — catch conflicts before you're double-booked in two cities.</p>
-      </div>
-      <div class="audience-card">
-        <div class="aud-label">Coaches &amp; clubs</div>
-        <h4>A season view across your roster</h4>
-        <p>Track every athlete's qualification status and upcoming commitments in one dashboard instead of a dozen separate conversations.</p>
+  <section class="tight band">
+    <div class="wrap">
+      <h3 class="eyebrow reveal">Who it's for</h3>
+      <h2 class="sec-h2 reveal">Designed for everyone around the strip</h2>
+      <div class="audience-grid reveal" style="margin-top:28px;">
+        <div class="audience-card">
+          <div class="aud-icon"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" fill="currentColor" stroke="none"/></svg></div>
+          <div class="aud-label">Athletes</div>
+          <h4>Know your next best move</h4>
+          <p>See your own qualification path, deadlines, and recommended competitions without digging through federation websites.</p>
+        </div>
+        <div class="audience-card">
+          <div class="aud-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.3" cy="9" r="2.6"/><path d="M15.1 14.7c2.6.2 4.9 2.4 4.9 5.3"/></svg></div>
+          <div class="aud-label">Parents &amp; families</div>
+          <h4>One plan for the whole family</h4>
+          <p>Manage multiple fencers' schedules, travel, and entry fees side by side — catch conflicts before you're double-booked in two cities.</p>
+        </div>
+        <div class="audience-card">
+          <div class="aud-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg></div>
+          <div class="aud-label">Coaches &amp; clubs</div>
+          <h4>A season view across your roster</h4>
+          <p>Track every athlete's qualification status and upcoming commitments in one dashboard instead of a dozen separate conversations.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section>
-    <h3 class="eyebrow">How it works</h3>
-    <h2 class="sec-h2">Up and running in a few minutes</h2>
-    <div class="steps-grid" style="margin-top:28px;">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h4>Add your fencers</h4>
-        <p>Name, weapon, age category — or sync directly from your Ophardt biography page.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h4>Sync your competitions</h4>
-        <p>Import the season calendar and rankings once; after that, rankings refresh automatically every night.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h4>Get your season plan</h4>
-        <p>See recommended competitions, deadlines, and your qualification path — all kept current as results come in.</p>
+    <div class="wrap">
+      <h3 class="eyebrow reveal">How it works</h3>
+      <h2 class="sec-h2 reveal">Up and running in a few minutes</h2>
+      <div class="steps-grid reveal" style="margin-top:28px;">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h4>Add your fencers</h4>
+          <p>Name, weapon, age category — or sync directly from your Ophardt biography page.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h4>Sync your competitions</h4>
+          <p>Import the season calendar and rankings once; after that, rankings refresh automatically every night.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h4>Get your season plan</h4>
+          <p>See recommended competitions, deadlines, and your qualification path — all kept current as results come in.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="pricing">
-    <h3 class="eyebrow">Pricing</h3>
-    <h2 class="sec-h2">Simple pricing, start free</h2>
-    <p class="sec-lead">No credit card needed to try it. Upgrade only when you're tracking more than one fencer.</p>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-tier">Free</div>
-        <div class="price-amount">0 SEK</div>
-        <div class="price-note">Forever free for one fencer</div>
-        <ul class="price-feats">
-          <li>1 fencer</li>
-          <li>Full season calendar</li>
-          <li>Deadline &amp; conflict alerts</li>
-          <li>Smart recommendations</li>
-          <li>Qualification path tracking</li>
-        </ul>
-        <a class="btn" href="/app">Start Free</a>
-      </div>
-      <div class="price-card featured">
-        <div class="price-tier">Personal</div>
-        <div class="price-amount">49 SEK <span class="unit">/ month</span></div>
-        <div class="price-note">For families tracking more than one fencer</div>
-        <ul class="price-feats">
-          <li>Everything in Free</li>
-          <li>Unlimited fencers</li>
-          <li>Multi-fencer travel &amp; conflict view</li>
-          <li>Live rankings sync</li>
-          <li>Priority support</li>
-        </ul>
-        <a class="btn primary" href="/app">Start Free</a>
-      </div>
-      <div class="price-card">
-        <div class="price-tier">Club</div>
-        <div class="price-amount">Coming soon</div>
-        <div class="price-note">Roster-wide view for coaches and clubs</div>
-        <ul class="price-feats">
-          <li>Everything in Personal</li>
-          <li>Full roster dashboard</li>
-          <li>Coach-facing qualification overview</li>
-          <li>Get in touch for early access</li>
-        </ul>
-        <a class="btn" href="mailto:zhuhan80@gmail.com?subject=FencerPath%20Club%20plan">Contact us</a>
+  <section id="pricing" class="band">
+    <div class="wrap">
+      <h3 class="eyebrow reveal">Pricing</h3>
+      <h2 class="sec-h2 reveal">Simple pricing, start free</h2>
+      <p class="sec-lead reveal">No credit card needed to try it. Upgrade only when you're tracking more than one fencer.</p>
+      <div class="pricing-grid reveal">
+        <div class="price-card">
+          <div class="price-tier">Free</div>
+          <div class="price-amount">0 SEK</div>
+          <div class="price-note">Forever free for one fencer</div>
+          <ul class="price-feats">
+            <li>1 fencer</li>
+            <li>Full season calendar</li>
+            <li>Deadline &amp; conflict alerts</li>
+            <li>Smart recommendations</li>
+            <li>Qualification path tracking</li>
+          </ul>
+          <a class="btn" href="/app">Start Free</a>
+        </div>
+        <div class="price-card featured">
+          <div class="price-tier">Personal</div>
+          <div class="price-amount">49 SEK <span class="unit">/ month</span></div>
+          <div class="price-note">For families tracking more than one fencer</div>
+          <ul class="price-feats">
+            <li>Everything in Free</li>
+            <li>Unlimited fencers</li>
+            <li>Multi-fencer travel &amp; conflict view</li>
+            <li>Live rankings sync</li>
+            <li>Priority support</li>
+          </ul>
+          <a class="btn primary" href="/app">Start Free</a>
+        </div>
+        <div class="price-card">
+          <div class="price-tier">Club</div>
+          <div class="price-amount">Coming soon</div>
+          <div class="price-note">Roster-wide view for coaches and clubs</div>
+          <ul class="price-feats">
+            <li>Everything in Personal</li>
+            <li>Full roster dashboard</li>
+            <li>Coach-facing qualification overview</li>
+            <li>Get in touch for early access</li>
+          </ul>
+          <a class="btn" href="mailto:zhuhan80@gmail.com?subject=FencerPath%20Club%20plan">Contact us</a>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="faq">
-    <h3 class="eyebrow">FAQ</h3>
-    <h2 class="sec-h2">Good to know</h2>
-    <div class="faq-list" style="margin-top:24px;">
-      <details class="faq-item">
-        <summary>Is my data private?</summary>
-        <div class="faq-a">Yes. Your competition and fencer data is tied to your account and only visible to you — it isn't shared across other users' accounts.</div>
-      </details>
-      <details class="faq-item">
-        <summary>Do I need a credit card to start?</summary>
-        <div class="faq-a">No. The Free plan covers one fencer with no payment details required. You only add payment info if you choose to upgrade later.</div>
-      </details>
-      <details class="faq-item">
-        <summary>Which federations and rankings are supported?</summary>
-        <div class="faq-a">FencerPath currently syncs Swedish national rankings and VM/EM selection rankings automatically, alongside FIE competition data. More federations are being added over time.</div>
-      </details>
-      <details class="faq-item">
-        <summary>Can I use it on my phone?</summary>
-        <div class="faq-a">Yes — FencerPath works in any mobile browser, and can be added to your home screen for an app-like experience.</div>
-      </details>
+    <div class="wrap">
+      <h3 class="eyebrow reveal">FAQ</h3>
+      <h2 class="sec-h2 reveal">Good to know</h2>
+      <div class="faq-list reveal" style="margin-top:24px;">
+        <details class="faq-item">
+          <summary>Is my data private?</summary>
+          <div class="faq-a">Yes. Your competition and fencer data is tied to your account and only visible to you — it isn't shared across other users' accounts.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need a credit card to start?</summary>
+          <div class="faq-a">No. The Free plan covers one fencer with no payment details required. You only add payment info if you choose to upgrade later.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Which federations and rankings are supported?</summary>
+          <div class="faq-a">FencerPath currently syncs Swedish national rankings and VM/EM selection rankings automatically, alongside FIE competition data. More federations are being added over time.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I use it on my phone?</summary>
+          <div class="faq-a">Yes — FencerPath works in any mobile browser, and can be added to your home screen for an app-like experience.</div>
+        </details>
+      </div>
     </div>
   </section>
 
   <section>
-    <div class="cta-band">
-      <h2 class="sec-h2" style="justify-content:center;">Ready to plan your season?</h2>
-      <p>Start free with one fencer — upgrade only when you need to.</p>
-      <a class="btn primary big" href="/app">Start Free</a>
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <h2 class="sec-h2">Ready to plan your season?</h2>
+        <p>Start free with one fencer — upgrade only when you need to.</p>
+        <a class="btn primary big" href="/app">Start Free</a>
+      </div>
     </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
-  <main class="footer-inner" style="padding:0;">
+  <div class="wrap footer-inner">
     <div class="footer-brand">
       <img class="logo-mark" src="LOGO.PNG" alt="" width="20" height="20" />
       FencerPath
@@ -580,11 +682,44 @@
       <a href="mailto:zhuhan80@gmail.com">Contact</a>
       <a href="/app">Log in</a>
     </div>
-  </main>
-  <main style="padding:0;">
+  </div>
+  <div class="wrap">
     <div class="footer-copy">© 2026 FencerPath. Built for fencers, families, and clubs.</div>
-  </main>
+  </div>
 </footer>
+
+<script>
+  // Header shrink-on-scroll
+  (function () {
+    var header = document.getElementById('site-header');
+    if (!header) return;
+    var onScroll = function () {
+      if (window.scrollY > 8) header.classList.add('is-scrolled');
+      else header.classList.remove('is-scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // Scroll-reveal for below-the-fold sections
+  (function () {
+    var items = document.querySelectorAll('.reveal');
+    if (!items.length) return;
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('in-view'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 
 </body>
 </html>
