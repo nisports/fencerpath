@@ -3461,6 +3461,7 @@ const I18N = {
     addFencerTitle: "Add fencer", editFencerTitle: "Edit fencer",
     addRegTitle: "Register fencer", editRegTitle: "Edit registration",
     fencerName: "Name", weapons: "Weapons", clubName: "Club", color: "Color",
+    familyGroup: "Family group", familyGroupHint: "Optional — give siblings/household members the same value to enable family-clash scheduling warnings between them",
     nationalRank: "National ranking", efcRank: "EFC ranking", fieRank: "FIE ranking",
     pointsToDefend: "Points to defend (current period)",
     accompanyingAdult: "Accompanying adult",
@@ -3794,6 +3795,7 @@ const I18N = {
     addFencerTitle: "Lägg till fäktare", editFencerTitle: "Redigera fäktare",
     addRegTitle: "Anmäl fäktare", editRegTitle: "Redigera anmälan",
     fencerName: "Namn", weapons: "Vapen", clubName: "Klubb", color: "Färg",
+    familyGroup: "Familjegrupp", familyGroupHint: "Valfritt — ge syskon/hushållsmedlemmar samma värde för att aktivera varningar om schemakrockar mellan dem",
     nationalRank: "Nationell rankning", efcRank: "EFC-rankning", fieRank: "FIE-rankning",
     pointsToDefend: "Poäng att försvara (nuvarande period)",
     accompanyingAdult: "Medföljande vuxen",
@@ -3903,7 +3905,9 @@ const __BUNDLED_COMPETITIONS__ = [{"source":"ophardt","sourceId":"ophardt:32388:
 ====================================================================== */
 const STORAGE_KEY = "fencing_season_manager_v1";
 const State = {
-  fencers: [],          // {id, name, weapons:[], ageCategory, club, color, nationalRank:{foil,epee,sabre}, fieRank:{...}, pointsToDefend:{...}}
+  fencers: [],          // {id, name, weapons:[], ageCategory, club, family, color, nationalRank:{foil,epee,sabre}, fieRank:{...}, pointsToDefend:{...}}
+                         // family: optional free-text tag — fencers sharing a non-empty, matching value are
+                         // treated as the same household for schedule-clash warnings (see sameFamily()).
   competitions: [],     // {id, name, startDate, endDate, city, country, weapon, ageCategory, level, regOpen, regClose, cancelDeadline, pointsPool, link, notes}
   registrations: [],    // {id, fencerId, competitionId, status, result:{placement,points:[{scope,value}]}, ...}
   scoringRules: [],     // {id, name, source, ophardtRankingId, scope, ageCategory, weapon, gender, season, qualifyingCompIds:[fpCompIds], qualifyingOphardtIds:[ophardtCompIds], importedAt}
@@ -4319,6 +4323,19 @@ function isSatelliteComp(c) {
   if ((c.typ || "").toUpperCase() === "SAT") return true;
   if (/\bsatellite\b/i.test(c.name || "")) return true;
   return /^\s*sat-\w+\b/i.test(c.name || "");   // SVFF abbreviation, e.g. "Sat-VC <city>"
+}
+
+// Two fencers count as the same household ONLY if both have a non-empty, matching
+// `family` tag (case-insensitive, trimmed) — set manually on the fencer form. This is
+// deliberately opt-in: a club-coach account manages many unrelated athletes under one
+// login, so we can no longer assume "every other fencer in this account = my family"
+// (that used to be the default and produced false "family clash" warnings/logistics
+// penalties between unrelated club athletes — see conversation 2026-07-17).
+function sameFamily(a, b) {
+  if (!a || !b) return false;
+  const fa = (a.family || "").trim().toLowerCase();
+  const fb = (b.family || "").trim().toLowerCase();
+  return !!fa && fa === fb;
 }
 // True if a competition is currently counting toward a Top-32 VM/EM qualifying
 // result (i.e. isC2Comp already accepted it — see getC2Status) but its Satellite-tier
@@ -10907,11 +10924,20 @@ function renderCalendarTimeline() {
     if (!byMonth.has(key)) byMonth.set(key, []);
     byMonth.get(key).push(ci);
   }
-  // Sort items within each month by start date
-  for (const arr of byMonth.values()) {
-    arr.sort((a,b) => (a.s||new Date(0)) - (b.s||new Date(0)));
+  // Anchor the timeline on today, per Tina's 2026-07-17 request (the old strict-ascending
+  // order buried upcoming events under years of history — 2018 showed before anything
+  // actionable). Upcoming/current-month events read soonest-first (most useful — "what's
+  // next"); past events read most-recent-first below them (most useful — "what just
+  // happened"), rather than one single global date direction.
+  const curMonthKey = `${td.getFullYear()}-${String(td.getMonth()+1).padStart(2,"0")}`;
+  for (const [key, arr] of byMonth.entries()) {
+    if (key >= curMonthKey) arr.sort((a,b) => (a.s||new Date(0)) - (b.s||new Date(0)));  // soonest first
+    else                    arr.sort((a,b) => (b.s||new Date(0)) - (a.s||new Date(0)));  // most recent first
   }
-  const sortedKeys = [...byMonth.keys()].sort();
+  const allKeys = [...byMonth.keys()].sort();
+  const futureKeys = allKeys.filter(k => k >= curMonthKey);               // ascending: soonest month first
+  const pastKeys   = allKeys.filter(k => k < curMonthKey).reverse();      // descending: most recent month first
+  const sortedKeys = [...futureKeys, ...pastKeys];
 
   let html = `<div class="timeline">`;
   for (const key of sortedKeys) {
@@ -12216,7 +12242,11 @@ function scoreReco(f, c, ctx) {
       if (overlaps) { hasHardConflict = true; conflictWith = b.c.name || null; }
       else if (Math.abs(daysBetween(b.e, cs)) <= 7) burden++;
     } else {
-      if (b.s <= ce && cs <= b.e) {
+      // Only a real logistics conflict if the other registration belongs to a fencer
+      // explicitly tagged as the same family/household (see sameFamily()) — otherwise
+      // this is just another, unrelated athlete in the same club/account and there's
+      // no shared parent/guardian who'd actually need to be in two places at once.
+      if (b.s <= ce && cs <= b.e && sameFamily(f, State.fencers.find(x => x.id === b.r.fencerId))) {
         if ((b.c.city||"").toLowerCase() !== (c.city||"").toLowerCase()) famConf++;
       }
     }
@@ -12669,11 +12699,14 @@ function recommendFor(f) {
   // Flag cross-fencer family same-day conflicts among NOT-yet-booked candidates. scoreReco's
   // famConf penalty (and hasHardConflict) only look at ctx.booked — i.e. another sibling's
   // ALREADY-confirmed registration. Two unbooked candidates, one per sibling, that overlap in
-  // date and sit in different cities get no warning at all today, even though a parent/coach
+  // date and sit in different cities get no warning at all today, even though a parent
   // can't physically be in two cities at once. This is informational only (no score penalty —
   // neither sibling has committed yet, so it shouldn't be treated as a real conflict), but the
   // family should see it before both get booked independently.
-  const otherFamilyCandidates = State.fencers.filter(of => of.id !== f.id).flatMap(of =>
+  // Only fencers explicitly tagged with a matching `family` value are considered — see
+  // sameFamily(). Without this, every other fencer in the account (e.g. a club coach's
+  // unrelated athletes) would be treated as a sibling.
+  const otherFamilyCandidates = State.fencers.filter(of => of.id !== f.id && sameFamily(f, of)).flatMap(of =>
     eligibleCompsFor(of).map(c => ({ comp: c, fencerName: (of.name||"").split(" ")[0] }))
   );
   mapped.forEach(item => {
@@ -13604,6 +13637,7 @@ function openFencerForm(id, draft) {
       <div class="form-grid">
         <label class="full"><span>${t("fencerName")}</span><input id="f-fname" value="${escape(f.name||"")}"/></label>
         <label><span>${t("clubName")}</span><input id="f-club" value="${escape(f.club||"")}"/></label>
+        <label><span>${t("familyGroup")}</span><input id="f-family" value="${escape(f.family||"")}" placeholder="${escape(t("familyGroupHint"))}" title="${escape(t("familyGroupHint"))}"/></label>
         <label><span>${t("genderLabel")}</span><select id="f-gender">
           <option value="M"${(f.gender||"M")==="M"?" selected":""}>${t("genderM")}</option>
           <option value="F"${f.gender==="F"?" selected":""}>${t("genderF")}</option>
@@ -13922,7 +13956,7 @@ function readFencerDraftFromForm(id) {
   const ageCategories = ["u11","u13","u15","u17","u20","u23","senior","veteran"]
     .filter(a => document.getElementById("f-aa-"+a)?.checked);
   return {
-    id, name: val("f-fname"), club: val("f-club"), color: val("f-color"),
+    id, name: val("f-fname"), club: val("f-club"), family: val("f-family"), color: val("f-color"),
     weapons, ageCategory: val("f-fage"), ageCategories,
     seasonGoals: (()=>{
       const primary  = val("f-fage");
