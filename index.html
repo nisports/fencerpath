@@ -463,7 +463,7 @@
     </div>
     <div class="nav-cta">
       <a href="/app" class="login">Log in</a>
-      <a href="#signup" class="btn btn-primary">Start free</a>
+      <a href="/app" class="btn btn-primary">Start free</a>
     </div>
     <button class="nav-toggle" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -483,7 +483,7 @@
         <p class="lede">Track your path from regional events to World Championships, catch every registration deadline, and know exactly what it takes to qualify — all in one place.</p>
         <p class="hero-trust"><strong>Built for athletes, coaches and fencing families.</strong></p>
         <div class="hero-actions">
-          <a href="#signup" class="btn btn-primary">Start free</a>
+          <a href="/app" class="btn btn-primary">Start free</a>
           <a href="#preview" class="btn btn-ghost" onclick="
             var el=document.getElementById('dashCollapsible');
             var btn=document.getElementById('dashExpandToggle');
@@ -858,7 +858,7 @@
             <li>Deadline alerts</li>
             <li>AI Coach (beta)</li>
           </ul>
-          <a href="#signup" class="btn btn-primary">Join beta</a>
+          <a href="/app" class="btn btn-primary">Join beta</a>
         </div>
         <div class="price-card soon">
           <span class="price-tier">Coach &amp; club</span>
@@ -870,7 +870,7 @@
             <li>Competition recommendations</li>
             <li>Group travel coordination</li>
           </ul>
-          <a href="#signup" class="btn btn-ghost">Join club beta</a>
+          <a href="/app" class="btn btn-ghost">Join club beta</a>
         </div>
       </div>
     </div>
@@ -953,11 +953,8 @@
       <span class="eyebrow" style="color:var(--brand-blue)">Ready when you are</span>
       <h2>Know your next move.<br>Follow the path<br>to your <span class="accent">goal.</span></h2>
       <p>Create a free account in under a minute. No credit card required.</p>
-      <form class="signup-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Check your inbox →';">
-        <input type="email" placeholder="you@email.com" required>
-        <button type="submit" class="btn btn-primary">Start free</button>
-      </form>
-      <p class="signup-note">Already have an account? <a href="/app" style="color:#fff;text-decoration:underline;">Log in</a></p>
+      <a href="/app" class="btn btn-primary" style="display:inline-flex;margin-top:8px;">Start free</a>
+      <p class="signup-note" style="margin-top:16px;">Already have an account? <a href="/app" style="color:#fff;text-decoration:underline;">Log in</a></p>
     </div>
   </section>
 
