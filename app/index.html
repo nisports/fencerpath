@@ -831,7 +831,7 @@
   .wim-pts { font-size: 11px; font-weight: 700; text-align: right; white-space: nowrap; }
   .wim-scheme-name { font-size: 10.5px; color: var(--muted); margin-bottom: 8px; }
   .wim-no-scheme { font-size: 11.5px; color: var(--muted); font-style: italic; }
-  /* Season Roadmap */
+  /* Season Path */
   .srm-meta { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
   .srm-progress-wrap { margin-bottom: 12px; }
   .srm-progress-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
@@ -2275,7 +2275,7 @@
   .ao-qual-cond-head { font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
   .ao-qual-cond-body { font-size: 11px; line-height: 1.55; color: var(--text); }
 
-  /* ── Horizontal Season Roadmap ──────────────────────────────────── */
+  /* ── Horizontal Season Path ──────────────────────────────────── */
   .srm-h-wrap { overflow-x: auto; padding: 4px 0 8px; }
   .srm-h-timeline { display: flex; align-items: flex-start; gap: 0; min-width: min-content; }
   .srm-h-node { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
@@ -2536,9 +2536,9 @@
       </div>
     </div>
 
-    <!-- Season Roadmap — full width at bottom -->
+    <!-- Season Path — full width at bottom -->
     <div class="card" id="dash-roadmap-card" style="display:none; margin-top:14px;">
-      <div class="card-head"><h3>Season Roadmap</h3></div>
+      <div class="card-head"><h3>Season Path</h3></div>
       <div id="dash-roadmap"></div>
     </div>
     <!-- Qualification Path -->
@@ -3400,7 +3400,7 @@ const I18N = {
     seasonGoalPrimary: "Primary goal",
     seasonGoalSecondary: "Secondary goal (optional)",
     goalNone: "— None —",
-    viewFullRoadmap: "View full qualification roadmap →",
+    viewFullRoadmap: "View full qualification path →",
     expectedEntries: "Expected entries",
     recoSelectionBadge: "🎯 VM/EM selection event",
     recoNationalBadge:  "Counts for national ranking",
@@ -5098,7 +5098,7 @@ function upgradeGoalAndDismiss(fencerId, cat, alertKey) {
 }
 function setAthleteCategory(fencerId, cat) {
   uiAthleteCategories[fencerId] = cat;
-  // Keep global category in sync — Season Roadmap will follow this tab
+  // Keep global category in sync — Season Path will follow this tab
   if (fencerId === uiSelectedFencer) {
     uiSelectedCategory = cat;
     renderCategoryDropdown();
@@ -7353,7 +7353,7 @@ function renderUpcomingPanel() {
   }).join("");
 }
 
-/** Horizontal Season Roadmap — only shown for a specific selected fencer */
+/** Horizontal Season Path — only shown for a specific selected fencer */
 function renderSeasonRoadmapHorizontal() {
   const card = document.getElementById("dash-roadmap-card");
   const root = document.getElementById("dash-roadmap");
@@ -7543,10 +7543,10 @@ function renderSeasonRoadmapHorizontal() {
   const CAT_LABEL = { u11:"U11", u13:"U13", u15:"U15", u17:"U17", u20:"U20", u23:"U23", senior:"Senior", veteran:"Veteran" };
   const catSuffix = ` · ${CAT_LABEL[activeCat] || activeCat.toUpperCase()}`;
   const title = goalAchieved
-    ? (isSv ? `Säsongsplan — Mål #${targetRank} nått ✓${catSuffix}` : `Season Roadmap — Goal #${targetRank} Achieved ✓${catSuffix}`)
+    ? (isSv ? `Säsongsplan — Mål #${targetRank} nått ✓${catSuffix}` : `Season Path — Goal #${targetRank} Achieved ✓${catSuffix}`)
     : targetRank
-      ? (isSv ? `Säsongsplan mot topp ${targetRank}${catSuffix}` : `Season Roadmap to Top ${targetRank}${catSuffix}`)
-      : (isSv ? `Säsongsplan${catSuffix}` : `Season Roadmap${catSuffix}`);
+      ? (isSv ? `Säsongsplan mot topp ${targetRank}${catSuffix}` : `Season Path to Top ${targetRank}${catSuffix}`)
+      : (isSv ? `Säsongsplan${catSuffix}` : `Season Path${catSuffix}`);
   document.querySelector("#dash-roadmap-card .card-head h3").textContent = title;
 
   root.innerHTML = `<div class="srm-h-wrap"><div class="srm-h-timeline">${nodeHtml}</div></div>`;
@@ -8208,7 +8208,7 @@ function updateBottomRowVisibility() {
   // Cards are now inside the unified dashboard-grid — no wrapper row to toggle
 }
 
-/* ── Season Roadmap ───────────────────────────────────────────────────────── */
+/* ── Season Path ───────────────────────────────────────────────────────── */
 function renderSeasonRoadmap() {
   const card = document.getElementById("dash-roadmap-card");
   const root = document.getElementById("dash-roadmap");
