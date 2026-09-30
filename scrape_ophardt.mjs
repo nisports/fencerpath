@@ -64,35 +64,78 @@ const CACHE_TTL_HOURS = parseInt(args["cache-hours"]) || 24;
 
 const log = (...a) => { if (!QUIET) console.log(...a); };
 
+// ---------- country name normalization ----------
+// Ophardt sometimes shows a federation acronym instead of a country name, or a
+// Swedish-language country name. Normalize the common ones for readability.
+const COUNTRY_ALIASES = {
+  "FBRCE/KBFS/KBVF": "Belgium",  // Belgian fencing federation (FR/NL acronyms), not a country
+  "Island": "Iceland",            // Swedish for Iceland, easily confused with English "island"
+};
+function normalizeCountry(country) {
+  return COUNTRY_ALIASES[country] || country;
+}
+
+// Continental championships for zones outside Europe (Africa, Pan-America, Asia) carry
+// the FIE brand but have no bearing on Swedish selection — Sweden competes in the
+// European zone. Excluded even though they'd otherwise pass the FIE-brand check below.
+const NON_EUROPEAN_ZONE = /\bAfrican\s+Championships|\bPan\s+American\s+Championship|\bAsian\s+Championships/i;
+
+// "European/World Championships for X" — occupational or affinity-group championships
+// (e.g. medical professionals, police, firefighters, students) that happen to use the
+// words "European/World Championship" in their name but are amateur affinity events,
+// not part of any national-team selection pathway. Excluded regardless of level match.
+const AFFINITY_CHAMPIONSHIP = /\b(?:European|World)\s+Championships?\s+for\s+\w+/i;
+
 // ---------- auto level detection ----------
 // Inspects competition name and organizing nation to assign the correct level.
-// Order of precedence: World Championship > European Championship > EFC > Nordic > Swedish > international
+// Order of precedence: World Championship > FIE > European Championship > EFC > Nordic > Swedish > other (excluded)
+//
+// IMPORTANT: unlike earlier versions, this NEVER falls back to "fie" just because a
+// competition is hosted outside Sweden. Being "international" is not the same as being
+// FIE/EFC-tier — most foreign competitions on the global Ophardt calendar are small
+// domestic/regional club tournaments (e.g. a German regional cup, a South African closed
+// championship) that have no bearing on Swedish selection. Only events that are explicitly
+// FIE-branded (World Cup / Grand Prix / Satellite / Zonal — wherever in the world they're
+// hosted), explicitly EFC-branded, an explicit World/European Championship, a Nordic
+// championship, or Swedish-domestic are kept. Everything else is tagged "other" and
+// excluded from the written output (see main()).
 function detectLevel(name, nationCode) {
   const n = (name || "").toLowerCase();
   const nc = (nationCode || "").toUpperCase();
 
+  // Non-European zone championships (Africa/Pan-America/Asia) never count, regardless
+  // of FIE branding — Sweden competes in the European zone only.
+  if (NON_EUROPEAN_ZONE.test(name || "")) return "other";
+
+  // Occupational/affinity-group "championships" (e.g. "...for medical professions")
+  // never count, even though the name contains "European/World Championship".
+  if (AFFINITY_CHAMPIONSHIP.test(name || "")) return "other";
+
   // World-level events
   if (/\bworld\s+championship|\bwc\b/.test(n)) return "ec";  // stored as "ec" (world champ is top tier)
-  if (/\bworld\s+cup|\bfie\s+(grand\s+prix|gp)\b/.test(n)) return "fie";
+  // Any event explicitly carrying the FIE brand (World Cup, Grand Prix, Satellite, Zonal
+  // Championship, etc.) counts regardless of host country — FIE World Cups rotate globally.
+  if (/\bfie\b/.test(n)) return "fie";
+  if (/\bworld\s+cup\b/.test(n)) return "fie";
 
   // European-level events
   if (/\beuropean\s+championship|\bec\b/.test(n)) return "ec";
-  if (/\befc\b|european\s+(fencing|cup|grand\s+prix|circuit)|\bgrand\s+prix\b/.test(n)) return "efc";
-  if (/\binternational\b.*tournament|\btournoi\b.*international|\binternational\b.*open/i.test(n)) return "efc";
+  if (/\befc\b|european\s+(fencing|cup|grand\s+prix|circuit)/.test(n)) return "efc";
 
-  // Nordic region events
-  if (/\bnordisk|\bnordic\b/.test(n)) return "nordic";
-  const NORDIC = ["NOR","DNK","FIN","ISL","DEN"];
-  // A non-Swedish Nordic event: hosted by another Nordic country with "championship" in name
-  if (NORDIC.includes(nc) && /championship|mästar|mesterskab|meisteri/i.test(n)) return "nordic";
+  // Nordic region events — ONLY the actual cross-national Nordic Championship (NM /
+  // "Nordiska Mästerskapen" / NFU), never a Nordic country's own domestic national
+  // championship (e.g. "Dansk Championships", "Norway Championships" are Denmark's/
+  // Norway's own nationals, not a Nordic-wide event — same mistake class as the old
+  // "any foreign event → fie" fallback, just scoped to Nordic countries).
+  if (/\bnordisk|\bnordic\b|\bnm\b|\bnfu\b/.test(n)) return "nordic";
 
   // Swedish domestic
   if (nc === "SWE" || /\bsvensk|\bsverige|\bsm\b|\bsäsongsstart|distrikt/i.test(n)) return "swedish";
 
-  // Anything else from a non-Swedish nation = international
-  if (nc && nc !== "SWE") return "fie";
-
-  return "swedish";  // fallback
+  // Anything else is a foreign domestic/regional/club event with no bearing on Swedish
+  // selection (e.g. a German regional cup, a South African closed championship). Tagged
+  // "other" so main() can drop it rather than silently mislabeling it as "fie".
+  return "other";
 }
 
 const URL_TEMPLATE = (from, to, nation) => {
@@ -253,7 +296,7 @@ function parseCalendarPage(html) {
           startDate,
           endDate,
           city,
-          country: nationName || nationCode,
+          country: normalizeCountry(nationName || nationCode),
           weapon,
           ageCategory: age,
           level,
@@ -437,7 +480,15 @@ async function main() {
   // Dedupe by sourceId (latest wins, but they should already be unique)
   const seen = new Map();
   for (const it of items) seen.set(it.sourceId, it);
-  const list = [...seen.values()].sort((a, b) => a.startDate.localeCompare(b.startDate));
+  const preFilterList = [...seen.values()];
+
+  // Drop anything auto-detected as "other" — a foreign domestic/regional/club event with
+  // no bearing on Swedish selection (e.g. a German regional cup, a Nigerian championship).
+  // Keeps: all Swedish, explicit FIE-branded, explicit EFC-branded, EC/World Championship,
+  // and Nordic championship events — regardless of which country hosts them.
+  const excludedCount = preFilterList.filter(x => x.level === "other").length;
+  const list = preFilterList.filter(x => x.level !== "other")
+                             .sort((a, b) => a.startDate.localeCompare(b.startDate));
 
   if (WITH_DEADLINES) await enrichWithDeadlines(list, here);
 
@@ -454,6 +505,7 @@ async function main() {
 
   log(`✓ Wrote ${list.length} records to ${outPath}`);
   log(`  (${new Set(list.map(x => x.eventId)).size} distinct events × weapon × age)`);
+  log(`  excluded ${excludedCount} record(s) as "other" (foreign domestic/regional events with no bearing on Swedish selection)`);
 
   // brief breakdown
   const byWeapon = list.reduce((m, x) => (m[x.weapon] = (m[x.weapon]||0)+1, m), {});
