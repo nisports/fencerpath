@@ -12898,13 +12898,25 @@ function bioRowSeasonKey(r, scope) {
   const start = parseInt(y[1], 10) - (endingYear ? 1 : 0);
   return `${String(start % 100).padStart(2, "0")}/${String((start + 1) % 100).padStart(2, "0")}`;
 }
-/** Individual rows of one bio scope for the active season, best list first
- *  (team rankings excluded; a direct EFC list beats an "extracted FIE" one). */
+/** How preferred a bio ranking list is (lower = better) when one weapon×age×season has
+ *  several. National: the Svensk Ranking / national list wins over Masters (U17 has both on
+ *  Ophardt, and the SVFF rank shown in the app must be the national one — reported 2026-11-13).
+ *  Continental: a direct EFC list wins over an "extracted FIE" one. */
+function bioListPreference(r, scope) {
+  const t = r?.title || "";
+  if (scope === "national") {
+    if (/m[aä]ster/i.test(t)) return 2;
+    if (/svensk|national|nationell|uttagning/i.test(t)) return 0;
+    return 1;
+  }
+  return /extracted/i.test(t) ? 1 : 0;
+}
+/** Individual rows of one bio scope for the active season, best list first (team excluded). */
 function bioRowsForActiveSeason(arr, scope) {
   const want = activeSeasonKey();
   return (arr || [])
     .filter(r => r && r.kind !== "Team" && bioRowSeasonKey(r, scope) === want)
-    .sort((a, b) => (/extracted/i.test(a.title || "") ? 1 : 0) - (/extracted/i.test(b.title || "") ? 1 : 0));
+    .sort((a, b) => bioListPreference(a, scope) - bioListPreference(b, scope));
 }
 function getRankFromBio(f, weapon, cat, scope) {
   const hit = bioRowsForActiveSeason(f.ophardtRankings?.[scope], scope)
@@ -13941,6 +13953,13 @@ async function fetchOphardtBioForForm(id) {
       const picked = pickAllRankings(bio.rankings);
       draft.efcRank = picked.efc;
       draft.fieRank = picked.fie;
+      // National: only overwrite categories the bio has a (national, non-Masters) rank for —
+      // the Svensk Ranking cache stays the primary source for nationalRank.
+      draft.nationalRank = draft.nationalRank || {};
+      for (const [w, byCat] of Object.entries(picked.national)) {
+        if (typeof draft.nationalRank[w] !== "object" || draft.nationalRank[w] == null) draft.nationalRank[w] = {};
+        Object.assign(draft.nationalRank[w], byCat);
+      }
     }
     draft.ophardtResultsPending = bio.results || [];
     draft.ophardtLastSync = (bio.scrapedAt || new Date().toISOString()).slice(0, 10);
@@ -17425,7 +17444,9 @@ function linkDuplicateEventGroupsSafetyNet() {
  */
 function repairBioDerivedEfcFieRanks() {
   let changed = false;
-  const scopes = [["continental", "efcRank"], ["international", "fieRank"]];
+  // national added 2026-11-13: U17 bios list both the national (Svensk) ranking and a Masters
+  // ranking; a Masters rank that was prefilled and saved into nationalRank gets corrected here.
+  const scopes = [["national", "nationalRank"], ["continental", "efcRank"], ["international", "fieRank"]];
   for (const f of (State.fencers || [])) {
     const bio = f.ophardtRankings;
     if (!bio) continue;
@@ -17443,7 +17464,10 @@ function repairBioDerivedEfcFieRanks() {
           const correct = getRankFromBio(f, w, cat, scope);
           const stored  = store[w]?.[cat] ?? null;
           if (stored === correct) continue;
-          const storedFromBio = stored != null && rows.some(r => r.weapon === w && r.age === cat && r.rank === stored);
+          // National values normally come from the Svensk Ranking cache (re-synced every render),
+          // so only correct a national value that is exactly a Masters rank from the bio.
+          const storedFromBio = stored != null && rows.some(r => r.weapon === w && r.age === cat && r.rank === stored &&
+            (scope !== "national" || /m[aä]ster/i.test(r.title || "")));
           if (stored != null && !storedFromBio) continue; // manual entry — keep
           if (correct != null) {
             if (!store[w] || typeof store[w] !== "object") store[w] = {};
