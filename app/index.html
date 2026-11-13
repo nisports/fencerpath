@@ -17414,7 +17414,90 @@ function linkDuplicateEventGroupsSafetyNet() {
  *  data), and again from onAuthReady() after cloud data overwrites State —
  *  so a second device loading fresh cloud data gets the exact same safety
  *  nets applied, not just whatever happened to be in its own localStorage. */
+/**
+ * Repair EFC/FIE ranks that were derived from Ophardt bio data with the old, ambiguous season
+ * matcher (fixed 2026-11-13, see bioRowSeasonKey()). Runs for EVERY fencer on every load —
+ * cheap and idempotent — so all users' existing fencers get corrected, not just re-fetched ones.
+ *
+ * Only touches values that came from the bio table (the stored number equals some bio row's
+ * rank for that weapon×category). A number that matches no bio row was typed in by hand and
+ * is left alone.
+ */
+function repairBioDerivedEfcFieRanks() {
+  let changed = false;
+  const scopes = [["continental", "efcRank"], ["international", "fieRank"]];
+  for (const f of (State.fencers || [])) {
+    const bio = f.ophardtRankings;
+    if (!bio) continue;
+    for (const [scope, field] of scopes) {
+      const rows = (bio[scope] || []).filter(r => r && r.kind !== "Team");
+      if (!rows.length) continue;
+      const store = f[field] = (f[field] && typeof f[field] === "object") ? f[field] : {};
+      for (const w of ["foil", "epee", "sabre"]) {
+        if (typeof store[w] === "number") continue; // legacy flat value: no per-category info, leave it
+        const cats = new Set([
+          ...Object.keys(store[w] || {}),
+          ...rows.filter(r => r.weapon === w && r.age).map(r => r.age),
+        ]);
+        for (const cat of cats) {
+          const correct = getRankFromBio(f, w, cat, scope);
+          const stored  = store[w]?.[cat] ?? null;
+          if (stored === correct) continue;
+          const storedFromBio = stored != null && rows.some(r => r.weapon === w && r.age === cat && r.rank === stored);
+          if (stored != null && !storedFromBio) continue; // manual entry — keep
+          if (correct != null) {
+            if (!store[w] || typeof store[w] !== "object") store[w] = {};
+            store[w][cat] = correct;
+          } else if (store[w]) {
+            delete store[w][cat]; // was another season's rank; no rank for this season yet
+          }
+          changed = true;
+        }
+      }
+    }
+  }
+  if (changed) save();
+  return changed;
+}
+
+/**
+ * Keep every fencer's Ophardt bio (EFC/FIE ranks, results) fresh without anyone clicking
+ * "Fetch from Ophardt": re-fetch bios older than 7 days via /api/ophardt-bio, a few per page
+ * load, one at a time. Starts a few seconds after load so it runs on the cloud-loaded state.
+ */
+let _bioRefreshRunning = false;
+async function autoRefreshStaleBios({ maxPerRun = 8, maxAgeDays = 7 } = {}) {
+  if (_bioRefreshRunning || typeof fetch !== "function") return;
+  _bioRefreshRunning = true;
+  try {
+    const cutoff = Date.now() - maxAgeDays * 86400000;
+    const stale = (State.fencers || [])
+      .filter(f => f.ophardtSlug && (!f.ophardtLastSync || new Date(f.ophardtLastSync).getTime() < cutoff))
+      .slice(0, maxPerRun);
+    let updated = 0;
+    for (const f of stale) {
+      try {
+        const r = await fetch(`/api/ophardt-bio?slug=${encodeURIComponent(f.ophardtSlug)}`);
+        const bio = await r.json();
+        if (!r.ok || bio.error || !bio.rankings) continue;
+        f.ophardtRankings = bio.rankings;
+        f.ophardtLastSync = (bio.scrapedAt || new Date().toISOString()).slice(0, 10);
+        updated++;
+      } catch (e) { /* network hiccup: try again next load */ }
+      await new Promise(res => setTimeout(res, 1000));
+    }
+    if (updated) {
+      repairBioDerivedEfcFieRanks();
+      save(); renderAll();
+    }
+  } finally {
+    _bioRefreshRunning = false;
+  }
+}
+
 function runStartupMigrationsAndSync() {
+  repairBioDerivedEfcFieRanks();
+  setTimeout(() => autoRefreshStaleBios(), 8000);
   autoCarryOverActiveSeasonIfNeeded();
   autoFillMissingDeadlines();
   assignMissingCompetitionIds();
