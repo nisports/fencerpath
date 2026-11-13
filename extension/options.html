@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<title>FencerPath Ranking Sync</title>
+<style>
+  body { font: 13px system-ui, sans-serif; width: 340px; margin: 14px; color: #1f2937; }
+  h1 { font-size: 15px; margin: 0 0 10px; }
+  label { display: block; margin: 8px 0 3px; font-weight: 600; }
+  input { width: 100%; box-sizing: border-box; padding: 6px; border: 1px solid #d1d5db; border-radius: 6px; }
+  button { margin-top: 10px; padding: 6px 12px; border-radius: 6px; border: 1px solid #2563eb; background: #2563eb; color: #fff; cursor: pointer; }
+  button.ghost { background: #fff; color: #2563eb; }
+  #status { margin-top: 12px; padding: 8px; border-radius: 6px; background: #f3f4f6; white-space: pre-wrap; }
+  .ok { background: #ecfdf5 !important; } .challenge { background: #fffbeb !important; } .error { background: #fef2f2 !important; }
+</style>
+</head>
+<body>
+  <h1>🤺 FencerPath Ranking Sync</h1>
+  <label for="endpoint">FencerPath-adress</label>
+  <input id="endpoint" placeholder="https://fencerpath.com" />
+  <label for="secret">Nyckel (INGEST_SECRET)</label>
+  <input id="secret" type="password" />
+  <button id="save">Spara</button>
+  <button id="sync" class="ghost">Synka nu</button>
+  <div id="status">–</div>
+  <script src="options.js"></script>
+</body>
+</html>

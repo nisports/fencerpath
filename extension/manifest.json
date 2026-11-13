@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "FencerPath Ranking Sync",
+  "version": "1.0.0",
+  "description": "Hämtar Svensk Ranking från Ophardt en gång per dag i din egen webbläsare och skickar den till FencerPath.",
+  "permissions": ["alarms", "storage", "notifications"],
+  "host_permissions": [
+    "https://fencing.ophardt.online/*",
+    "https://fencerpath.com/*",
+    "https://*.vercel.app/*"
+  ],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "options_page": "options.html",
+  "action": { "default_title": "FencerPath Ranking Sync", "default_popup": "options.html" },
+  "icons": { "128": "icon.png" }
+}

@@ -2840,6 +2840,28 @@
         </div>
       </div>
 
+      <!-- Manual paste import of one Svensk Ranking table. Fallback for when Ophardt's
+           Cloudflare bot challenge blocks the Vercel cron (started ~2026-11-03). -->
+      <div id="paste-ranking-box" style="margin-top:16px; padding:12px; border:1px dashed var(--border); border-radius:8px;">
+        <div style="font-weight:600; margin-bottom:6px;">📋 Klistra in Svensk Ranking från Ophardt</div>
+        <div style="font-size:12px; color:var(--muted); margin-bottom:8px;">
+          Öppna rankingsidan på Ophardt i din webbläsare → Ctrl/Cmd+U (källkod) → markera allt → kopiera → klistra in här.
+          Kopierad tabelltext (Ctrl/Cmd+A på sidan) fungerar också. Sparas även i den delade rankingcachen för alla användare.
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+          <select id="paste-rk-weapon"><option value="epee">Värja</option><option value="foil">Florett</option><option value="sabre">Sabel</option></select>
+          <select id="paste-rk-age"><option value="senior">Senior</option><option value="u23">U23</option><option value="u20">U20</option><option value="u17">U17</option></select>
+          <select id="paste-rk-gender"><option value="M">Herrar</option><option value="F">Damer</option></select>
+          <input id="paste-rk-season" placeholder="26/27" style="width:70px;" />
+        </div>
+        <textarea id="paste-rk-text" rows="5" style="width:100%; font-family:monospace; font-size:12px;" placeholder="Klistra in källkod eller tabelltext…"></textarea>
+        <div style="margin-top:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button class="btn" onclick="previewPastedRanking()">Förhandsgranska</button>
+          <button class="btn primary" id="paste-rk-save" onclick="importPastedRanking()" disabled>Spara</button>
+          <span id="paste-rk-preview" style="font-size:12px; color:var(--muted);"></span>
+        </div>
+      </div>
+
       <div style="margin-top:10px;">
         <span id="ophardt-status" style="color:var(--muted); font-size:13px;"></span>
         <div id="comp-import-freshness" style="margin-top:4px;"></div>
@@ -10534,12 +10556,13 @@ function renderFencers() {
       const ages = fencerCategoriesForActiveSeason(f);
       const currentSeason = String(new Date().getFullYear());
       const cellFor = (scope, weapon, age) => {
-        const arr = (orank[scope]||[]).filter(r => r.weapon === weapon && r.age === age);
-        if (arr.length === 0) return "—";
-        // most recent season first
-        arr.sort((a,b) => +b.season - +a.season);
-        const r = arr[0];
-        const stale = r.season !== currentSeason;
+        const all = (orank[scope]||[]).filter(r => r.weapon === weapon && r.age === age && r.kind !== "Team");
+        if (all.length === 0) return "—";
+        // active season first (strict per-table convention), else most recent season, greyed
+        const r = bioRowsForActiveSeason(all, scope)[0]
+               || [...all].sort((a,b) => (bioRowSeasonKey(b, scope)||"").localeCompare(bioRowSeasonKey(a, scope)||""))[0];
+        const stale = bioRowSeasonKey(r, scope) !== activeSeasonKey();
+        void currentSeason;
         return `<span title="${r.title} — ${r.season}" style="${stale ? 'color:var(--muted);' : 'font-weight:600;'}">#${r.rank}</span>`;
       };
       const weapons = (f.weapons||[]);
@@ -12856,17 +12879,37 @@ function reorderWeaponsByActivity(weapons, rankings, results) {
  * ophardtSeasonMatches() — see that function's comment for why (Ophardt's international
  * ranking table uses the opposite starting/ending-year convention from national/continental).
  */
+/**
+ * Season key ("26/27") of one Ophardt bio ranking row, using the convention of its table.
+ *
+ * NOTE (2026-11-13): ophardtSeasonMatches() accepts a lone year under EITHER convention, so
+ * for the active season 26/27 a FIE row labelled "2026" (= 25/26, FIE labels by ENDING year)
+ * also matched and LAST season's FIE/EFC rank showed up as current (reported for Jonathan
+ * Kong). Each table has one fixed convention, so resolve it strictly instead:
+ *   national, continental (EFC)          → lone year = STARTING year ("2026" → 26/27)
+ *   international (FIE), and any list
+ *   whose title says it is FIE-derived   → lone year = ENDING year   ("2027" → 26/27)
+ */
+function bioRowSeasonKey(r, scope) {
+  const str = String(r?.season ?? "").trim();
+  const y = str.match(/^(\d{4})$/);
+  if (!y) return normalizeSeasonKey(str);
+  const endingYear = scope === "international" || /\bFIE\b/i.test(r?.title || "");
+  const start = parseInt(y[1], 10) - (endingYear ? 1 : 0);
+  return `${String(start % 100).padStart(2, "0")}/${String((start + 1) % 100).padStart(2, "0")}`;
+}
+/** Individual rows of one bio scope for the active season, best list first
+ *  (team rankings excluded; a direct EFC list beats an "extracted FIE" one). */
+function bioRowsForActiveSeason(arr, scope) {
+  const want = activeSeasonKey();
+  return (arr || [])
+    .filter(r => r && r.kind !== "Team" && bioRowSeasonKey(r, scope) === want)
+    .sort((a, b) => (/extracted/i.test(a.title || "") ? 1 : 0) - (/extracted/i.test(b.title || "") ? 1 : 0));
+}
 function getRankFromBio(f, weapon, cat, scope) {
-  const arr = f.ophardtRankings?.[scope];
-  if (!arr || !arr.length) return null;
-  const wantSeason = activeSeasonKey();
-  const matches = arr.filter(r =>
-    r.weapon === weapon && r.age === cat &&
-    ophardtSeasonMatches(r.season, wantSeason)
-  );
-  if (!matches.length) return null;
-  matches.sort((a, b) => +b.season - +a.season);
-  return matches[0].rank ?? null;
+  const hit = bioRowsForActiveSeason(f.ophardtRankings?.[scope], scope)
+    .find(r => r.weapon === weapon && r.age === cat);
+  return hit?.rank ?? null;
 }
 
 /**
@@ -13891,6 +13934,14 @@ async function fetchOphardtBioForForm(id) {
     }
     draft.ophardtSlug = slug;
     draft.ophardtRankings = bio.rankings || draft.ophardtRankings;
+    // A live fetch is the freshest EFC/FIE data we have: replace the stored per-category
+    // EFC/FIE ranks (which otherwise win over bio in the form prefill and could be stale,
+    // e.g. carried over from last season). National stays on the Svensk Ranking cache path.
+    if (bio.rankings) {
+      const picked = pickAllRankings(bio.rankings);
+      draft.efcRank = picked.efc;
+      draft.fieRank = picked.fie;
+    }
     draft.ophardtResultsPending = bio.results || [];
     draft.ophardtLastSync = (bio.scrapedAt || new Date().toISOString()).slice(0, 10);
 
@@ -14803,6 +14854,95 @@ function mergeVmEmRankingsPayload(payload) {
     "good"
   );
 }
+/* ── Paste-import one Svensk Ranking table (Cloudflare fallback) ─────────────
+ * Ophardt put its site behind a Cloudflare bot challenge (~2026-11-03), so the
+ * Vercel cron (api/cron/sync-rankings.mjs) can no longer fetch ranking pages.
+ * The admin opens the page in a real browser and pastes either:
+ *   (a) the HTML source — parsed with the SAME regex as lib/vmemScraper.mjs, or
+ *   (b) the copied table text — parsed line by line.
+ * The result goes through mergeVmEmRankingsPayload() (same path as the old JSON
+ * import) and, for admins, is upserted into the shared rankings_cache table
+ * (write allowed by supabase/migrations/0002_rankings_cache_admin_write.sql). */
+function normaliseOphardtName(raw) {
+  const parts = raw.trim().split(/\s+/);
+  if (parts.length < 2) return raw.trim();
+  if (parts[0] === parts[0].toUpperCase() && /[A-ZÅÄÖ]/.test(parts[0])) {
+    const last = parts[0][0] + parts[0].slice(1).toLowerCase();
+    return `${parts.slice(1).join(" ")} ${last}`;
+  }
+  return raw.trim();
+}
+function parseOphardtRankingPaste(text) {
+  const out = [];
+  if (/<td class="ranking">/.test(text)) {
+    const rowRe = /<td class="ranking">(\d+)<\/td>\s*<td class="ranking">([\d.]+)<\/td>\s*<td class="ranking">[\d.]*<\/td>\s*<td class="ranking">([\s\S]*?)<\/td>/g;
+    let m;
+    while ((m = rowRe.exec(text)) !== null) {
+      const nm = m[3].match(/dropdown-toggle[^>]*>\s*([^<\n]+?)\s*(?:\n|<)/);
+      if (!nm) continue;
+      const raw = nm[1].trim();
+      out.push({ rank: parseInt(m[1], 10), points: parseFloat(m[2]), name: normaliseOphardtName(raw), rawName: raw });
+    }
+    return out;
+  }
+  // Plain copied text: "rank  points  [points2]  SURNAME First  [club …]"
+  const lines = text.split(/\r?\n/);
+  const rowRe = /^\s*T?(\d+)\.?\s+(\d+(?:[.,]\d+)?)(?:\s+\d+(?:[.,]\d+)?)?\s*(.*)$/;
+  const nameRe = /^([A-ZÅÄÖÉÈÜÑØÆ][A-ZÅÄÖÉÈÜÑØÆ'\-]+(?:\s+[A-ZÅÄÖÉÈÜÑØÆ][A-ZÅÄÖÉÈÜÑØÆ'\-]+)*\s+[A-ZÅÄÖÉ][^\t]*?)\s*$/;
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(rowRe);
+    if (!m) continue;
+    let rest = m[3].split("\t").map(x => x.trim()).find(Boolean) || "";
+    if (!rest) { // name on the next non-empty line
+      for (let j = i + 1; j < Math.min(i + 3, lines.length); j++) {
+        if (lines[j].trim()) { rest = lines[j].split("\t").map(x => x.trim()).find(Boolean) || ""; break; }
+      }
+    }
+    const nm = rest.match(nameRe);
+    if (!nm) continue;
+    const raw = nm[1].replace(/\s+(SWE|NOR|DEN|FIN|GER|EST|LAT|LTU)$/, "").trim();
+    out.push({ rank: parseInt(m[1], 10), points: parseFloat(m[2].replace(",", ".")), name: normaliseOphardtName(raw), rawName: raw });
+  }
+  return out;
+}
+let _pastedRankingPayload = null;
+function previewPastedRanking() {
+  const el = id => document.getElementById(id);
+  const list = parseOphardtRankingPaste(el("paste-rk-text").value || "");
+  const season = normalizeSeasonKey(el("paste-rk-season").value.trim()) || activeSeasonKey();
+  const weapon = el("paste-rk-weapon").value, age = el("paste-rk-age").value, gender = el("paste-rk-gender").value;
+  // Sanity: ranks must be consistent with points (ties share a rank).
+  const bad = list.filter(x => x.rank !== 1 + list.filter(y => y.points > x.points).length);
+  if (!list.length) {
+    _pastedRankingPayload = null; el("paste-rk-save").disabled = true;
+    el("paste-rk-preview").textContent = "✗ Hittade inga rankingrader.";
+    return;
+  }
+  _pastedRankingPayload = {
+    scrapedAt: new Date().toISOString(), season,
+    filters: { weapon, age, gender, nation: "SWE", season, type: "vmem" },
+    rankings: list,
+  };
+  el("paste-rk-save").disabled = false;
+  el("paste-rk-preview").textContent =
+    `${weapon} ${age} ${gender} @${season}: ${list.length} fäktare — ` +
+    list.slice(0, 3).map(x => `#${x.rank} ${x.name} (${x.points})`).join(", ") +
+    (bad.length ? ` ⚠ ${bad.length} rader med avvikande placering` : "");
+}
+async function importPastedRanking() {
+  const p = _pastedRankingPayload; if (!p) return;
+  mergeVmEmRankingsPayload(p);
+  document.getElementById("paste-rk-save").disabled = true;
+  if (!isAdminUser(currentAuthUser)) return;
+  const { error } = await supabaseClient.from("rankings_cache").upsert({
+    weapon: p.filters.weapon, age_category: p.filters.age, gender: p.filters.gender,
+    nation: "SWE", season: p.season, source: "swe",
+    scraped_at: p.scrapedAt, list: p.rankings, updated_at: new Date().toISOString(),
+  }, { onConflict: "weapon,age_category,gender,nation,season,source" });
+  const prev = document.getElementById("paste-rk-preview");
+  prev.textContent = error ? `✗ Delad cache: ${error.message}` : `✓ Sparad lokalt + i delad cache (${p.rankings.length} fäktare)`;
+}
+
 /* ── Import ophardt_results.json ─────────────────────────────────────────── */
 function importResultsFile(ev) {
   const file = ev.target.files[0]; if (!file) return;
@@ -15698,17 +15838,21 @@ function pickAllRankings(bioRankings) {
   // every time. See ophardtSeasonMatches()'s comment for the full story.
   const out = { national:{}, efc:{}, fie:{} };
   const wantSeason = activeSeasonKey();
-  const byKey = (arr) => {
+  // NOTE (2026-11-13): strict per-table season convention + team rows excluded + first (best)
+  // list wins — see bioRowSeasonKey(). Previously the LAST matching row won, which on
+  // newest-first bio tables was often last season's row.
+  const byKey = (arr, scope) => {
     const m = {};
-    for (const r of (arr||[])) {
-      if (!ophardtSeasonMatches(r.season, wantSeason)) continue;
-      m[`${r.weapon}-${r.age}`] = r; // one entry per weapon×age for the active season
+    for (const r of bioRowsForActiveSeason(arr, scope)) {
+      const k = `${r.weapon}-${r.age}`;
+      if (!(k in m)) m[k] = r; // one entry per weapon×age for the active season
     }
     return m;
   };
-  const nat  = byKey(bioRankings.national);
-  const cont = byKey(bioRankings.continental);
-  const intl = byKey(bioRankings.international);
+  void wantSeason;
+  const nat  = byKey(bioRankings.national, "national");
+  const cont = byKey(bioRankings.continental, "continental");
+  const intl = byKey(bioRankings.international, "international");
   for (const w of ["foil","epee","sabre"]) {
     for (const [key, entry] of Object.entries(nat)) {
       if (!key.startsWith(w + "-")) continue;
